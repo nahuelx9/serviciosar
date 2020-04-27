@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
+        <link href="carrousel.css" rel="stylesheet">
+        <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
+        <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
+       <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+        <title>Servcios.com</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-light bg-dark ajustar ">
+                <a th:href="@{/}" class="volver titulobuscadorServicios"><h1 class=" text-right titulo text-success titulobuscador">Servicios.com</h1></a>
+                <form class="form-inline titulobuscador">
+                    <input class="form-control mr-sm-2 buscador titulobuscador" type="search" placeholder="Busque un Servicio" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-1 botoncito botonbuscar buscar" type="submit">Buscar</button>
+                </form>
+                <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
+            </nav>
+        </header>
+        <!-- Filtros -->
+        <p>
+            <a class="btn btn-outline-success btn-filtros" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Filtros
+            </a>
+
+        </p>
+        <div class="container-fluid clearfix contenedor-filtros collapse" id="collapseExample">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="ciudades">
+                        <div class="col-md-3 mb-3 ">
+                            <label for="validationDefault04" class="labelbuscador">Departamento</label>
+                            <select class="custom-select custom1 buscadorciudad" id="validationDefault04" required>
+                                <option selected  value="">No especificar</option>
+                                <option>...</option>
+                            </select>
+                            <label for="validationDefault04" class="labelbuscador">Ciudad</label>
+                            <select class="custom-select buscadorciudad" id="validationDefault04" required>
+                                <option selected  value="">No especificar</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <label for="validationDefault04">Horario Disponible</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" >
+                        <label class="form-check-label" for="exampleRadios1">
+                            Part Time
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Full Time
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                        <label class="form-check-label" for="exampleRadios3">
+                            No especificar
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="rangoPrecio">
+                        <label for="customRange1">Precio Maximo</label>
+                        <input type="range" class="custom-range" id="precio" min="0" max="100000" value="0" >
+                        $<span class="preFiltro" id="pre">0</span>
+                    </div>
+                    <div class="form-check rangoSinPrecio">
+                        <input class="form-check-input" type="checkbox" value="" id="rangoSinPrecio" >
+                        <label class="form-check-label" for="defaultCheck1">
+                            No especificar
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success botoncito btnfiltros" type="submit">Aplicar</button>
+        </div>
+        <!-- Servicios -->
+
+        <div class="container ajustar-lista">
+            <ul class="list-group">
+                <li class="list-group">
+                    <div class="row">
+                        <div class="col-md-25">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Nombre del servicio</h4>
+                                </div>
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Descripcion:</th>
+                                            <th>Datos:</th>
+                                            <th>Fotos:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <article class="text-descripcion"lang="en">
+                                                   <p>For example, if you are designing a brand new website for someone, most a brand new website for someone, most times you times you will have to make sure the prototype looks finished by inserting text or photos or what have you. The purpose of this is so the person viewing the prototype has a chance to actually feel and understand the idea behind what you have created.</p>
+                                                </article>
+                                            </td>
+                                            <td><p class="datos-tabla">Celular: 2634809575 <i class="fa fa-whatsapp " aria-hidden="true"></i></p><p class="datos-tabla">Email: nahuelx9.np@gmail.com</p><p class="datos-tabla">Precio: A acordar con el cliente</p>
+                                                <p class="datos-tabla"> Horario: A acordar con el vendedor</p><p class="datos-tabla">Provincia: Mendoza</p><p class="datos-tabla">Ciudad: San Martin</p><p class="datos-tabla">Usuario: Nahuel Perea</p></td>
+                                            <td><div id="carrusel1"  class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
+                                                    <div class="carousel-inner clearfix">
+                                                        <div class="carousel-item slider active">
+                                                            <a th:href="@{img/1.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block " alt="..."></a>
+                                                        </div>
+                                                        <div class="carousel-item slider">
+                                                            <a href="@{img/4.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/4.jpg}" class="d-block" alt="..." ></a>
+                                                        </div>
+                                                        <div class="carousel-item slider">
+                                                            <a href="@{img/33.jpg}"  data-lightbox="photos1" class="img-slider"><img th:src="@{img/33.jpg}" class="d-block" alt="..." ></a>
+                                                        </div>
+                                                    </div>
+                                                    <a class="carousel-control-prev" href="#carrusel1" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carrusel1" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                    <p class="text-secondary text-center mb-0">click en el centro de la imagen para ampliar</p>
+                                                </div>
+                                                <a th:href="@{img/1.jpg}"  data-lightbox="photos1" class="fotos mensaje-fotos" style="display: none"><p class="text-center text-secondary">Presione Aqui para ver las imagenes</p></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group">
+                    <div class="row">
+                        <div class="col-md-25">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Nombre del servicio</h4>
+                                </div>
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Descripcion:</th>
+                                            <th>Datos:</th>
+                                            <th>Fotos:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                               <article class="text-descripcion"lang="en">
+                                                   <p>For example, if you are designing a brand new website for someone, most a brand new website for someone, most times you times you will have to make sure the prototype looks finished by inserting text or photos or what have you. The purpose of this is so the person viewing the prototype has a chance to actually feel and understand the idea behind what you have created.</p>
+                                                </article>
+                                            </td>
+                                            <td><p class="datos-tabla">Celular: 2634809575 <i class="fa fa-whatsapp " aria-hidden="true"></i></p><p class="datos-tabla">Email: nahuelx9.np@gmail.com</p><p class="datos-tabla">Precio: A acordar con el cliente</p>
+                                                <p class="datos-tabla"> Horario: A acordar con el vendedor</p><p class="datos-tabla">Provincia: Mendoza</p><p class="datos-tabla">Ciudad: San Martin</p><p class="datos-tabla">Usuario: Nahuel Perea</p></td>
+                                            <td><div id="carrusel2"  class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
+                                                    <div class="carousel-inner clearfix">
+                                                        <div class="carousel-item slider active">
+                                                            <a th:href="@{img/1.jpg}" data-lightbox="photos2" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block img-slider " alt="..."></a>
+                                                        </div>
+                                                        <div class="carousel-item slider">
+                                                            <a th:href="@{img/4.jpg}" data-lightbox="photos2"class="img-slider" ><img th:src="@{img/4.jpg}" class="d-block img-slider " alt="..." ></a>
+                                                        </div>
+                                                        <div class="carousel-item slider">
+                                                            <a th:href="@{img/33.jpg}" data-lightbox="photos2" class="img-slider"><img th:src="@{img/33.jpg}" class="d-block img-slider " alt="..." ></a>
+                                                        </div>
+                                                    </div>
+                                                    <a class="carousel-control-prev" href="#carrusel2" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carrusel2" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                    <p class="text-secondary text-center mb-0">click en el centro de la imagen para ampliar</p>
+                                                </div>
+                                                <a th:href="@{img/1.jpg}" data-lightbox="photos2" class="fotos mensaje-fotos" style="display: none"><p class="text-center text-secondary">Presione Aqui para ver las imagenes</p></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <nav aria-label="Page navigation example" class="ajustar-paginas">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#lista">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <footer class="page-footer font-small blue footerBuscador">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
+            <a th:href="@{/}" class="text-success"> Servicios.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+    <script type="text/javascript" th:src="@{js/js.js}"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+</body>
+</html>

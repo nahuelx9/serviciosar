@@ -17,20 +17,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ControladorInicio {
 
     @Autowired
-   private  ServicioService servicioService;
+    private ServicioService servicioService;
 
     @GetMapping("/")
     public String inicio(Model model) {
         List<Servicio> servicios = servicioService.listarServicios();
-
         log.info("ejecutando el controlador spring mvc");
         model.addAttribute("servicios", servicios);
         return "index";
     }
 
-    @GetMapping("/agregar")
-    public String agregar(Servicio servicio) {
+    @GetMapping("/agregarUsuario")
+    public String agregarUsuario() {
+        return "registroUsuario";
+    }
+/*
+    @PostMapping("/guardarUsuario")
+    public String guardarUsuario(@Valid Servicio servicio, Errors errores) {
+        if (errores.hasErrors()) {
+            return "registroUsuario";
+        }
+        servicioService.guardar(servicio);
+        return "redirect:/";
+    }
+
+    @GetMapping("/editar/{idUsuario}")
+    public String editarUsuario(Servicio servicio, Model model) {
+        servicio = servicioService.encontrarServicio(servicio);
+        model.addAttribute("servicio", servicio);
         return "modificar";
+    }
+
+    @GetMapping("/eliminarUsuario")
+    public String eliminarUsuario(Servicio servicio) {
+        servicioService.eliminar(servicio);
+        return "redirect:/";
+    }
+*/
+    @GetMapping("/agregarServicio")
+    public String agregarServicio(Servicio servicio) {
+        return "registroServicio";
     }
 
     @PostMapping("/guardar")
@@ -41,18 +67,30 @@ public class ControladorInicio {
         servicioService.guardar(servicio);
         return "redirect:/";
     }
+    @GetMapping("/buscar")
+    public String buscar(Model model) {
+        return "buscadorServicios";
+    }
+    @GetMapping("/serviciosUsuario")
+    public String serviciosUsuario(Model model) {
+        return "serviciosUsuario";
+    }
 
     @GetMapping("/editar/{idServicio}")
     public String editar(Servicio servicio, Model model) {
         servicio = servicioService.encontrarServicio(servicio);
         model.addAttribute("servicio", servicio);
-        return "modificar";
+        return "editarServicio";
     }
 
     @GetMapping("/eliminar")
     public String eliminar(Servicio servicio) {
         servicioService.eliminar(servicio);
-        return "redirect:/";
+        return "redirect:/serviciosUsuario";
+    }
+    @GetMapping("/prueba")
+    public String prueba(Model model) {
+        return "editarServicio";
     }
 
 }
