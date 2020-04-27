@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -31,6 +32,7 @@ public class Servicio implements Serializable {
     @NotEmpty
     private String horario;
     @NotEmpty
+    @Size(max = 370)
     private String descripcion;
 
 }

@@ -21,9 +21,6 @@ public class ControladorInicio {
 
     @GetMapping("/")
     public String inicio(Model model) {
-        List<Servicio> servicios = servicioService.listarServicios();
-        log.info("ejecutando el controlador spring mvc");
-        model.addAttribute("servicios", servicios);
         return "index";
     }
 
@@ -90,7 +87,10 @@ public class ControladorInicio {
     }
     @GetMapping("/prueba")
     public String prueba(Model model) {
-        return "editarServicio";
+        List<Servicio> servicios = servicioService.listarServicios();
+        log.info("ejecutando el controlador spring mvc");
+        model.addAttribute("servicios", servicios);
+        return "index-prueba";
     }
 
 }

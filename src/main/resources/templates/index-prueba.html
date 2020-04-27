@@ -17,18 +17,20 @@
                     <th>Precio</th>
                     <th>Precio Descripcion</th>
                     <th>Descripcion</th>
+                    <th>Numero</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
 
-                <tr th:each="servicio: ${servicios}">
+                <tr th:each="servicio, iStat: ${servicios}">
                     <td th:text="${servicio.nombre}">mostrar nombre</td>
                     <td th:text="${servicio.celular}">mostrar celular</td>
                     <td th:text="${servicio.horario}">mostrar horario</td>
                     <td th:text="${servicio.email}">mostrar email</td>
                     <td th:text="${servicio.precio}">mostrar precio</td>
-                     <td th:text="${servicio.precioDescripcion}">mostrar preciodescripcion</td>
-                      <td th:text="${servicio.descripcion}">mostrar descripcion</td>
+                    <td th:text="${servicio.precioDescripcion}">mostrar preciodescripcion</td>
+                    <td th:text="${servicio.descripcion}">mostrar descripcion</td>
+                    <td th:text="${iStat.index}">mostrar numero</td>
                     <td><a th:href="@{/editar/} + ${servicio.idServicio}" th:text="Editar"/></td>
                     <td><a th:href="@{/eliminar(idServicio=${servicio.idServicio})}" th:text="Eliminar"/></td>
                 </tr>
