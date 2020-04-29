@@ -28,7 +28,8 @@ public class ControladorInicio {
     public String agregarUsuario() {
         return "registroUsuario";
     }
-/*
+
+    /*
     @PostMapping("/guardarUsuario")
     public String guardarUsuario(@Valid Servicio servicio, Errors errores) {
         if (errores.hasErrors()) {
@@ -50,7 +51,7 @@ public class ControladorInicio {
         servicioService.eliminar(servicio);
         return "redirect:/";
     }
-*/
+     */
     @GetMapping("/agregarServicio")
     public String agregarServicio(Servicio servicio) {
         return "registroServicio";
@@ -64,10 +65,14 @@ public class ControladorInicio {
         servicioService.guardar(servicio);
         return "redirect:/";
     }
+
     @GetMapping("/buscar")
     public String buscar(Model model) {
+        List<Servicio> servicios = servicioService.listarServicios();
+        model.addAttribute("servicios", servicios);
         return "buscadorServicios";
     }
+
     @GetMapping("/serviciosUsuario")
     public String serviciosUsuario(Model model) {
         return "serviciosUsuario";
@@ -85,9 +90,10 @@ public class ControladorInicio {
         servicioService.eliminar(servicio);
         return "redirect:/serviciosUsuario";
     }
+
     @GetMapping("/prueba")
     public String prueba(Model model) {
-        List<Servicio> servicios = servicioService.listarServicios();
+         List<Servicio> servicios = servicioService.listarServicios();
         log.info("ejecutando el controlador spring mvc");
         model.addAttribute("servicios", servicios);
         return "index-prueba";

@@ -52,7 +52,7 @@ body{
     .form-inline .form-control{
         width: 272px;
     }
-    
+
 
 }
 @media only screen and (max-width: 356px){
@@ -62,7 +62,7 @@ body{
 
 }
 @media only screen and (max-width: 320px){
-.botonIndex{
+    .botonIndex{
         margin-bottom: 8px!important;
     }
 }
@@ -73,21 +73,23 @@ body{
     height: 200px;
 }
 .img-slider  img {
-    width: 280px!important;
-    height: 180px!important;
+    width: 280px;
+    height: 180px;
+}
+
+@media only screen and (max-width:991px){
+    .text-descripcion {width: 220px;}
+    .datos-div{width: 265px;}
+    .img-slider img{width: 220px;
+                    height: 159px;}
 }
 @media only screen and (max-width: 767px){
     .img-slider  img {
-        width: 110px!important;
-
+        width: 110px;
+        height: 120px;
     }
 }
-@media only screen and (max-width: 621px){
-    .img-slider  img {
-        width: 60px!important;
 
-    }
-}
 
 .promocion{
     font-family: 'Caladea', serif;
@@ -437,21 +439,9 @@ a:hover{
 .descripcion{
     margin-bottom: 3px;
 }
-.text-descripcion {
-    margin: 0 auto;
-    text-align: justify;
-}
 
-.text-descripcion p {
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-}
 
-@media only screen and (max-width:991px){
-    .text-descripcion p{width: 220px;}
-}
+
 .usarioservicio{
     float: right;
     margin-top: 30px;
@@ -592,14 +582,18 @@ a:hover{
 
 .datos-tabla{
     float:left;
-    margin-right: 20px;
+    margin-right: 25px;
     margin-bottom: 6px!important;
 }
+
 .card{
 
     border-bottom: 1px solid green;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+}
+.datos-div{
+    width: 270px;
 }
 @media only screen and (max-width:500px){
     .slider-principal{
@@ -613,6 +607,22 @@ a:hover{
 @media only screen and (max-width:800px){
     .ajustar{
         width: 110%;
+    }
+}
+@media only screen and (max-width: 673px){
+    .ajustar{
+        width: 120%;
+    }
+    .footerBuscador{
+        width: 120%!important;
+    }
+}
+@media only screen and (max-width:550px){
+    .ajustar{
+        width: 130%;
+    }
+    .footerBuscador{
+        width: 130%!important;
     }
 }
 @media only screen and (max-width:521px){
@@ -632,15 +642,45 @@ a:hover{
     .footerServicioUsuario{
         width: 180%!important;
     }
+    .datos-div{
+        width: 350px;
+    }
+    .img-slider img {
+        width: 250px!important;
+    }
     .lightbox{
         left:45%!important;
     }
 }
+@media only screen and (max-width:408px){
+    .datos-div{
+        width: 265px;
+    }
+}
 @media only screen and (max-width:320px){
     .footerBuscador{
-        width: 640px!important;
+        width: 670px!important;
     }
     .ajustar{
-        width: 200%;
+        width: 210%;
     }
+}
+h4{
+    text-transform: lowercase!important;
+
+}
+h4::first-letter{
+    text-transform: capitalize!important;
+}  
+
+.text-descripcion {
+    margin: 0 auto!important;
+    text-align: justify;
+}
+
+.text-descripcion p {
+    -webkit-hyphens: auto!important;
+    -moz-hyphens: auto!important;
+    -ms-hyphens: auto!important;
+    hyphens: auto!important;
 }
