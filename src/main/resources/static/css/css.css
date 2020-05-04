@@ -376,7 +376,7 @@ a:hover{
 
 }
 .buscadorciudad{
-    width: 300%;
+    width: 220px;
 }
 .contenedor-filtros{
     border: 1px solid gray;
@@ -385,12 +385,6 @@ a:hover{
 }
 .row{
     padding: 20px;
-}
-@media only screen and (max-width:1100px){
-    .buscadorciudad{
-        width: auto;
-    }
-
 }
 @media only screen and (max-width:575px){
     .col-sm{

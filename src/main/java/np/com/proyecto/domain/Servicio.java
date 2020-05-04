@@ -33,7 +33,7 @@ public class Servicio implements Serializable {
     private String horario;
     @NotEmpty
     @Size(max = 365)
-    @Size(min = 70)
+    @Size(min = 92)
     private String descripcion;
 
 }

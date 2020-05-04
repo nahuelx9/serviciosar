@@ -5,6 +5,9 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import np.com.proyecto.domain.Servicio;
 import np.com.proyecto.servicio.ServicioService;
+import np.com.proyecto.util.Departamento;
+import np.com.proyecto.util.Provincia;
+import np.com.proyecto.util.ResultadoId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,9 +70,15 @@ public class ControladorInicio {
     }
 
     @GetMapping("/buscar")
-    public String buscar(Model model) {
+    public String buscar(Model model, Provincia provincia, Departamento departamento) {
         List<Servicio> servicios = servicioService.listarServicios();
+        List<Provincia> provincias = provincia.listarProvincia();
+        List<Departamento> departamentos = departamento.listarDepartamento();
+         ResultadoId idResultado = new ResultadoId();
         model.addAttribute("servicios", servicios);
+        model.addAttribute("provincias", provincias);
+        model.addAttribute("departamentos", departamentos);
+        model.addAttribute("idReusltado", idResultado);
         return "buscadorServicios";
     }
 
@@ -93,7 +102,7 @@ public class ControladorInicio {
 
     @GetMapping("/prueba")
     public String prueba(Model model) {
-         List<Servicio> servicios = servicioService.listarServicios();
+        List<Servicio> servicios = servicioService.listarServicios();
         log.info("ejecutando el controlador spring mvc");
         model.addAttribute("servicios", servicios);
         return "index-prueba";
