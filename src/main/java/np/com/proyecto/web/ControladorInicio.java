@@ -4,11 +4,14 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import np.com.proyecto.domain.Servicio;
+import np.com.proyecto.domain.Usuario;
 import np.com.proyecto.servicio.ServicioService;
+import np.com.proyecto.servicio.UsuarioService;
 import np.com.proyecto.util.Departamento;
 import np.com.proyecto.util.Provincia;
-import np.com.proyecto.util.ResultadoId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -21,40 +24,33 @@ public class ControladorInicio {
 
     @Autowired
     private ServicioService servicioService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping("/")
-    public String inicio(Model model) {
+    public String inicio(Model model, @AuthenticationPrincipal User user) {
+        log.info("Usuario que hizo login:" + user);
         return "index";
     }
 
     @GetMapping("/agregarUsuario")
-    public String agregarUsuario() {
+    public String agregarUsuario(Model model, Provincia provincia, Departamento departamento) {
+        List<Provincia> provincias = provincia.listarProvincia();
+        List<Departamento> departamentos = departamento.listarDepartamento();
+        model.addAttribute("provincias", provincias);
+        model.addAttribute("departamentos", departamentos);
         return "registroUsuario";
     }
 
-    /*
     @PostMapping("/guardarUsuario")
-    public String guardarUsuario(@Valid Servicio servicio, Errors errores) {
+    public String guardarUsuario(@Valid Usuario usuario, Errors errores) {
         if (errores.hasErrors()) {
-            return "registroUsuario";
+            return "/agregarUsuario";
         }
-        servicioService.guardar(servicio);
+        usuarioService.guardar(usuario);
         return "redirect:/";
     }
 
-    @GetMapping("/editar/{idUsuario}")
-    public String editarUsuario(Servicio servicio, Model model) {
-        servicio = servicioService.encontrarServicio(servicio);
-        model.addAttribute("servicio", servicio);
-        return "modificar";
-    }
-
-    @GetMapping("/eliminarUsuario")
-    public String eliminarUsuario(Servicio servicio) {
-        servicioService.eliminar(servicio);
-        return "redirect:/";
-    }
-     */
     @GetMapping("/agregarServicio")
     public String agregarServicio(Servicio servicio) {
         return "registroServicio";
@@ -74,11 +70,9 @@ public class ControladorInicio {
         List<Servicio> servicios = servicioService.listarServicios();
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
-         ResultadoId idResultado = new ResultadoId();
         model.addAttribute("servicios", servicios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
-        model.addAttribute("idReusltado", idResultado);
         return "buscadorServicios";
     }
 

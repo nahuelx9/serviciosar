@@ -26,7 +26,7 @@ and open the template in the editor.
     <body>
         <header>
             <nav class="navbar navbar-light bg-dark ajustar ">
-                <a href="index.html" class="volver tituloMisServicios"><h1 class=" text-right titulo text-success">Servicios.com</h1></a>
+                <a th:href="@{/}" class="volver tituloMisServicios"><h1 class=" text-right titulo text-success">Servicios.com</h1></a>
                 <h1 class="text-light text-center tituloregistro">Mis Servicios</h1>
                 <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
             </nav>
@@ -88,10 +88,10 @@ and open the template in the editor.
                             </table>
                         </div>
                         <div class="mx-auto d-flex justify-content-center m-2">
-                            <a th:href="@{/editar/} + ${servicio.idServicio}" class="btn btn-secondary text-center edicion mr-2">
+                            <a href="#" class="btn btn-secondary text-center edicion mr-2">
                                 <i class="far fa-edit "></i></i> Editar
                             </a>
-                            <a th:href="@{/eliminar(idServicio=${servicio.idServicio})}" class="btn btn-danger edicion" data-toggle="modal" data-target="#exampleModal">
+                            <a href="#" class="btn btn-danger edicion" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fas fa-trash"></i>  Eliminar
                             </a>
                         </div>
@@ -188,7 +188,7 @@ and open the template in the editor.
     <footer class="page-footer font-small blue footerServicioUsuario">
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
-            <a href="#" class="text-success"> Servicios.com</a>
+            <a th:href="@{/}" class="text-success"> Servicios.com</a>
         </div>
         <!-- Copyright -->
     </footer>

@@ -1,5 +1,6 @@
 <!doctype html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http:/www.thymeleaf.org/extras/spring-security">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -43,10 +44,12 @@
                 </form>
                 <h1 class="text-light text-right titulo">Servicios.com</h1>
                 <div class="boton">
-                    <button type="button" class="btn btn-outline-success botoncito botonIndex" data-toggle="modal" data-target="#staticBackdrop">Iniciar Sesion</button>
-                    <a th:href="@{/agregarUsuario}"><button type="button" class="btn btn-outline-success botoncito " >Registrarse</button></a>
-                    <a href="@{/ServiciosUsuario}"><button type="button" class="btn btn-outline-success botoncito botonIndex" style="display:none;">Mis Servcios</button></a>
-                    <button type="button" class="btn btn-outline-success botoncito" style="display:none;">Salir</button></a>
+                    <button type="button" class="btn btn-outline-success botoncito botonIndex" data-toggle="modal" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</button>
+                    <a th:href="@{/agregarUsuario}"><button type="button" class="btn btn-outline-success botoncito" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</button></a>
+                    <a th:href="@{/serviciosUsuario}"><button type="button" class="btn btn-outline-success botoncito botonIndex" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</button></a>
+                    <form method="POST" class="cerrar-sesion"  th:action="@{/logout}">
+                        <button onclick="this.parentNode.submit();" class="btn btn-outline-success botoncito"  sec:authorize="hasRole('ROLE_USER')">Cerrar sesion</button>
+                    </form>
                 </div>
             </nav>
         </header>
@@ -112,11 +115,12 @@
             <section class="seccion contenedor">
                 <h2 class="titulomenu">conoce todos los servicios diponibles a continuacion</h2>
                 <a th:href="@{/buscar}"><button type="button" class="btn btn-secondary btn-lg btn-block lista">Ir a la lista de servicios</button></a>
-                <button type="button" class="btn btn-secondary btn-lg btn-block lista" data-toggle="modal" data-target="#exampleModal">Promociona tu Servicio</button>
+                <button type="button" class="btn btn-secondary btn-lg btn-block lista" data-toggle="modal" data-target="#exampleModal" sec:authorize="hasRole('ROLE_ANONYMOUS')">Promociona tu Servicio</button>
+                <a th:href="@{/agregarServicio}"><button type="button" class="btn btn-secondary btn-lg btn-block lista"  sec:authorize="hasRole('ROLE_USER')">Promociona tu Servicio</button></a>
             </section><!--seccion-->
         </main>
 
-        <!-- Modal -->
+        <!-- Modal iniciar sesion -->
         <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -127,25 +131,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="POST" th:action="@{/login}">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <label for="username">Email</label>
+                                <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Contraseña</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="password">Contraseña</label>
+                                <input type="password" class="form-control" name="password" id="password">
                             </div>
                             <div class="form-group form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1">Recordar mi cuenta</label>
                             </div>
+                            </div>
+                            <div class="modal-footer bg-dark">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary btn btn-success">Iniciar</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer bg-dark">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary btn btn-success">Iniciar</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -161,7 +165,7 @@
                     </div>
                     <div class="modal-body">
                         Nos emociona que hayas elegido SERVICIOS.COM para promocionar tus servicio pero antes es necesario que te registres en nuestra plataforma es muy facil solo debes completar algunos de tus datos,
-                        una vez registrado podras promocionar tu servicio para asi poder obtener nuevos clientes.
+                        una vez registrado vuelve a presionar este boton.
                     </div>
                     <div class="modal-footer bg-dark">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -175,7 +179,8 @@
 
             <!-- Copyright -->
             <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
-                <a th:href="@{/}"  class="text-success"> Servicios.com</a>
+                <a th:href="@{/}"  class="text-success"> Servicios.com</a>|
+                <b>User:</b><span sec:authentication="name">Usuario logueado</span>|
             </div>
             <!-- Copyright -->
         </footer>
@@ -183,7 +188,7 @@
         <!-- Footer -->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-       <script type="text/javascript" th:src="@{js/js.js}"></script>
+        <script type="text/javascript" th:src="@{js/js.js}"></script>
         <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

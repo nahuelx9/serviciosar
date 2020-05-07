@@ -678,3 +678,6 @@ h4::first-letter{
     -ms-hyphens: auto!important;
     hyphens: auto!important;
 }
+.cerrar-sesion{
+    display: contents;
+}

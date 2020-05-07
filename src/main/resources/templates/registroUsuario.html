@@ -4,8 +4,8 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
-    <head xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,10 +16,10 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
         <!-- Bootstrap CSS -->
-     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
-         <link th:href="@{css/carrousel.css}" rel="stylesheet">
-       
+        <link th:href="@{css/carrousel.css}" rel="stylesheet">
+
         <title>Registro Usuario</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +33,7 @@ and open the template in the editor.
             </nav>
         </header>
         <div class="container-md formulario">
-            <form class="was-validated">
+            <form class="was-validated" th:action="@{/guardarUsuario}" th:object="${usuario}" method="POST">
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" class="form-control" name="nombre" required>
@@ -44,31 +44,53 @@ and open the template in the editor.
                 </div>
                 <div class="form-group">
                     <label for="provincia">Seleccion su provincia:</label>
-                    <select class="custom-select" required>
-                        <option value="">Provincia</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select name="provincia" class="custom-select" id="listaProvincias" onclick="mostrarListado()" required>
+                        <option selected value="">Provincia</option>
+                        <option  th:each="provincias: ${provincias}"   th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
                     </select>
                     <div class="invalid-feedback">Debe Selccionar una Provincia</div>
                 </div>
                 <div class="form-group">
                     <label for="ciudad">Seleccione su Departamento:</label>
-                    <select class="custom-select" required>
+                    <select class="custom-select" name="departamento"   id="listaDepartamentos" required>
                         <option value="">Departamento</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <script th:inline="javascript">
+                            function mostrarListado() {
+                                /* Obtenemos el value de la provincia selecciona*/
+                                var idProvincia = document.getElementById("listaProvincias").value;
+                                var idDepartamento = document.getElementById("listaDepartamentos");
+                                /* El value es un String lo pasamos a un int para que se pueda comparar*/
+                                var idResultado = parseInt(idProvincia);
+                                /* Traemos la lista de deparmentos*/
+                                var departamentos = /*[[${departamentos}]]*/ null;
+                                /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
+                                document.getElementById("listaProvincias").addEventListener('change', limpiar, false);
+                                /* Recorremos la lista de departamentos si existe un id =  listaProvincia lo agregamos al select*/
+                                for (var i in departamentos) {
+                                    let opcion = document.createElement('option');
+                                    if (departamentos[i].id == idResultado) {
+                                        opcion.value = departamentos[i].nombre;
+                                        opcion.text = departamentos[i].nombre;
+                                        idDepartamento.add(opcion);
+                                    }
+                                }
+                            }
+                            function limpiar() {
+                                /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
+                                var idDepartamento = document.getElementById("listaDepartamentos");
+                                idDepartamento.innerHTML = '<option selected value="">Departamento</option>';
+                            }
+                        </script>
                     </select>
                     <div class="invalid-feedback">Debe Selccionar su ciudad</div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" required>
+                    <input type="email" class="form-control" name="username" id="username" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" class="form-control" name="password" required>
+                    <input type="password" class="form-control" name="password" id="password" required>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
@@ -78,8 +100,7 @@ and open the template in the editor.
                         </label>
                     </div>
                 </div>
-                <button class="btn   botonform bg-dark" type="submit">Registrarse</button>
-
+                <button class="btn botonform bg-dark" type="submit">Registrarse</button>
             </form>
         </div>
         <!-- Footer -->
@@ -90,7 +111,7 @@ and open the template in the editor.
             </div>
             <!-- Copyright -->
         </footer>
-       <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     </body>
