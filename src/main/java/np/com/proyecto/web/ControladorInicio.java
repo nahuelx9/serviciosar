@@ -3,8 +3,10 @@ package np.com.proyecto.web;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import np.com.proyecto.domain.Rol;
 import np.com.proyecto.domain.Servicio;
 import np.com.proyecto.domain.Usuario;
+import np.com.proyecto.servicio.RolService;
 import np.com.proyecto.servicio.ServicioService;
 import np.com.proyecto.servicio.UsuarioService;
 import np.com.proyecto.util.Departamento;
@@ -26,6 +28,8 @@ public class ControladorInicio {
     private ServicioService servicioService;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private RolService rolService;
 
     @GetMapping("/")
     public String inicio(Model model, @AuthenticationPrincipal User user) {
