@@ -46,7 +46,7 @@
                 <div class="boton">
                     <button type="button" class="btn btn-outline-success botoncito botonIndex" data-toggle="modal" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</button>
                     <a th:href="@{/agregarUsuario}"><button type="button" class="btn btn-outline-success botoncito" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</button></a>
-                    <a th:href="@{/serviciosUsuario}"><button type="button" class="btn btn-outline-success botoncito botonIndex" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</button></a>
+                    <a th:href="@{/serviciosUsuario/} + ${id}"><button type="button" class="btn btn-outline-success botoncito botonIndex" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</button></a>
                     <form method="POST" class="cerrar-sesion"  th:action="@{/logout}">
                         <button onclick="this.parentNode.submit();" class="btn btn-outline-success botoncito"  sec:authorize="hasRole('ROLE_USER')">Cerrar sesion</button>
                     </form>

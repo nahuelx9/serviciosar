@@ -16,12 +16,10 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
         <!-- Bootstrap CSS -->
+        <link rel="stylesheet" th:href="@{/static/css/css.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
         <title>Servicios.com</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <header>
@@ -34,13 +32,13 @@ and open the template in the editor.
     </body>
     <!-- Servicios -->
     <div class="container-md ajustar-lista">
-        <ul class="list-group">
+        <ul th:each="servicio, iStat: ${servicios}" class="list-group">
             <li class="list-group">
                 <div class="row">
                     <div class="col-md-25">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Nombre del servicio</h4>
+                                <h3 class="text-capitalize"   style="font-family: 'DM Serif Text', serif;" th:text="${servicio.nombre}">Nombre del servicio</h3>
                             </div>
                             <table class="table table-stryped">
                                 <thead class="thead-dark">
@@ -53,35 +51,44 @@ and open the template in the editor.
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <article class="text-descripcion"lang="en">
-                                                <p>For example, if you are designing a brand new website for someone, most a brand new website for someone, most times you times you will have to make sure the prototype looks finished by inserting text or photos or what have you. The purpose of this is so the person viewing the prototype has a chance to actually feel and understand the idea behind what you have created.</p>
+                                            <article class="text-descripcion" lang="en">
+                                                <p   th:text="${servicio.descripcion}">Descripcion</p>
                                             </article>
                                         </td>
-                                        <td><p class="datos-tabla">Celular: 2634809575 <i class="fa fa-whatsapp " aria-hidden="true"></i></p><p class="datos-tabla">Email: nahuelx9.np@gmail.com</p><p class="datos-tabla">Precio: A acordar con el cliente</p>
-                                            <p class="datos-tabla"> Horario: A acordar con el vendedor</p><p class="datos-tabla">Provincia: Mendoza</p><p class="datos-tabla">Ciudad: San Martin</p><p class="datos-tabla">Usuario: Nahuel Perea</p></td>
-                                        <td><div id="carrusel1"  class="carousel slide slider-principal clearfix" data-ride="carousell" data-interval="false">
+                                        <td>
+                                            <div class="datos-div">
+                                                <p class="datos-tabla"  th:text="'Email: ' + ${servicio.email}" >email</p>
+                                                <p  class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}" > <i class="fa fa-whatsapp" aria-hidden="true"></i></p>
+                                                <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
+                                                <p class="datos-tabla"  th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                <p class="datos-tabla">Provincia: Mendoza</p><p class="datos-tabla">Departamento: San Martin</p>
+                                                <p class="datos-tabla">Usuario: Nahuel Perea</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
                                                 <div class="carousel-inner clearfix">
                                                     <div class="carousel-item slider active">
-                                                        <a th:href="@{img/1.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block " alt="..."></a>
+                                                        <a th:href="@{/static/img/1.jpg}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="@{/static/img/1.jpg}" class="d-block " alt="..."></a>
                                                     </div>
                                                     <div class="carousel-item slider">
-                                                        <a th:href="@{img/4.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/4.jpg}" class="d-block " alt="..."></a>
+                                                        <a th:href="@{/static/img/4.jpg}"  th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="@{/static/img/4.jpg}" class="d-block" alt="..." ></a>
                                                     </div>
                                                     <div class="carousel-item slider">
-                                                        <a th:href="@{img/33.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/33.jpg}" class="d-block " alt="..."></a>
+                                                        <a th:href="@{/static/img/33.jpg}"   th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="@{/static/img/33.jpg}" class="d-block" alt="..." ></a>
                                                     </div>
                                                 </div>
-                                                <a class="carousel-control-prev" href="#carrusel1" role="button" data-slide="prev">
+                                                <a class="carousel-control-prev" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="prev">
                                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Previous</span>
                                                 </a>
-                                                <a class="carousel-control-next" href="#carrusel1" role="button" data-slide="next">
+                                                <a class="carousel-control-next" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="next">
                                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Next</span>
                                                 </a>
                                                 <p class="text-secondary text-center mb-0">click en el centro de la imagen para ampliar</p>
                                             </div>
-                                            <a href="1.jpg" data-lightbox="photos1" class="fotos mensaje-fotos" style="display: none"><p class="text-center text-secondary">Presione Aqui para ver las imagenes</p></a>
+                                            <a th:href="@{/static/img/1.jpg}"  th:data-lightbox="'photos'+${iStat.index}" class="fotos mensaje-fotos" style="display: none"><p class="text-center text-secondary">Presione Aqui para ver las imagenes</p></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -91,72 +98,29 @@ and open the template in the editor.
                             <a href="#" class="btn btn-secondary text-center edicion mr-2">
                                 <i class="far fa-edit "></i></i> Editar
                             </a>
-                            <a href="#" class="btn btn-danger edicion" data-toggle="modal" data-target="#exampleModal">
+                            <a href="#" class="btn btn-danger edicion" data-toggle="modal" th:data-target="'#m'+${iStat.index}">
                                 <i class="fas fa-trash"></i>  Eliminar
                             </a>
                         </div>
                     </div>
                 </div>
-            </li>
-            <li class="list-group">
-                <div class="row">
-                    <div class="col-md-25">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Nombre del servicio</h4>
+                <!-- Modal Eliminar -->
+                <div class="modal fade" th:id="'m'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header modal-eliminar">
+                                <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <table class="table table-stryped">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Descripcion:</th>
-                                        <th>Datos:</th>
-                                        <th>Fotos:</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <article class="text-descripcion"lang="en">
-                                                <p>For example, if you are designing a brand new website for someone, most a brand new website for someone, most times you times you will have to make sure the prototype looks finished by inserting text or photos or what have you. The purpose of this is so the person viewing the prototype has a chance to actually feel and understand the idea behind what you have created.</p>
-                                            </article>
-                                        </td>
-                                        <td><p class="datos-tabla">Celular: 2634809575 <i class="fa fa-whatsapp " aria-hidden="true"></i></p><p class="datos-tabla">Email: nahuelx9.np@gmail.com</p><p class="datos-tabla">Precio: A acordar con el cliente</p>
-                                            <p class="datos-tabla"> Horario: A acordar con el vendedor</p><p class="datos-tabla">Provincia: Mendoza</p><p class="datos-tabla">Ciudad: San Martin</p><p class="datos-tabla">Usuario: Nahuel Perea</p></td>
-                                        <td><div id="carrusel1"  class="carousel slide slider-principal clearfix" data-ride="carousell" data-interval="false">
-                                                <div class="carousel-inner clearfix">
-                                                    <div class="carousel-item slider active">
-                                                        <a th:href="@{img/1.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block " alt="..."></a>
-                                                    </div>
-                                                    <div class="carousel-item slider">
-                                                        <a th:href="@{img/4.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block " alt="..."></a>
-                                                    </div>
-                                                    <div class="carousel-item slider">
-                                                        <a th:href="@{img/33.jpg}" data-lightbox="photos1" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block " alt="..."></a>
-                                                    </div>
-                                                </div>
-                                                <a class="carousel-control-prev" href="#carrusel1" role="button" data-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="carousel-control-next" href="#carrusel1" role="button" data-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="mx-auto d-flex justify-content-center m-2">
-                            <a href="editarServicio.html" class="btn btn-secondary text-center edicion mr-2">
-                                <i class="far fa-edit "></i></i> Editar
-                            </a>
-                            <a href="#" class="btn btn-danger edicion" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fas fa-trash"></i>  Eliminar
-                            </a>
+                            <div class="modal-body">
+                                Esta segur@ de elimiar su servicio, no podra revertir cambios
+                            </div>
+                            <div class="modal-footer modal-eliminar ">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                <a th:href="@{/eliminar(idServicio=${servicio.idServicio})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -164,26 +128,6 @@ and open the template in the editor.
         </ul>
     </div>
 
-    <!-- Modal Eliminar -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-eliminar">
-                    <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Esta segur@ de elimiar su servicio, no podra revertir cambios
-                </div>
-                <div class="modal-footer modal-eliminar ">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
-                    <button type="button" class="btn btn-danger">Si, Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Footer -->
     <footer class="page-footer font-small blue footerServicioUsuario">
         <!-- Copyright -->
@@ -192,11 +136,11 @@ and open the template in the editor.
         </div>
         <!-- Copyright -->
     </footer>
-   <script type="text/javascript" th:src="@{js/js.js}"></script>
-        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/js.js}"></script>
+    <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
 </body>
 </html>

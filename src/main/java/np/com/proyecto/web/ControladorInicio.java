@@ -3,7 +3,6 @@ package np.com.proyecto.web;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import np.com.proyecto.domain.Rol;
 import np.com.proyecto.domain.Servicio;
 import np.com.proyecto.domain.Usuario;
 import np.com.proyecto.servicio.RolService;
@@ -32,8 +31,14 @@ public class ControladorInicio {
     private RolService rolService;
 
     @GetMapping("/")
-    public String inicio(Model model, @AuthenticationPrincipal User user) {
+    public String inicio(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
         log.info("Usuario que hizo login:" + user);
+        if(user != null){
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        log.info("id Usuario que hizo login:" + usuario.getIdUsuario());
+        Long id = usuario.getIdUsuario();
+        model.addAttribute("id", id);
+        }
         return "index";
     }
 
@@ -80,8 +85,11 @@ public class ControladorInicio {
         return "buscadorServicios";
     }
 
-    @GetMapping("/serviciosUsuario")
-    public String serviciosUsuario(Model model) {
+    @GetMapping("/serviciosUsuario/{idUsuario}")
+    public String serviciosUsuario(Model model, Usuario usuario) {
+        usuario = usuarioService.encontrarUsuario(usuario);
+        List<Servicio> servicios = usuario.getServicios();
+        model.addAttribute("servicios", servicios);
         return "serviciosUsuario";
     }
 
@@ -95,7 +103,7 @@ public class ControladorInicio {
     @GetMapping("/eliminar")
     public String eliminar(Servicio servicio) {
         servicioService.eliminar(servicio);
-        return "redirect:/serviciosUsuario";
+        return "redirect:/";
     }
 
     @GetMapping("/prueba")

@@ -21,8 +21,6 @@ and open the template in the editor.
         <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
         <title>Servcios.com</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <header>
@@ -159,7 +157,8 @@ and open the template in the editor.
                                                     <p class="datos-tabla">Usuario: Nahuel Perea</p>
                                                 </div>
                                             </td>
-                                            <td><div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
+                                            <td>
+                                                <div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
                                                     <div class="carousel-inner clearfix">
                                                         <div class="carousel-item slider active">
                                                             <a th:href="@{img/1.jpg}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block " alt="..."></a>
