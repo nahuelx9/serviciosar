@@ -25,14 +25,14 @@ and open the template in the editor.
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-light bg-dark ">
+            <nav class="navbar navbar-light bg-dark  nav-misServicios">
                 <a th:href="@{/}" class="volver tituloRegistroServcio"><h1 class=" text-right titulo  text-success">Servicios.com</h1></a> 
                 <h1 class="text-light text-center tituloregistro">Registro de Servicio</h1>
                 <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
             </nav>
         </header>
         <div class="container-md formulario">
-            <form class="was-validated">
+            <form class="was-validated" th:action="@{/guardarServicio}" method="POST" enctype="multipart/form-data" name="multipleUploadForm">
                 <div class="form-group">
                     <label for="nombre">Nombre Del Servicio:</label>
                     <input type="text" class="form-control" name="nombre" placeholder="Ejemplo: Plomero,animador,conductor,etc..." required>
@@ -42,7 +42,7 @@ and open the template in the editor.
                     <input type="tel" class="form-control" name="celular" required>
                 </div>
                 <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input text-secondary" id="whatsapp">
+                    <input type="checkbox" class="form-check-input text-secondary" name="whatsapp" id="whatsapp">
                     <label class="form-check-label text-secondary" for="exampleCheck1">WhatsApp</label>  <i class="fa fa-whatsapp " aria-hidden="true"></i>
                 </div>
                 <div class="form-group">
@@ -54,53 +54,53 @@ and open the template in the editor.
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <input type="number" class="form-control novalidate" id="precioNo" aria-label="Amount (to the nearest dollar)">
+                    <input type="number" name="precio" class="form-control novalidate" id="precioNo" aria-label="Amount (to the nearest dollar)">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
                     </div>
                 </div>
                 <div class="form-group required" >
                     <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onclick="habilitar()" >
+                        <input class="form-check-input" type="radio" value="Por Hora" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio1">Por Hora</label>
                     </div>
                     <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onclick="habilitar()" >
+                        <input class="form-check-input" type="radio" value="Por Dia" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio1">Por Dia</label>
                     </div>
                     <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onclick="habilitar()" >
+                        <input class="form-check-input" type="radio" value="Por Mes" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio1">Por Mes</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" onclick="habilitar()" >
+                        <input class="form-check-input" type="radio" value="Por Jornada Laboral" name="precioDescripcion" id="inlineRadio2" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio2">Por Jornada Laboral</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input " type="radio" name="inlineRadioOptions" id="inlineRadio3" onclick="habilitar()" >
+                        <input class="form-check-input " type="radio" value="Por trabajo terminado" name="precioDescripcion" id="inlineRadio3" onclick="habilitar()" >
                         <label class="form-check-label novalidate " for="inlineRadio3">Por trabajo terminado</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id=""  onclick="desabilitar2()">
+                        <input class="form-check-input" type="radio" value="A acordar con el cliente" name="precioDescripcion" id=""  onclick="desabilitar2()">
                         <label class="form-check-label novalidate" for="inlineRadio4">A acordar con el cliente</label>
                     </div>
                 </div>
                 <label for="horario">Horario De trabajo:</label>
                 <div class="form-group borde required">
                     <div class="form-check">
-                        <input class="form-check-input " type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios1" value="Part Time" checked>
                         <label class="form-check-label novalidate" for="exampleRadios1">
                             Part Time
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios2" value="Full Time">
                         <label class="form-check-label novalidate" for="exampleRadios2">
                             Full Time
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios3" value="A acordar con el cliente">
                         <label class="form-check-label novalidate" for="exampleRadios3">
                             A acordar con el cliente
                         </label>
@@ -111,8 +111,8 @@ and open the template in the editor.
                     <p class="aviso">Puedes agregar algunas fotos que representen tu trabajo</p>
                     <p class="aviso text-secondary">(Una imagen puede hacer que los clientes esten mas interesados al poder ver tu servicio)</p>
                     <p class="aviso text-secondary">(Minimo de imagenes requeridas:1 &nbsp maximo de imagenes opcionales:5)</p>
-                    <input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1">
-                    <input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1">
+                    <input id="multipleFileUploadInput" type="file" th:name="files"   multiple/>
+                   <input id="multipleFileUploadInput" type="file" th:name="files"   multiple/>
                 </div>
                 <label></label>
                 <div class="form-group">
@@ -121,11 +121,9 @@ and open the template in the editor.
                         <div class="input-group-prepend">
                             <span class="input-group-text">Descripcion</span>
                         </div>
-                        <textarea class="form-control novalidate" style="height:85px;" aria-label="With textarea" placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte."></textarea>
+                        <textarea class="form-control novalidate" name="descripcion" style="height:85px;" aria-label="With textarea" placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte."></textarea>
                     </div>
                 </div>
-
-
                 <button class="btn   botonform bg-dark" type="submit">Subir Servicio</button>
             </form>
         </div>

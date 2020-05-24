@@ -525,12 +525,13 @@ a:hover{
     margin-top: 5px;
 }
 .footerServicioUsuario{
-    bottom: -1200px!important;
+    bottom: -2000px!important;
 } 
 
-@media only screen and (max-width:425px){
+@media only screen and (max-width:768px){
     .footerServicioUsuario{
         bottom: -2700px!important;
+         width: 110%;
     }
 }
 @media only screen and (max-width:390px){
@@ -546,6 +547,7 @@ a:hover{
         margin-left: 10%;
     }
 }
+
 .modal-eliminar{
     background-color: #424a53;
     color: white;
@@ -568,12 +570,14 @@ a:hover{
         margin: auto!important;
     }
 }
-@media only screen and (max-width:488px){
-    .tituloMisServicios{
-        margin: auto!important;
-    }
-}
 
+.tituloMisServicios{
+     font-family: 'Caladea', serif;
+    
+}
+.nav-misServicios{
+    padding: .1rem 1rem!important;
+}
 .datos-tabla{
     float:left;
     margin-right: 25px;
@@ -644,6 +648,11 @@ a:hover{
     }
     .lightbox{
         left:45%!important;
+    }
+}
+@media only screen and (max-width:320px){
+    .footerServicioUsuario{
+        width: 210%!important;
     }
 }
 @media only screen and (max-width:408px){
