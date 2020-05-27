@@ -1,7 +1,9 @@
 package np.com.proyecto.web;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -106,9 +108,26 @@ public class ControladorInicio {
         List<Servicio> servicios = servicioService.listarServicios();
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
+        List<Usuario> usuarios = usuarioService.listarUsuarios();
+        ArrayList<String> nombreUsuario = new ArrayList<>();
+        ArrayList<String> apellidoUsuario = new ArrayList<>();
+        ArrayList<String> provinciaUsuario = new ArrayList<>();
+        ArrayList<String> departamentoUsuario = new ArrayList<>();
         model.addAttribute("servicios", servicios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
+
+        for (Usuario u : usuarios) {
+            nombreUsuario.add(u.getNombre());
+            apellidoUsuario.add(u.getApellido());
+            provinciaUsuario.add(u.getProvincia());
+            departamentoUsuario.add(u.getDepartamento());
+        }
+        model.addAttribute("nombreUsuario", nombreUsuario);
+        model.addAttribute("apellidoUsuario", apellidoUsuario);
+        model.addAttribute("provinciaUsuario", provinciaUsuario);
+        model.addAttribute("departamentoUsuario", departamentoUsuario);
+
         return "buscadorServicios";
     }
 
@@ -117,6 +136,7 @@ public class ControladorInicio {
         usuario = usuarioService.encontrarUsuario(usuario);
         List<Servicio> servicios = usuario.getServicios();
         model.addAttribute("servicios", servicios);
+
         return "serviciosUsuario";
     }
 
@@ -140,7 +160,6 @@ public class ControladorInicio {
         model.addAttribute("servicios", servicios);
         return "prueba-imagenes";
     }
-
 
     @GetMapping("/downloadFile/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) {

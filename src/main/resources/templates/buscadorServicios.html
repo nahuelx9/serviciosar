@@ -153,8 +153,8 @@ and open the template in the editor.
                                                     <p class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}">Celular<i class="fa fa-whatsapp " aria-hidden="true"></i></p>
                                                     <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
                                                     <p class="datos-tabla"  th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
-                                                    <p class="datos-tabla">Provincia: Mendoza</p><p class="datos-tabla">Departamento: San Martin</p>
-                                                    <p class="datos-tabla">Usuario: Nahuel Perea</p>
+                                                    <p class="datos-tabla text-capitalize" th:text="'Provincia: ' + ${provinciaUsuario[__${iStat.index}__]}">Provincia</p><p class="datos-tabla text-capitalize"  th:text="'Departamento: ' + ${departamentoUsuario[__${iStat.index}__]}">Departamento</p>
+                                                    <p class="datos-tabla text-capitalize" th:text="'Usuario: ' + ${nombreUsuario[__${iStat.index}__]} + ' ' + ${apellidoUsuario[__${iStat.index}__]}">Usuario</p>
                                                 </div>
                                             </td>
                                             <td>

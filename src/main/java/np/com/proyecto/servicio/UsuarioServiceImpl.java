@@ -145,6 +145,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Usuario encontrarUsuarioPorUsername(String username) {
         Usuario usuario = usuarioDao.findByUsername(username);
         return usuario;

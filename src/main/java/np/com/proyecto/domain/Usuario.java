@@ -43,6 +43,7 @@ public class Usuario implements Serializable {
     
     
     
+    
      public  String encriptarPassword(String password){
          BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
          return encoder.encode(password);
