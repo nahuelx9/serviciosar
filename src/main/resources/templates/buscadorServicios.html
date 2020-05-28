@@ -74,8 +74,8 @@ and open the template in the editor.
                                             }
                                         }
                                     }
-                                    function limpiar(){
-                                         /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
+                                    function limpiar() {
+                                        /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
                                         var idDepartamento = document.getElementById("listaDepartamentos");
                                         idDepartamento.innerHTML = '<option selected value="">No especificar</option>';
                                     }
@@ -152,22 +152,17 @@ and open the template in the editor.
                                                     <p class="datos-tabla"  th:text="'Email: ' + ${servicio.email}" >email</p>
                                                     <p class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}">Celular<i class="fa fa-whatsapp " aria-hidden="true"></i></p>
                                                     <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
-                                                    <p class="datos-tabla"  th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                    <p class="datos-tabla" th:if="${servicio.precio} != null" th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                    <p class="datos-tabla" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
                                                     <p class="datos-tabla text-capitalize" th:text="'Provincia: ' + ${provinciaUsuario[__${iStat.index}__]}">Provincia</p><p class="datos-tabla text-capitalize"  th:text="'Departamento: ' + ${departamentoUsuario[__${iStat.index}__]}">Departamento</p>
                                                     <p class="datos-tabla text-capitalize" th:text="'Usuario: ' + ${nombreUsuario[__${iStat.index}__]} + ' ' + ${apellidoUsuario[__${iStat.index}__]}">Usuario</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
-                                                    <div class="carousel-inner clearfix">
-                                                        <div class="carousel-item slider active">
-                                                            <a th:href="@{img/1.jpg}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="@{img/1.jpg}" class="d-block " alt="..."></a>
-                                                        </div>
-                                                        <div class="carousel-item slider">
-                                                            <a th:href="@{img/4.jpg}"  th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="@{img/4.jpg}" class="d-block" alt="..." ></a>
-                                                        </div>
-                                                        <div class="carousel-item slider">
-                                                            <a th:href="@{img/33.jpg}"   th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="@{img/33.jpg}" class="d-block" alt="..." ></a>
+                                                    <div class="carousel-inner clearfix" >
+                                                        <div  th:each="file, iterstat : ${servicio.filess}"  class="carousel-item  slider" th:class="${iterstat.index}!=0 ? 'carousel-item slider':'carousel-item slider active'">
+                                                            <a th:href="*{'data:image/jpg;base64,' + file.url}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="*{'data:image/jpg;base64,'+ file.url}" class="d-block " alt="..."></a>
                                                         </div>
                                                     </div>
                                                     <a class="carousel-control-prev" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="prev">
@@ -180,7 +175,6 @@ and open the template in the editor.
                                                     </a>
                                                     <p class="text-secondary text-center mb-0">click en el centro de la imagen para ampliar</p>
                                                 </div>
-                                                <a th:href="@{img/1.jpg}"  th:data-lightbox="'photos'+${iStat.index}" class="fotos mensaje-fotos" style="display: none"><p class="text-center text-secondary">Presione Aqui para ver las imagenes</p></a>
                                             </td>
                                         </tr>
                                     </tbody>

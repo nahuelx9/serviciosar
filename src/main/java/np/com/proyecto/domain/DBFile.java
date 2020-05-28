@@ -22,8 +22,12 @@ public class DBFile {
     @Lob
     private byte[] data;
 
+     private String url = null;
+    
     @Column(name = "id_servicio")
     private int idServicio = 0;
+    
+   
 
     public DBFile() {
     }
