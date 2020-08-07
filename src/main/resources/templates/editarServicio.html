@@ -8,6 +8,7 @@ and open the template in the editor.
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
         <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
@@ -16,102 +17,104 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
-        
-        <title>Editar Servicio</title>
+        <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
+
+        <title>Registro Servicio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-light bg-dark ">
-                <a href="index.html" class="volver tituloRegistroServcio"><h1 class=" text-right titulo  text-success">Servicios.com</h1></a> 
-                <h1 class="text-light text-center tituloregistro">Editar Servicio</h1>
+            <nav class="navbar navbar-light bg-dark  nav-misServicios">
+                <a th:href="@{/}" class="volver tituloRegistroServcio"><h1 class=" text-right titulo  text-success">Servicios.com</h1></a> 
+                <h1 class="text-light text-center tituloregistro">Registro de Servicio</h1>
                 <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
             </nav>
         </header>
         <div class="container-md formulario">
-            <form class="was-validated">
+            <form class="was-validated" th:action="@{/guardarServicio}" method="POST" th:object="${servicio}" enctype="multipart/form-data" name="multipleUploadForm">
+                <input type="hidden" name="idServicio" th:field="*{idServicio}"/>
                 <div class="form-group">
                     <label for="nombre">Nombre Del Servicio:</label>
-                    <input type="text" class="form-control" name="nombre" placeholder="Ejemplo: Plomero,animador,conductor,etc..." required>
+                    <input type="text" class="form-control" name="nombre" th:field="*{nombre}" required>
                 </div>
                 <div class="form-group">
                     <label for="celular">Celular:</label>
-                    <input type="tel" class="form-control" name="celular" required>
+                    <input type="tel" class="form-control" name="celular" th:field="*{celular}" required>
                 </div>
                 <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input text-secondary" id="whatsapp">
+                    <input type="checkbox" class="form-check-input text-secondary" name="whatsapp" id="whatsapp" th:field="*{whatsapp}">
                     <label class="form-check-label text-secondary" for="exampleCheck1">WhatsApp</label>  <i class="fa fa-whatsapp " aria-hidden="true"></i>
                 </div>
                 <div class="form-group">
                     <label for="email">Email de contacto:</label>
-                    <input type="email" class="form-control" name="email" required>
+                    <input type="email" class="form-control" name="email" th:field="*{email}" required>
                 </div>
                 <label for="precio">Precio por el servicio:</label>
                 <div class="input-group mb-3 form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <input type="number" class="form-control novalidate" id="precioNo" aria-label="Amount (to the nearest dollar)">
+                    <input  th:if="*{precioDescripcion == 'A acordar con el cliente'}" type="number" name="precio" class="form-control novalidate" id="precioNo" th:field="*{precio}" disabled>
+                    <input  th:if="*{precioDescripcion != 'A acordar con el cliente'}" type="number" name="precio" class="form-control novalidate" id="precioNo" th:field="*{precio}" >
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
                     </div>
                 </div>
                 <div class="form-group required" >
-                    <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onclick="habilitar()" >
+                    <div class="form-check form-check-inline" >
+                        <input  class="form-check-input" type="radio" value="Por Hora" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio1" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio1">Por Hora</label>
                     </div>
                     <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onclick="habilitar()" >
+                        <input class="form-check-input" type="radio" value="Por Dia" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio1" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio1">Por Dia</label>
                     </div>
                     <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onclick="habilitar()" >
+                        <input class="form-check-input" type="radio" value="Por Mes" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio1" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio1">Por Mes</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" onclick="habilitar()" >
+                        <input class="form-check-input" type="radio" value="Por Jornada Laboral" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio2" onclick="habilitar()" >
                         <label class="form-check-label novalidate" for="inlineRadio2">Por Jornada Laboral</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input " type="radio" name="inlineRadioOptions" id="inlineRadio3" onclick="habilitar()" >
+                        <input class="form-check-input " type="radio" value="Por trabajo terminado" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio3" onclick="habilitar()" >
                         <label class="form-check-label novalidate " for="inlineRadio3">Por trabajo terminado</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id=""  onclick="desabilitar2()">
+                        <input class="form-check-input" type="radio" value="A acordar con el cliente" name="precioDescripcion" th:field="*{precioDescripcion}" id=""  onclick="desabilitar2()">
                         <label class="form-check-label novalidate" for="inlineRadio4">A acordar con el cliente</label>
                     </div>
                 </div>
                 <label for="horario">Horario De trabajo:</label>
-                <div class="form-group borde required">
+                <div class="form-group borde required" >
                     <div class="form-check">
-                        <input class="form-check-input " type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios1" value="Part Time"  th:field="*{horario}">
                         <label class="form-check-label novalidate" for="exampleRadios1">
                             Part Time
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios2" value="Full Time" th:field="*{horario}">
                         <label class="form-check-label novalidate" for="exampleRadios2">
                             Full Time
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios3" value="A acordar con el cliente" th:field="*{horario}">
                         <label class="form-check-label novalidate" for="exampleRadios3">
                             A acordar con el cliente
                         </label>
                     </div>
                 </div>
-                <label for="exampleFormControlFile1">Agrega algunas imagenes:</label>
-                <div class="form-group borde">
+                <div class="form-group borde" >
                     <p class="aviso">Puedes agregar algunas fotos que representen tu trabajo</p>
                     <p class="aviso text-secondary">(Una imagen puede hacer que los clientes esten mas interesados al poder ver tu servicio)</p>
                     <p class="aviso text-secondary">(Minimo de imagenes requeridas:1 &nbsp maximo de imagenes opcionales:5)</p>
-                    <input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1">
-                    <input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1"><input type="file"  class="boton-servicio" id="exampleFormControlFile1">
+                    <div th:each="file : *{filess}">
+                    <img src="#" class="d-block " th:name="${file.id}" alt="...">
+                    </div>
                 </div>
                 <label></label>
                 <div class="form-group">
@@ -120,12 +123,10 @@ and open the template in the editor.
                         <div class="input-group-prepend">
                             <span class="input-group-text">Descripcion</span>
                         </div>
-                        <textarea class="form-control novalidate" style="height:85px;" aria-label="With textarea" placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte."></textarea>
+                        <textarea class="form-control novalidate" name="descripcion" style="height:85px;" aria-label="With textarea" th:field="*{descripcion}"></textarea>
                     </div>
                 </div>
-
-
-                <button class="btn   botonform bg-dark" type="submit">Subir Servicio</button>
+                <button class="btn   botonform bg-dark" type="submit" th:text='Guardar'>submit</button>
             </form>
         </div>
         <!-- Footer -->
@@ -133,11 +134,11 @@ and open the template in the editor.
 
             <!-- Copyright -->
             <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
-                <a href="#" class="text-success"> Servicios.com</a>
+                <a th:href="@{/}" class="text-success"> Servicios.com</a>
             </div>
             <!-- Copyright -->
         </footer>
-        <script type="text/javascript" th:src="@{js/js.js}"></script>
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
         <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

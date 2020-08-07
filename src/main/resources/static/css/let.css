@@ -1,0 +1,35 @@
+body
+{
+    background: rgba(31,59,8,1);
+    margin: 0;
+    padding: 0;
+}
+
+.center{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+}
+
+.letter{
+    color: #fff;
+    font-size: 6em;
+    margin: 0;
+    padding: 0;
+    transition: .5s;
+    text-transform: uppercase;
+    
+}
+p{
+    color: white;
+    font-size: 2em;
+    text-transform: uppercase;
+}
+.icono{
+    color: white;
+   text-align: center;
+   width: 580px;
+   margin: 20px;
+}

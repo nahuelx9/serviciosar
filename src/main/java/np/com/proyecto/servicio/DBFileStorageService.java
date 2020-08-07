@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.List;
 
 @Service
-public class DBFileStorageService {
+public class DBFileStorageService implements DBFileService {
 
     @Autowired
     private DBFileRepository dbFileRepository;
@@ -40,4 +41,22 @@ public class DBFileStorageService {
     public void guardar(DBFile dbFile){
         dbFileRepository.save(dbFile);
     }
+
+    @Override
+    public List<DBFile> listarDBFiles() {
+        return (List<DBFile>) dbFileRepository.findAll();
+    }
+
+    @Override
+    public void eliminar(DBFile dbFile) {
+        dbFileRepository.delete(dbFile);
+    }
+
+    @Override
+    public DBFile encontrarDBFile(DBFile dbFile) {
+        return  dbFileRepository.findById(dbFile.getId()).orElse(null);
+    }
+
+
+
 }

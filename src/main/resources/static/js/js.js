@@ -1,4 +1,3 @@
-
 addEventListener('load', inicio, false);
 function inicio()
 {
@@ -14,6 +13,11 @@ function cambioPrecio()
 
 }
 
+window.setTimeout(function() {
+    $(".alert").fadeTo(700, 0).slideUp(700, function(){
+        $(this).remove(); 
+    });
+}, 5000);
 
 function desabilitar()
 {
@@ -65,3 +69,4 @@ function showDivs(n) {
     x[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].className += " w3-white";
 }
+

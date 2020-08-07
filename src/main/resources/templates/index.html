@@ -13,8 +13,8 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link th:href="@{css/carrousel.css}" rel="stylesheet">
-        <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
+        <link th:href="@{/css/carrousel.css}" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
 
 
         <title>Servicios.com</title>
@@ -53,6 +53,19 @@
                 </div>
             </nav>
         </header>
+        
+        <div th:if="${loginError}" class="alert alert-danger alert-dismissible text-center text-descripcion" id="alert" role="alert">
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <strong>¡Error!</strong> Usuario o contraseña incorrecto!
+        </div>
+        <div th:if="${newUser}" class="alert alert-success alert-dismissible text-center text-descripcion" id="alert" role="alert">
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <strong>¡Usuario creado correctamente!</strong> ya puede inicar sesion!
+        </div>
+        <div th:if="${loginLogout}" class="alert alert-info alert-dismissible text-center text-descripcion" id="alert" role="alert">
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <strong>¡Sesion finalizada!</strong> 
+        </div>
         <main role="main" class="flex-shrink-0">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -132,6 +145,7 @@
                     </div>
                     <div class="modal-body">
                         <form method="POST" th:action="@{/login}">
+
                             <div class="form-group">
                                 <label for="username">Email</label>
                                 <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp">
@@ -144,12 +158,12 @@
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1">Recordar mi cuenta</label>
                             </div>
-                            </div>
-                            <div class="modal-footer bg-dark">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary btn btn-success">Iniciar</button>
-                            </div>
-                        </form>
+                    </div>
+                    <div class="modal-footer bg-dark">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn btn-success">Iniciar</button>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -188,7 +202,7 @@
         <!-- Footer -->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script type="text/javascript" th:src="@{js/js.js}"></script>
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
         <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
