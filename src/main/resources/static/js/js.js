@@ -39,6 +39,7 @@ function desabilitar2()
 function habilitar() {
     document.getElementById('precioNo').disabled = false;
 }
+    
 var slideIndex = 1;
 showDivs(slideIndex);
 

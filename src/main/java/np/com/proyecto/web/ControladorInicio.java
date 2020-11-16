@@ -38,6 +38,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -115,8 +116,8 @@ public class ControladorInicio {
         return "redirect:/";
     }
 
-    @PostMapping("/guardarServicioEditado")
-    public String guardarEditado(@Valid Servicio servicio, Errors errores, Usuario usuario, @AuthenticationPrincipal User user) throws UnsupportedEncodingException {
+    @PutMapping("/guardarServicioEditado")
+    public String guardarEditado(@Valid Servicio servicio, Errors errores, Usuario usuario, DBFile dbFile, @AuthenticationPrincipal User user) throws UnsupportedEncodingException {
         if (errores.hasErrors()) {
             log.info("error = " + errores);
             return "registroServicio";
@@ -125,11 +126,7 @@ public class ControladorInicio {
         Long id = usuario.getIdUsuario();
         int idU = id.intValue();
         servicio.setIdUsuario(idU);
-        Servicio servicioExistente = servicioService.encontrarServicio(servicio);
-        servicio.setFiless(servicioExistente.getFiless());
-        log.info("Servicio == " + servicio);
         servicioService.guardar(servicio);
-
         return "redirect:/";
     }
 
@@ -177,14 +174,47 @@ public class ControladorInicio {
     @GetMapping("/editar/{idServicio}")
     public String editar(Servicio servicio, Model model, DBFile dbFile) {
         servicio = servicioService.encontrarServicio(servicio);
+        List<DBFile> files = servicio.getFiless();
         model.addAttribute("servicio", servicio);
-
+         model.addAttribute("files", files);
         return "editarServicio";
     }
 
+    /**
+     * Editar fotos
+     */
+    @GetMapping("/editarImagenes/{idServicio}")
+    public String editarImagenes(Servicio servicio, Model model, DBFile dbFile) throws UnsupportedEncodingException {
+        servicio = servicioService.encontrarServicio(servicio);
+        List<DBFile> files = new ArrayList<DBFile>();
+        for (DBFile f : servicio.getFiless()) {
+            byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
+            String img = new String(encodeBase64, "UTF-8");
+            f.setUrl(img);
+            files.add(f);
+            log.info("file" + f);
+        }
+        int cantFiles = files.size();
+        model.addAttribute("cantFiles", cantFiles);
+        model.addAttribute("files", files);
+        return "editarImagenes";
+    }
+
+    /**
+     * Eliminar Servicio
+     */
     @GetMapping("/eliminar")
     public String eliminar(Servicio servicio) {
         servicioService.eliminar(servicio);
+        return "redirect:/";
+    }
+
+    /**
+     * Eliminar Imagen
+     */
+    @GetMapping("/eliminarImagen")
+    public String eliminarImagen(DBFile dbFile) {
+        dbFileStorageService.eliminar(dbFile);
         return "redirect:/";
     }
 
@@ -196,7 +226,7 @@ public class ControladorInicio {
         model.addAttribute("loginError", true);
         return "index";
     }
-    
+
     /**
      * Usuario creado correctamente
      */
@@ -205,8 +235,8 @@ public class ControladorInicio {
         model.addAttribute("newUser", true);
         return "index";
     }
-    
-  /**
+
+    /**
      * Sesion finalizada correctamente
      */
     @RequestMapping("/login-logout.html")
@@ -218,7 +248,7 @@ public class ControladorInicio {
     @GetMapping("/prueba")
     public String prueba(Model model) {
         List<Servicio> servicios = servicioService.listarServicios();
-        log.info("ejecutando el controlador spring mvc");
+        log.info("elog.ijecutando el controlador spring mvc");
         model.addAttribute("servicios", servicios);
         return "prueba-imagenes";
     }

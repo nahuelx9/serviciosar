@@ -81,7 +81,9 @@ and open the template in the editor.
                                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Next</span>
                                                 </a>
-                                                <p class="text-secondary text-center mb-0">click en el centro de la imagen para ampliar</p>
+                                                <a th:href="@{/editarImagenes/} + ${servicio.idServicio}" class="btn btn btn-outline-secondary text-center edicion editar-fotos ">
+                                                    <i class="far fa-edit "></i></i> Editar Fotos
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>

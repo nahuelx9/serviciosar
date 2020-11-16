@@ -111,8 +111,7 @@ and open the template in the editor.
                     <p class="aviso">Puedes agregar algunas fotos que representen tu trabajo</p>
                     <p class="aviso text-secondary">(Una imagen puede hacer que los clientes esten mas interesados al poder ver tu servicio)</p>
                     <p class="aviso text-secondary">(Minimo de imagenes requeridas:1 &nbsp maximo de imagenes opcionales:5)</p>
-                    <input id="multipleFileUploadInput"  class="mb-2" type="file" th:name="files"   multiple/><input id="multipleFileUploadInput"  class="mb-2" type="file" th:name="files"   multiple/><input id="multipleFileUploadInput"  class="mb-2" type="file" th:name="files"   multiple/>
-                    <input id="multipleFileUploadInput"  class="mb-2" type="file" th:name="files"   multiple/><input id="multipleFileUploadInput"  class="mb-2" type="file" th:name="files"   multiple/><input id="multipleFileUploadInput"  class="mb-2" type="file" th:name="files"   multiple/>
+                    <input th:each="i: ${#numbers.sequence(1, 6)}"   id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple/>
                 </div>
                 <label></label>
                 <div class="form-group">

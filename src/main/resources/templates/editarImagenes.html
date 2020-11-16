@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <html  xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
+            <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
+            <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+            <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
+
+            <title>Registro Servicio</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body>
+            <header>
+                <nav class="navbar navbar-light bg-dark  nav-misServicios">
+                    <a th:href="@{/}" class="volver tituloRegistroServcio"><h1 class=" text-right titulo  text-success">Servicios.com</h1></a> 
+                    <h1 class="text-light text-center tituloregistro">Imagenes</h1>
+                    <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
+                </nav>
+            </header>
+            <div class="container-md justify-content-center align-items-center minh-100">
+                <div  class="row"  id="imagenRow">
+                    <div th:each="f, iStat : *{files}" class="card imagenes-card float-left mr-5 mb-4 " >
+                        <img th:src="*{'data:image/jpg;base64,'+ f.url}" class="d-block img-thumbnail rounded "  th:alt="${f.id}">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-center" th:text="${f.fileName}"></li>
+                        </ul>
+                        <div class="card-body ">
+                            <div class="mx-auto d-flex justify-content-center ">
+                                <a href="#" class="btn btn-outline-secondary text-center edicion m-1">
+                                    <i class="far fa-edit "></i></i> Modificar
+                                </a>
+                                <a href="#" class="btn btn-outline-danger text-center edicion m-1" data-toggle="modal" th:data-target="'#eliminar'+${iStat.index}">
+                                    <i class="fas fa-trash"></i>  Eliminar
+                                </a>
+                            </div>
+                        </div>
+                        <div class="modal fade" th:id="'eliminar'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header modal-eliminar">
+                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Esta segur@ de elimiar su servicio, no podra revertir cambios
+                                    </div>
+                                    <div class="modal-footer modal-eliminar ">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                        <a th:href="@{/eliminarImagen(id=${f.id})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${cantFiles == 5}">
+                        <div th:each="i: ${#numbers.sequence(1, 1)}" class="card imagenes-card float-left mr-5 mb-4 ">
+                            <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
+                            <div class="card-body ">
+                                <div class="mx-auto d-flex justify-content-center ">
+                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                        <i class="far fa-edit "></i></i> Agregar
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${cantFiles == 4}">
+                        <div th:each="i: ${#numbers.sequence(1, 2)}" class="card imagenes-card float-left mr-5 mb-4 ">
+                            <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
+                            <div class="card-body ">
+                                <div class="mx-auto d-flex justify-content-center ">
+                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                        <i class="far fa-edit "></i></i> Agregar
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${cantFiles == 3}">
+                        <div th:each="i: ${#numbers.sequence(1, 3)}" class="card imagenes-card float-left mr-5 mb-4 ">
+                            <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
+                            <div class="card-body ">
+                                <div class="mx-auto d-flex justify-content-center ">
+                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                        <i class="far fa-edit "></i></i> Agregar
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${cantFiles == 2}" >
+                        <script th:inline="javascript">
+                            var div = document.getElementById("imagenRow");
+                            div.classList.remove('row');
+                        </script>
+                        <div th:each="i: ${#numbers.sequence(1, 4)}" class="card imagenes-card float-left mr-5 mb-4  ">
+                            <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
+                            <div class="card-body ">
+                                <div class="mx-auto d-flex justify-content-center ">
+                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                        <i class="far fa-edit "></i></i> Agregar
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${cantFiles == 1}">
+                        <script th:inline="javascript">
+                            var div = document.getElementById("imagenRow");
+                            div.classList.remove('row');
+                        </script>
+                        <div th:each="i: ${#numbers.sequence(1, 5)}" class="card imagenes-card float-left mr-5 mb-4 " >
+                            <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
+                            <div class="card-body ">
+                                <div class="mx-auto d-flex justify-content-center ">
+                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                        <i class="far fa-edit "></i></i> Agregar
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </body>
+        <!-- Footer -->
+        <footer class="page-footer font-small footer">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
+                <a th:href="@{/}" class="text-success"> Servicios.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    </html>
