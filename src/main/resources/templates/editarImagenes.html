@@ -32,7 +32,7 @@ and open the template in the editor.
                     <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
                 </nav>
             </header>
-            <div class="container-md justify-content-center align-items-center minh-100">
+            <div class="container-md justify-content-center align-items-center minh-100 center">
                 <div  class="row"  id="imagenRow">
                     <div th:each="f, iStat : *{files}" class="card imagenes-card float-left mr-5 mb-4 " >
                         <img th:src="*{'data:image/jpg;base64,'+ f.url}" class="d-block img-thumbnail rounded "  th:alt="${f.id}">
@@ -41,9 +41,11 @@ and open the template in the editor.
                         </ul>
                         <div class="card-body ">
                             <div class="mx-auto d-flex justify-content-center ">
-                                <a href="#" class="btn btn-outline-secondary text-center edicion m-1">
-                                    <i class="far fa-edit "></i></i> Modificar
+                                <a  th:href="@{/modificarImagen/} + ${f.id}" class="btn btn-outline-secondary text-center edicion m-1" data-toggle="modal" th:data-target="'#modificar'+${iStat.index}">
+                                    <i class="far fa-edit"></i></i> Modificar
+
                                 </a>
+
                                 <a href="#" class="btn btn-outline-danger text-center edicion m-1" data-toggle="modal" th:data-target="'#eliminar'+${iStat.index}">
                                     <i class="fas fa-trash"></i>  Eliminar
                                 </a>
@@ -68,6 +70,41 @@ and open the template in the editor.
                                 </div>
                             </div>
                         </div>
+                        <!-- Modal modificar imagenes -->
+                        <form  th:action="@{/modificarImagen}"  method="POST" enctype="multipart/form-data" name="multipleUploadForm">
+                            <div class="modal fade" th:id="'modificar'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Moodificar imagen</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                                                </div>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" th:name="file" id="inputGroupFile01"
+                                                           aria-describedby="inputGroupFileAddon01"  multiple/>
+                                                    <label class="custom-file-label" for="inputGroupFile01">Presione para elegir imagen</label>
+                                                </div>
+                                                <input type="text" th:name="idValue" th:value="${f.id}" hidden >
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button type="submit"  class="btn btn-success">Guardar Cambios</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
                     </div>
                     <div th:if="${cantFiles == 5}">
                         <div th:each="i: ${#numbers.sequence(1, 1)}" class="card imagenes-card float-left mr-5 mb-4 ">
@@ -144,6 +181,8 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+
+
 
         </body>
         <!-- Footer -->

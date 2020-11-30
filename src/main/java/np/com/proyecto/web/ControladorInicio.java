@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import np.com.proyecto.domain.DBFile;
+import np.com.proyecto.domain.Filtro;
 import np.com.proyecto.domain.Servicio;
 import np.com.proyecto.domain.Usuario;
 import np.com.proyecto.payload.UploadFileResponse;
@@ -21,6 +22,7 @@ import np.com.proyecto.servicio.ServicioService;
 import np.com.proyecto.servicio.UsuarioService;
 import np.com.proyecto.util.Departamento;
 import np.com.proyecto.util.Provincia;
+import np.com.proyecto.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -116,35 +118,169 @@ public class ControladorInicio {
         return "redirect:/";
     }
 
-    @PutMapping("/guardarServicioEditado")
+    @PostMapping("/guardarServicioEditado")
     public String guardarEditado(@Valid Servicio servicio, Errors errores, Usuario usuario, DBFile dbFile, @AuthenticationPrincipal User user) throws UnsupportedEncodingException {
         if (errores.hasErrors()) {
             log.info("error = " + errores);
             return "registroServicio";
         }
-        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
-        Long id = usuario.getIdUsuario();
-        int idU = id.intValue();
-        servicio.setIdUsuario(idU);
-        servicioService.guardar(servicio);
+
+        log.info("Servicio = " + servicio.getIdServicio());
+        Long idServicio = servicio.getIdServicio();
+        int idServ = idServicio.intValue();
+        servicioService.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(), idServ);
         return "redirect:/";
     }
 
     @GetMapping("/buscar")
-    public String buscar(Model model, Provincia provincia, Departamento departamento, Usuario usuario) throws UnsupportedEncodingException {
+    public String buscar(Model model, Provincia provincia, Departamento departamento, Usuario usuario, Util util) throws UnsupportedEncodingException {
         List<Servicio> servicios = servicioService.listarServicios();
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
+        util.modificarUrlImagen(servicios);
+        Filtro filtro = new Filtro();
 
-        for (Servicio s : servicios) {
-            List<DBFile> filess = s.getFiless();
-            for (DBFile f : filess) {
-                byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
-                String img = new String(encodeBase64, "UTF-8");
-                f.setUrl(img);
-            }
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("servicios", servicios);
+        model.addAttribute("provincias", provincias);
+        model.addAttribute("departamentos", departamentos);
+
+        return "buscadorServicios";
+    }
+
+    @GetMapping("/buscarPorNombre")
+    public String buscarPorNombre(Model model, Provincia provincia, Departamento departamento, Usuario usuario, Util util, @RequestParam("nombre") String nombre) throws UnsupportedEncodingException {
+        List<Servicio> servicios = servicioService.listarServicios();
+        List<Provincia> provincias = provincia.listarProvincia();
+        List<Departamento> departamentos = departamento.listarDepartamento();
+        List<Usuario> usuarios = usuarioService.listarUsuarios();
+        util.modificarUrlImagen(servicios);
+        Filtro filtro = new Filtro();
+        if (!"".equals(nombre)) {
+            filtro.setNombre(nombre);
+            servicios = servicioService.findByNombre(nombre);
         }
+
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("servicios", servicios);
+        model.addAttribute("provincias", provincias);
+        model.addAttribute("departamentos", departamentos);
+
+        return "buscadorServicios";
+    }
+
+    @GetMapping("/buscarPorFiltros")
+    public String buscarPorFiltros(Model model, Provincia provincia, Departamento departamento, Usuario usuario, @RequestParam("nombre") String nombreFiltro, @RequestParam("provincia") String provinciaFiltro, @RequestParam("departamento") String departamentoFiltro, @RequestParam("horario") String horarioFiltro, @RequestParam("rangoPrecio") String rangoPrecioFiltro, Util util, Filtro filtro) throws UnsupportedEncodingException {
+        String nombreProvincia = util.obtenerNombreProvincia(provinciaFiltro);
+        filtro = util.obtenerFiltros(nombreFiltro, nombreProvincia, departamentoFiltro, horarioFiltro, rangoPrecioFiltro);
+        List<Servicio> servicios = new ArrayList();
+        List<Provincia> provincias = provincia.listarProvincia();
+        List<Departamento> departamentos = departamento.listarDepartamento();
+        List<Usuario> usuarios = usuarioService.listarUsuarios();
+        System.out.println("FILTROSSSSS =====" + filtro.toString());
+        /*Condicionales filtros*/
+ /*todos los filtros*/
+
+ /*   if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByAllFilters(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getPrecio());
+        }*/
+
+ /*todos los filtros y el filtro.getNombre() */
+        if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findAllAndNombre( filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getPrecio(),filtro.getNombre());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByProvincia(filtro.getProvincia());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && "".equals(filtro.getNombre())) {
+            servicios = servicioService.findByDepartamento(filtro.getProvincia(), filtro.getDepartamento());
+
+        }
+
+        if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByPrecio(filtro.getPrecio());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario())) {
+            servicios = servicioService.findByProvinciaDepartamentoHorario(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"0".equals(filtro.getPrecio())) {
+            servicios = servicioService.findByProvinciaDepartamentoPrecio(filtro.getProvincia(), filtro.getDepartamento(), filtro.getPrecio());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio())) {
+            servicios = servicioService.findByProvinciaHorarioPrecio(filtro.getProvincia(), filtro.getHorario(), filtro.getPrecio());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"No especificar".equals(filtro.getHorario())) {
+            servicios = servicioService.findByProvinciaHorario(filtro.getProvincia(), filtro.getHorario());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"0".equals(filtro.getPrecio())) {
+            servicios = servicioService.findByProvinciaPrecio(filtro.getProvincia(), filtro.getPrecio());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombreProvincia(filtro.getNombre(), filtro.getProvincia());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombreProvinciaHorarioPrecio( filtro.getProvincia(), filtro.getHorario(), filtro.getPrecio(),filtro.getNombre());
+        }
+
+        if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombre(filtro.getNombre());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombreProvinciaDepartamentoHora( filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(),filtro.getNombre());
+        }
+
+        if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombreProvinciaDepartamento( filtro.getProvincia(), filtro.getDepartamento(),filtro.getNombre());
+        }
+
+        if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
+            servicios = servicioService.listarServicios();
+        }
+
+        if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByHorario(filtro.getHorario());
+        }
+
+        if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombrePrecio(filtro.getNombre(), filtro.getPrecio());
+        }
+
+        if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombreHora(filtro.getNombre(), filtro.getHorario());
+        }
+
+        
+        if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombreHorarioPrecio( filtro.getHorario(), filtro.getPrecio(),filtro.getNombre());
+        }
+         
+        
+        if (  !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByPrecioHorario(filtro.getHorario(), filtro.getPrecio());
+        }
+        
+          if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
+            servicios = servicioService.findByNombreProvinciaPrecio( filtro.getProvincia(),filtro.getPrecio(),filtro.getNombre());
+        }
+
+        
+        
+        util.modificarUrlImagen(servicios);
+
+        model.addAttribute("filtro", filtro);
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("servicios", servicios);
         model.addAttribute("provincias", provincias);
@@ -176,7 +312,7 @@ public class ControladorInicio {
         servicio = servicioService.encontrarServicio(servicio);
         List<DBFile> files = servicio.getFiless();
         model.addAttribute("servicio", servicio);
-         model.addAttribute("files", files);
+        model.addAttribute("files", files);
         return "editarServicio";
     }
 
@@ -198,6 +334,21 @@ public class ControladorInicio {
         model.addAttribute("cantFiles", cantFiles);
         model.addAttribute("files", files);
         return "editarImagenes";
+    }
+
+    @PostMapping("/modificarImagen")
+    public String modificarImagen(@Valid DBFile dbFile, Errors errores, @RequestParam("file") MultipartFile file, @RequestParam("idValue") String idValue) throws UnsupportedEncodingException {
+        if (errores.hasErrors()) {
+            log.info("error = " + errores);
+            return "registroServicio";
+        }
+        String id = idValue;
+        log.info("id imagen = " + idValue);
+        DBFile dbFileNew = dbFileStorageService.storeFile(file);
+        if (dbFileNew.getFileType().equals("image/jpeg") || dbFileNew.getFileType().equals("image/jpg") || dbFileNew.getFileType().equals("image/pneg") || dbFileNew.getFileType().equals("image/png")) {
+            dbFileStorageService.modificarImagen(dbFileNew.getData(), dbFileNew.getFileName(), dbFileNew.getFileType(), id);
+        }
+        return "redirect:/";
     }
 
     /**
@@ -245,12 +396,38 @@ public class ControladorInicio {
         return "index";
     }
 
-    @GetMapping("/prueba")
-    public String prueba(Model model) {
-        List<Servicio> servicios = servicioService.listarServicios();
-        log.info("elog.ijecutando el controlador spring mvc");
+    /* @GetMapping("/prueba")
+    public void prueba(Model model, @RequestParam("provincia") String provincia, @RequestParam("departamento") String departamento,@RequestParam("horario") String horario,@RequestParam("rangoPrecio") String rangoPrecio, Util util) {
+       
+       String nombreProvincia = util.obtenerNombreProvincia(provincia);
+        log.info("Horario filtros:" + horario);
+       log.info("provinicia filtros:" +  nombreProvincia);
+       log.info("departamento filtros:" + departamento);
+       log.info("Rango filtros:" + rangoPrecio);
+    
+    = new Filtro("");
+        
+        if(!"".equals(nombre)){
+            filtro.setNombre(nombre);
+        }
+        
+         for (Servicio s : servicios) {
+            List<DBFile> filess = s.getFiless();
+            for (DBFile f : filess) {
+                byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
+                String img = new String(encodeBase64, "UTF-8");
+                f.setUrl(img);
+            }
+        }
+         model.addAttribute("filtro",filtro);
+        model.addAttribute("usuarios", usuarios);
         model.addAttribute("servicios", servicios);
-        return "prueba-imagenes";
-    }
-
+        model.addAttribute("provincias", provincias);
+        model.addAttribute("departamentos", departamentos);
+         
+        
+         return "buscadorServicios";
+     }
+       
+    }*/
 }

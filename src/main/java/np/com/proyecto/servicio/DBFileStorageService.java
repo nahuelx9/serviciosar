@@ -10,13 +10,16 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DBFileStorageService implements DBFileService {
 
+    
+    
     @Autowired
     private DBFileRepository dbFileRepository;
-
+    
     public DBFile storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -57,6 +60,12 @@ public class DBFileStorageService implements DBFileService {
         return  dbFileRepository.findById(dbFile.getId()).orElse(null);
     }
 
+    @Override
+    @Transactional
+    public void modificarImagen(byte[] data, String file_name, String file_type, String id) {
+        dbFileRepository.modificarImagen(data,file_name,file_type,id); 
+    }
 
+   
 
 }

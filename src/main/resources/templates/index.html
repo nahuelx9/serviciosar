@@ -38,8 +38,8 @@
     <body>
         <header>
             <nav class="navbar navbar-light bg-dark ">
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2 buscador " type="search" placeholder="Busque un Servicio" aria-label="Search">
+                <form  th:action="@{/buscarPorNombre}" method="GET" class="form-inline">
+                    <input class="form-control mr-sm-2 buscador" name="nombre" type="search" placeholder="Busque un Servicio" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-1 botoncito botonbuscar buscar" type="submit">Buscar</button>
                 </form>
                 <h1 class="text-light text-right titulo">Servicios.com</h1>

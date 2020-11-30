@@ -78,10 +78,10 @@ body{
     height: 200px;
 }
 .img-slider  img {
-    width: 280px;
-    height: 180px;
+    width: 250px!important;
+    height: 200px!important;
 }
-
+/*
 @media only screen and (max-width:991px){
     .text-descripcion {width: 220px;}
     .datos-div{width: 265px;}
@@ -94,6 +94,7 @@ body{
         height: 120px;
     }
 }
+*/
 
 
 .promocion{
@@ -723,4 +724,14 @@ h4::first-letter{
 }
 .minh-100 {
   height: 100vh;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }

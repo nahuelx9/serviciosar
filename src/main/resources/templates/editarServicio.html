@@ -32,7 +32,7 @@ and open the template in the editor.
             </nav>
         </header>
         <div class="container-md formulario">
-            <form class="was-validated" th:action="@{/guardarServicioEditado}" method="PUT" th:object="${servicio}" >
+            <form class="was-validated" th:action="@{/guardarServicioEditado}" method="POST" th:object="${servicio}" >
                 <input type="hidden" name="idServicio" th:field="*{idServicio}"/>
                 <div class="form-group">
                     <label for="nombre">Nombre Del Servicio:</label>

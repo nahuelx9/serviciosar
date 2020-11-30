@@ -13,5 +13,7 @@ public interface DBFileService {
     
     public DBFile encontrarDBFile(DBFile dbFile);
     
+    public void modificarImagen(byte[] data,String file_name,String file_type,String id);
+    
     
 }
