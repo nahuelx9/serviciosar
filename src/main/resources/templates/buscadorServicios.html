@@ -23,25 +23,25 @@ and open the template in the editor.
         <title>Servcios.com</title>
     </head>
     <body>
-         <form th:action="@{/buscarPorFiltros}" method="GET"  th:object="${filtro}">
-        <header>
-            <nav class="navbar navbar-light bg-dark ajustar ">
-                <a th:href="@{/}" class="volver titulobuscadorServicios"><h1 class=" text-right titulo text-success titulobuscador">Servicios.com</h1></a>
-                <div class="form-inline titulobuscador">
-                    <input th:if="*{nombre != ''}" class="form-control  mr-sm-2 buscador titulobuscador" name="nombre" th:field="*{nombre}" type="search" aria-label="Search">
-                    <input  th:if="*{nombre == ''}" class="form-control  mr-sm-2 buscador titulobuscador" name="nombre"  type="search" placeholder="Busque un Servicio" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-1 botoncito botonbuscar bservicios" type="submit">Buscar</button>
-                </div>
-                <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
-            </nav>
-        </header>
-        <!-- Filtros -->
-        <p>
-            <a class="btn btn-outline-success btn-filtros" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Filtros
-            </a>
+        <form th:action="@{/buscarPorFiltros}" method="GET"  th:object="${filtro}">
+            <header>
+                <nav class="navbar navbar-light bg-dark ajustar ">
+                    <a th:href="@{/}" class="volver titulobuscadorServicios"><h1 class=" text-right titulo text-success titulobuscador">Servicios.com</h1></a>
+                    <div class="form-inline titulobuscador">
+                        <input th:if="*{nombre != ''}" class="form-control  mr-sm-2 buscador titulobuscador" name="nombre" th:field="*{nombre}" type="search" aria-label="Search">
+                        <input  th:if="*{nombre == ''}" class="form-control  mr-sm-2 buscador titulobuscador" name="nombre"  type="search" placeholder="Busque un Servicio" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-1 botoncito botonbuscar bservicios" type="submit">Buscar</button>
+                    </div>
+                    <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
+                </nav>
+            </header>
+            <!-- Filtros -->
+            <p>
+                <a class="btn btn-outline-success btn-filtros" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Filtros
+                </a>
 
-        </p>
+            </p>
             <div class="container-fluid clearfix contenedor-filtros collapse" id="collapseExample">
                 <div class="row">
                     <div class="col-sm">
@@ -129,96 +129,122 @@ and open the template in the editor.
         <!-- Servicios -->
 
         <div class="container ajustar-lista">
-            <ul th:each="servicio, iStat: ${servicios}" class="list-group">
-                <li class="list-group">
-                    <div class="row">
-                        <div class="col-md-25">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="text-capitalize"   style="font-family: 'DM Serif Text', serif;" th:text="${servicio.nombre}">Nombre del servicio</h3>
-                                </div>
-                                <table class="table table-stryped">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Descripcion:</th>
-                                            <th>Datos:</th>
-                                            <th>Fotos:</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <article class="text-descripcion" lang="en">
-                                                    <p   th:text="${servicio.descripcion}">Descripcion</p>
-                                                </article>
-                                            </td>
-                                            <td>
-                                                <div class="datos-div">
-                                                    <p class="datos-tabla"  th:text="'Email: ' + ${servicio.email}" >email</p>
-                                                    <p class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}">Celular<i class="fa fa-whatsapp " aria-hidden="true"></i></p>
-                                                    <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
-                                                    <p class="datos-tabla" th:if="${servicio.precio} != null" th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
-                                                    <p class="datos-tabla" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
-                                                    <span th:each="usuario, iStat: ${usuarios}"  th:if="${servicio.idUsuario} == ${usuario.idUsuario} ">
-                                                        <p class="datos-tabla text-capitalize" th:text="'Provincia: ' + ${usuario.provincia}">Provincia</p><p class="datos-tabla text-capitalize"  th:text="'Departamento: ' + ${usuario.departamento}">Departamento</p>
-                                                        <p class="datos-tabla text-capitalize" th:text="'Usuario: ' + ${usuario.nombre} + ' ' + ${usuario.apellido}">Usuario</p>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
-                                                    <div class="carousel-inner clearfix" >
-                                                        <div  th:each="file, iterstat : ${servicio.filess}"  class="carousel-item  slider" th:class="${iterstat.index}!=0 ? 'carousel-item slider':'carousel-item slider active'">
-                                                            <a th:href="*{'data:image/jpg;base64,' + file.url}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="*{'data:image/jpg;base64,'+ file.url}" class="d-block " alt="..."></a>
-                                                        </div>
+            <div th:if="${!list.isEmpty()}">
+                <ul th:each="servicio, iStat: ${list}" class="list-group">
+                    <li class="list-group">
+                        <div class="row">
+                            <div class="col-md-25">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="text-capitalize"   style="font-family: 'DM Serif Text', serif;" th:text="${servicio.nombre}">Nombre del servicio</h3>
+                                    </div>
+                                    <table class="table table-stryped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Descripcion:</th>
+                                                <th>Datos:</th>
+                                                <th>Fotos:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <article class="text-descripcion" lang="en">
+                                                        <p   th:text="${servicio.descripcion}">Descripcion</p>
+                                                    </article>
+                                                </td>
+                                                <td>
+                                                    <div class="datos-div">
+                                                        <p class="datos-tabla"  th:text="'Email: ' + ${servicio.email}" >email</p>
+                                                        <p class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}">Celular<i class="fa fa-whatsapp " aria-hidden="true"></i></p>
+                                                        <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
+                                                        <p class="datos-tabla" th:if="${servicio.precio} != null" th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                        <p class="datos-tabla" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                        <span th:each="usuario, iStat: ${usuarios}"  th:if="${servicio.idUsuario} == ${usuario.idUsuario} ">
+                                                            <p class="datos-tabla text-capitalize" th:text="'Provincia: ' + ${usuario.provincia}">Provincia</p><p class="datos-tabla text-capitalize"  th:text="'Departamento: ' + ${usuario.departamento}">Departamento</p>
+                                                            <p class="datos-tabla text-capitalize" th:text="'Usuario: ' + ${usuario.nombre} + ' ' + ${usuario.apellido}">Usuario</p>
+                                                        </span>
                                                     </div>
-                                                    <a class="carousel-control-prev" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="prev">
-                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    <a class="carousel-control-next" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="next">
-                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                    <p class="text-secondary text-center mb-0">click en el centro de la imagen para ampliar</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </td>
+                                                <td>
+                                                    <div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
+                                                        <div class="carousel-inner clearfix" >
+                                                            <div  th:each="file, iterstat : ${servicio.filess}"  class="carousel-item  slider" th:class="${iterstat.index}!=0 ? 'carousel-item slider':'carousel-item slider active'">
+                                                                <a th:href="*{'data:image/jpg;base64,' + file.url}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="*{'data:image/jpg;base64,'+ file.url}" class="d-block " alt="..."></a>
+                                                            </div>
+                                                        </div>
+                                                        <a class="carousel-control-prev" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                        <p class="text-secondary text-center mb-0">click en el centro de la imagen para ampliar</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
+
         <nav aria-label="Page navigation example" class="ajustar-paginas">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                <li class="page-item" th:classappend="${prev == 0 ? 'disabled': ''}">
+                    <a th:if="${#httpServletRequest.requestURI == '/buscar'}"  class="page-link" th:href="@{|/buscar?page=${prev}|}">Anterior</a>
+                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorNombre'}"  class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
+                      <a th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}"  class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#lista">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Siguiente</a>
+                <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active': ''}">
+                    <a th:if="${#httpServletRequest.requestURI == '/buscar'}"class="page-link" th:href="@{|/buscar?page=${page}|}" th:text="${page}"></a>
+                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorNombre'}"class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${page})}" th:text="${page}"></a>
+                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}"class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${page})}" th:text="${page}"></a>
+                </li>
+                <li  class="page-item" th:classappend="${current == last ? 'disabled': ''}">
+                    <a  th:if="${#httpServletRequest.requestURI == '/buscar'}" class="page-link" th:href="@{|/buscar?page=${next}|}">Siguiente</a>
+                    <a  th:if="${#httpServletRequest.requestURI == '/buscarPorNombre'}" class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${next})}">Siguiente</a>
+                    <a  th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}" class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${next})}">Siguiente</a>
                 </li>
             </ul>
         </nav>
-    </div>
-    <footer class="page-footer font-small blue footerBuscador">
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
-            <a th:href="@{/}" class="text-success"> Servicios.com</a>
-        </div>
-        <!-- Copyright -->
-    </footer>
-    <!-- Footer -->
-    <script type="text/javascript" th:src="@{/js/js.js}"></script>
-    <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
-</body>
+
+        <footer class="page-footer font-small blue footerBuscador">
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
+                <a th:href="@{/}" class="text-success"> Servicios.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+    </body>
 </html>
+
+<!--  
+
+      <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <nav arial-label = "Pagination" >
+                            <ul class=" pagination justify-content-center">
+                                <li class="page-item" th:each="page: ${pages}"  >
+                                    <a class="page-ling" th:href="@{|/?page=${page}|}" th:text="${page}"></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                      <div class="col-md-2"></div>
+                    </div>
+-->

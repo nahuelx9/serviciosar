@@ -7,15 +7,39 @@ function inicio()
 
 }
 
+
+  function deshabilitarBtnBusquedaIndex() {
+          console.log("change");
+          const mensaje = document.getElementById("mensaje");
+          const boton = document.getElementById("btnBuscar");
+          console.log(boton)
+          
+          if (mensaje.value.trim() !== "" &&  mensaje.value.length > 2 ) {
+            console.log("Se muestra")
+            boton.removeAttribute('disabled')
+          } else {
+            boton.setAttribute('disabled', "true");
+          }
+        }
+
+
+
+
+
+
+
+
+
+
 function cambioPrecio()
 {
     document.getElementById('pre').innerHTML = document.getElementById('precio').value;
 
 }
 
-window.setTimeout(function() {
-    $(".alert").fadeTo(700, 0).slideUp(700, function(){
-        $(this).remove(); 
+window.setTimeout(function () {
+    $(".alert").fadeTo(700, 0).slideUp(700, function () {
+        $(this).remove();
     });
 }, 5000);
 
@@ -39,7 +63,7 @@ function desabilitar2()
 function habilitar() {
     document.getElementById('precioNo').disabled = false;
 }
-    
+
 var slideIndex = 1;
 showDivs(slideIndex);
 

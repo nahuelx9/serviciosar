@@ -2,6 +2,8 @@ package np.com.proyecto.servicio;
 
 import java.util.List;
 import np.com.proyecto.domain.Servicio;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ServicioService {
 
@@ -15,48 +17,48 @@ public interface ServicioService {
 
     public void actualizarServicio(String nombre, String celular, boolean whatsaap, String precio_descripcion, String horario, String descripcion, int id_servicio);
 
-    public List<Servicio> findByPrecio(String precioRango);
+   public Page<Servicio>  findByPrecio(String precioRango,Pageable pageable);
 
-    public List<Servicio> findByHorario(String horario);
+   public Page<Servicio> findByHorario(String horario,Pageable pageable);
 
-    public List<Servicio> findByProvincia(String provincia);
+    public Page<Servicio> findByProvincia(String provincia,Pageable pageable);
 
-    public List<Servicio> findByDepartamento(String provincia, String departamento);
+   public Page<Servicio> findByDepartamento(String provincia, String departamento,Pageable pageable);
 
-    public List<Servicio> findByAllFilters(String provincia, String departamento, String horario, String precio);
+  public Page<Servicio> findByAllFilters(String provincia, String departamento, String horario, String precio,Pageable pageable);
 
-    public List<Servicio> findByProvinciaDepartamentoHorario(String provincia, String departamento, String horario);
+   public Page<Servicio> findByProvinciaDepartamentoHorario(String provincia, String departamento, String horario,Pageable pageable);
 
-    public List<Servicio> findByProvinciaDepartamentoPrecio(String provincia, String departamento, String precio);
+    public Page<Servicio> findByProvinciaDepartamentoPrecio(String provincia, String departamento, String precio,Pageable pageable);
 
-    public List<Servicio> findByProvinciaHorarioPrecio(String provincia, String horario, String precio);
+  public Page<Servicio> findByProvinciaHorarioPrecio(String provincia, String horario, String precio,Pageable pageable);
 
-    public List<Servicio> findByProvinciaHorario(String provincia, String horario);
+  public Page<Servicio> findByProvinciaHorario(String provincia, String horario,Pageable pageable);
 
-    public List<Servicio> findByProvinciaPrecio(String provincia, String precio);
+   public Page<Servicio> findByProvinciaPrecio(String provincia, String precio,Pageable pageable);
 
-    public List<Servicio> findByPrecioHorario(String horario,String precioRango);
+    public Page<Servicio> findByPrecioHorario(String horario,String precioRango,Pageable pageable);
 
-    public List<Servicio> findByNombre(String nombre);
+   public Page<Servicio> findByNombre(String nombre, Pageable pageable);
 
-    public List<Servicio> findAllAndNombre( String provincia, String departamento, String horario, String precio, String nombre);
+    public Page<Servicio> findAllAndNombre( String provincia, String departamento, String horario, String precio, String nombre,Pageable pageable);
 
-    public List<Servicio> findByNombreProvinciaDepartamentoHora(String provincia, String departamento, String horario,String nombre);
+   public Page<Servicio> findByNombreProvinciaDepartamentoHora(String provincia, String departamento, String horario,String nombre,Pageable pageable);
 
-    public List<Servicio> findByNombreProvinciaDepartamento(String provincia, String departamento,String nombre);
+  public Page<Servicio> findByNombreProvinciaDepartamento(String provincia, String departamento,String nombre,Pageable pageable);
 
-    public List<Servicio> findByNombreProvincia(String nombre, String provincia);
+   public Page<Servicio> findByNombreProvincia(String nombre, String provincia,Pageable pageable);
 
-    public List<Servicio> findByNombreDepartamento(String nombre, String departamento);
+   public Page<Servicio> findByNombreHora(String nombre, String horario,Pageable pageable);
 
-    public List<Servicio> findByNombreHora(String nombre, String horario);
-
-    public List<Servicio> findByNombrePrecio(String nombre, String precio);
+    public Page<Servicio> findByNombrePrecio(String nombre, String precio,Pageable pageable);
     
-    public List<Servicio> findByNombreProvinciaHorarioPrecio(String provincia, String horario,String precio,String nombre);
+    public Page<Servicio> findByNombreProvinciaHorarioPrecio(String provincia, String horario,String precio,String nombre,Pageable pageable);
     
-     public List<Servicio> findByNombreHorarioPrecio(String horario,String precio,String nombre);
+    public Page<Servicio> findByNombreHorarioPrecio(String horario,String precio,String nombre,Pageable pageable);
      
-      public List<Servicio> findByNombreProvinciaPrecio(String provincia,String precio,String nombre);
+     public Page<Servicio> findByNombreProvinciaPrecio(String provincia,String precio,String nombre,Pageable pageable);
+      
+      Page<Servicio> getAll(Pageable pageable);
 
 }

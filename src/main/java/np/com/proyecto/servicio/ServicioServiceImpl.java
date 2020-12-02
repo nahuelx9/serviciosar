@@ -5,6 +5,8 @@ import javax.persistence.Query;
 import np.com.proyecto.dao.ServicioDao;
 import np.com.proyecto.domain.Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,119 +49,120 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Servicio> findByPrecio(String precioRango) {
-       return servicioDao.findByPrecio(precioRango);
+   public Page<Servicio> findByPrecio(String precioRango,Pageable pageable) {
+       return servicioDao.findByPrecio(precioRango,pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Servicio> findByHorario(String horario) {
-        return servicioDao.findByHorario(horario);
+   public Page<Servicio> findByHorario(String horario,Pageable pageable) {
+        return servicioDao.findByHorario(horario,pageable);
         
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Servicio> findByProvincia(String provincia) {
-        return servicioDao.findByProvincia(provincia);
+    public Page<Servicio> findByProvincia(String provincia,Pageable pageable) {
+        return servicioDao.findByProvincia(provincia,pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Servicio> findByDepartamento(String provincia,String departamento) {
-        return servicioDao.findByDepartamento(provincia,departamento);
+   public Page<Servicio> findByDepartamento(String provincia,String departamento,Pageable pageable) {
+        return servicioDao.findByDepartamento(provincia,departamento,pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Servicio> findByAllFilters(String provincia, String departamento, String horario, String precio) {
-        return servicioDao.findByAllFilters(provincia, departamento, horario, precio);
+  public Page<Servicio> findByAllFilters(String provincia, String departamento, String horario, String precio,Pageable pageable) {
+        return servicioDao.findByAllFilters(provincia, departamento, horario, precio,pageable);
     }
 
     @Override
-    public List<Servicio> findByProvinciaDepartamentoHorario(String provincia, String departamento, String horario) {
-       return servicioDao.findByProvinciaDepartamentoHorario(provincia, departamento, horario);
+ public Page<Servicio> findByProvinciaDepartamentoHorario(String provincia, String departamento, String horario,Pageable pageable) {
+       return servicioDao.findByProvinciaDepartamentoHorario(provincia, departamento, horario,pageable);
     }
 
     @Override
-    public List<Servicio> findByProvinciaDepartamentoPrecio(String provincia, String departamento, String precio) {
-        return servicioDao.findByProvinciaDepartamentoPrecio(provincia, departamento, precio);
+   public Page<Servicio> findByProvinciaDepartamentoPrecio(String provincia, String departamento, String precio,Pageable pageable) {
+        return servicioDao.findByProvinciaDepartamentoPrecio(provincia, departamento, precio,pageable);
     }
 
     @Override
-    public List<Servicio> findByProvinciaHorarioPrecio(String provincia, String horario, String precio) {
-        return servicioDao.findByProvinciaHorarioPrecio(provincia,horario, precio);
+   public Page<Servicio> findByProvinciaHorarioPrecio(String provincia, String horario, String precio,Pageable pageable) {
+        return servicioDao.findByProvinciaHorarioPrecio(provincia,horario, precio,pageable);
     }
 
     @Override
-    public List<Servicio> findByProvinciaHorario(String provincia, String horario) {
-        return servicioDao.findByProvinciaHorario(provincia, horario);
+    public Page<Servicio>findByProvinciaHorario(String provincia, String horario,Pageable pageable) {
+        return servicioDao.findByProvinciaHorario(provincia, horario,pageable);
     }
 
     @Override
-    public List<Servicio> findByProvinciaPrecio(String provincia, String precio) {
-        return servicioDao.findByProvinciaPrecio(provincia, precio);
+  public Page<Servicio> findByProvinciaPrecio(String provincia, String precio,Pageable pageable) {
+        return servicioDao.findByProvinciaPrecio(provincia, precio,pageable);
     }
 
     @Override
-    public List<Servicio> findByPrecioHorario( String horario,String precioRango) {
-        return servicioDao.findByPrecioHorario(horario,precioRango);
+  public Page<Servicio> findByPrecioHorario( String horario,String precioRango,Pageable pageable) {
+        return servicioDao.findByPrecioHorario(horario,precioRango,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombre(String nombre) {
-        return servicioDao.findByNombre(nombre);
+   public Page<Servicio> findByNombre(String nombre, Pageable pageable) {
+        return servicioDao.findByNombre(nombre,pageable);
     }
 
     @Override
-    public List<Servicio> findAllAndNombre( String provincia, String departamento, String horario, String precio,String nombre) {
-        return servicioDao.findAllAndName( provincia, departamento, horario, precio,nombre);
+   public Page<Servicio> findAllAndNombre( String provincia, String departamento, String horario, String precio,String nombre,Pageable pageable) {
+        return servicioDao.findAllAndName( provincia, departamento, horario, precio,nombre,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreProvinciaDepartamentoHora( String provincia, String departamento, String horario,String nombre) {
-     return servicioDao.findByNombreProvinciaDepartamentoHora( provincia, departamento, horario,nombre);
+  public Page<Servicio> findByNombreProvinciaDepartamentoHora( String provincia, String departamento, String horario,String nombre,Pageable pageable) {
+     return servicioDao.findByNombreProvinciaDepartamentoHora( provincia, departamento, horario,nombre,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreProvinciaDepartamento(String provincia, String departamento,String nombre) {
-        return servicioDao.findByNombreProvinciaDepartamento( provincia, departamento,nombre);
+  public Page<Servicio> findByNombreProvinciaDepartamento(String provincia, String departamento,String nombre,Pageable pageable) {
+        return servicioDao.findByNombreProvinciaDepartamento( provincia, departamento,nombre,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreProvincia(String nombre, String provincia) {
-      return servicioDao.findByNombreProvincia(nombre, provincia);
+ public Page<Servicio> findByNombreProvincia(String nombre, String provincia,Pageable pageable) {
+      return servicioDao.findByNombreProvincia(nombre, provincia,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreDepartamento(String nombre, String departamento) {
-        return servicioDao.findByNombreDepartamento(nombre, departamento);
+ public Page<Servicio> findByNombreHora(String nombre, String horario,Pageable pageable) {
+         return servicioDao.findByNombreHora(nombre, horario,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreHora(String nombre, String horario) {
-         return servicioDao.findByNombreHora(nombre, horario);
+  public Page<Servicio> findByNombrePrecio(String nombre, String precio,Pageable pageable) {
+         return servicioDao.findByNombrePrecio(nombre, precio,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombrePrecio(String nombre, String precio) {
-         return servicioDao.findByNombrePrecio(nombre, precio);
+   public Page<Servicio> findByNombreProvinciaHorarioPrecio( String provincia, String horario, String precio,String nombre,Pageable pageable) {
+        return servicioDao.findByNombreProvinciaHorarioPrecio( provincia, horario, precio,nombre,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreProvinciaHorarioPrecio( String provincia, String horario, String precio,String nombre) {
-        return servicioDao.findByNombreProvinciaHorarioPrecio( provincia, horario, precio,nombre);
+  public Page<Servicio> findByNombreHorarioPrecio(String horario, String precio,String nombre,Pageable pageable) {
+           return servicioDao.findByNombreHorarioPrecio( horario, precio,nombre,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreHorarioPrecio(String horario, String precio,String nombre) {
-           return servicioDao.findByNombreHorarioPrecio( horario, precio,nombre);
+  public Page<Servicio> findByNombreProvinciaPrecio( String provincia, String precio,String nombre,Pageable pageable) {
+      return servicioDao.findByNombreProvinciaPrecio( provincia, precio,nombre,pageable);
     }
 
     @Override
-    public List<Servicio> findByNombreProvinciaPrecio( String provincia, String precio,String nombre) {
-      return servicioDao.findByNombreProvinciaPrecio( provincia, precio,nombre);
+    public Page<Servicio> getAll(Pageable pageable) {
+            return servicioDao.findAll(pageable);
     }
+
 
     
     

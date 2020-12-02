@@ -10,6 +10,9 @@ import np.com.proyecto.domain.Servicio;
 import np.com.proyecto.domain.Usuario;
 import np.com.proyecto.servicio.ServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 public class Util {
 
@@ -129,15 +132,16 @@ public class Util {
 
     }
 
+    /*
     public List<Servicio> serviciosBusqueda(String nombre, String provincia, String departamento, String horario, String rangoPrecio) {
         List<Servicio> servicios = null;
 
-        /*todos los filtros*/
+        
         if (!"".equals(provincia) && !"".equals(departamento) && !"No especificar".equals(horario) && !"0".equals(rangoPrecio) && (nombre == null || "".equals(nombre))) {
             servicios = servicioService.findByAllFilters(provincia, departamento, horario, rangoPrecio);
         }
 
-        /*todos los filtros y el nombre */
+        
         if (!"".equals(provincia) && !"".equals(departamento) && !"No especificar".equals(horario) && !"0".equals(rangoPrecio) && (nombre != null || !"".equals(nombre))) {
             servicios = servicioService.findAllAndNombre(nombre, provincia, departamento, horario, rangoPrecio);
         }
@@ -187,7 +191,7 @@ public class Util {
             servicios = servicioService.listarServicios();
         }
 
-        /* Nombre*/
+      
         if (!"".equals(provincia) && "".equals(departamento) && "No especificar".equals(horario) && "0".equals(rangoPrecio) && (nombre != null || !"".equals(nombre))) {
             servicios = servicioService.findByNombreProvincia(nombre, provincia);
         }
@@ -223,9 +227,9 @@ public class Util {
         return servicios;
 
     }
+     */
 
-
-    /* convertir el codigo en imgen */
+ /* convertir el codigo en imgen */
     public void modificarUrlImagen(List<Servicio> servicios) throws UnsupportedEncodingException {
         for (Servicio s : servicios) {
             List<DBFile> filess = s.getFiless();
@@ -236,4 +240,5 @@ public class Util {
             }
         }
     }
+
 }
