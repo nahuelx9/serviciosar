@@ -1,4 +1,5 @@
 addEventListener('load', inicio, false);
+
 function inicio()
 {
 
@@ -8,27 +9,53 @@ function inicio()
 }
 
 
-  function deshabilitarBtnBusquedaIndex() {
-          console.log("change");
-          const mensaje = document.getElementById("mensaje");
-          const boton = document.getElementById("btnBuscar");
-          console.log(boton)
-          
-          if (mensaje.value.trim() !== "" &&  mensaje.value.length > 2 ) {
-            console.log("Se muestra")
-            boton.removeAttribute('disabled')
-          } else {
-            boton.setAttribute('disabled', "true");
-          }
-        }
+function deshabilitarBtnBusquedaIndex() {
+    const mensaje = document.getElementById("mensaje");
+    const boton = document.getElementById("btnBuscar");
+    console.log(boton);
 
+    if (mensaje.value.trim() !== "" && mensaje.value.length > 2) {
+        console.log("Se muestra");
+        boton.removeAttribute('disabled');
+    } else {
+        boton.setAttribute('disabled', "true");
+    }
+}
 
+function contarCaracteres(){
+   let texto =  document.getElementById("message").value;
+   let cantidadDeCaracteres =texto.length;
+    document.getElementById("caracteres").innerHTML = cantidadDeCaracteres;
+}
 
+var checkbox = document.getElementById('checkUser');
+const btnUserRegister = document.getElementById('btnRegisterUser');
+checkbox.addEventListener( 'change', function() {
+    if(this.checked) {
+       btnUserRegister.removeAttribute('disabled');
+    }else{
+        btnUserRegister.setAttribute('disabled', "true");
+    }
+});
 
+//POPOVER
+$(function () {
+    $('[data-toggle="popover"]').popover();
+});
 
+$('.pop').popover().click(function () {
+       setTimeout(function () {
+           $('.pop').popover('hide');
+       }, 7000);
+});
 
+//VALIDACIONES
+$("#form-servicios").validate();
+  
 
+  
 
+  
 
 
 function cambioPrecio()
@@ -80,10 +107,10 @@ function showDivs(n) {
     var x = document.getElementsByClassName("mySlides");
     var dots = document.getElementsByClassName("demo");
     if (n > x.length) {
-        slideIndex = 1
+        slideIndex = 1;
     }
     if (n < 1) {
-        slideIndex = x.length
+        slideIndex = x.length;
     }
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
@@ -94,4 +121,3 @@ function showDivs(n) {
     x[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].className += " w3-white";
 }
-

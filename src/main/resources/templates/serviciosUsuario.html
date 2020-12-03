@@ -51,7 +51,7 @@ and open the template in the editor.
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <article class="text-descripcion" lang="en">
+                                            <article class="text-descripcion " lang="en">
                                                 <p   th:text="${servicio.descripcion}">Descripcion</p>
                                             </article>
                                         </td>
@@ -100,6 +100,7 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
+
                 <!-- Modal Eliminar -->
                 <div class="modal fade" th:id="'m'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -122,8 +123,11 @@ and open the template in the editor.
                 </div>
             </li>
         </ul>
+        <div class='container-fluid'>
+            <a th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}" <button type="button" class="btn btn-outline-success btn-lg btn-block mt-5" style="height: 60px;" ><p class="mt-2">AGREGAR SERVICIO</p></button></a>
+            <button th:if="${usuario.getServicios().size() >= 4}" type="button" class="btn btn-outline-success btn-lg btn-block mt-5 pop" style="height: 60px;" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario"><p class="mt-2">AGREGAR SERVICIO</p></button>
+        </div>
     </div>
-
     <!-- Footer -->
     <footer class="page-footer font-small blue footerServicioUsuario">
         <!-- Copyright -->
@@ -132,11 +136,13 @@ and open the template in the editor.
         </div>
         <!-- Copyright -->
     </footer>
+    <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/js.js}"></script>
     <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
 </body>
 </html>

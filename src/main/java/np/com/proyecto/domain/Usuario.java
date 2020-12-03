@@ -11,7 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -25,17 +27,25 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
+    
     @NotEmpty
     private String nombre;
+    
     @NotEmpty
     private String apellido;
+    
     @NotEmpty
     private String provincia;
+    
     @NotEmpty
     private String departamento;
+    
     @NotEmpty
+    @Email
     private String username;
+    
     @NotEmpty
+    @Size(min=8)
     private String password;
     @OneToMany
     @JoinColumn(name = "id_usuario")

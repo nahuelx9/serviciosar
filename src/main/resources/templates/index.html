@@ -53,18 +53,18 @@
                 </div>
             </nav>
         </header>
-        
+
         <div th:if="${loginError}" class="alert alert-danger alert-dismissible text-center text-descripcion" id="alert" role="alert">
-             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-             <strong>¡Error!</strong> Usuario o contraseña incorrecto!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>¡Error!</strong> Usuario o contraseña incorrecto!
         </div>
         <div th:if="${newUser}" class="alert alert-success alert-dismissible text-center text-descripcion" id="alert" role="alert">
-             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-             <strong>¡Usuario creado correctamente!</strong> ya puede inicar sesion!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>¡Usuario creado correctamente!</strong> ya puede inicar sesion!
         </div>
         <div th:if="${loginLogout}" class="alert alert-info alert-dismissible text-center text-descripcion" id="alert" role="alert">
-             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-             <strong>¡Sesion finalizada!</strong> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>¡Sesion finalizada!</strong> 
         </div>
         <main role="main" class="flex-shrink-0">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -127,9 +127,10 @@
             </div> 
             <section class="seccion contenedor">
                 <h2 class="titulomenu">conoce todos los servicios diponibles a continuacion</h2>
-                <a th:href="@{/buscar}"><button type="button" class="btn btn-secondary btn-lg btn-block lista">Ir a la lista de servicios</button></a>
-                <button type="button" class="btn btn-secondary btn-lg btn-block lista" data-toggle="modal" data-target="#exampleModal" sec:authorize="hasRole('ROLE_ANONYMOUS')">Promociona tu Servicio</button>
-                <a th:href="@{/agregarServicio}"><button type="button" class="btn btn-secondary btn-lg btn-block lista"  sec:authorize="hasRole('ROLE_USER')">Promociona tu Servicio</button></a>
+                <a th:href="@{/buscar}"><button type="button" class="btn btn-outline-success  btn-lg btn-block lista">Ir a la lista de servicios</button></a>
+                <button type="button" class="btn btn-outline-success btn-lg btn-block lista" data-toggle="modal" data-target="#exampleModal" sec:authorize="hasRole('ROLE_ANONYMOUS')">Promociona tu Servicio</button>
+                <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-success btn-lg btn-block lista"   >Promociona tu Servicio</button></a>
+                <button  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" type="button" class="btn btn-outline-success btn-lg btn-block lista pop"   data-container="body" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario" >Promociona tu Servicio</button></a>
             </section><!--seccion-->
         </main>
 
@@ -202,10 +203,11 @@
         <!-- Footer -->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+         <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
         <script type="text/javascript" th:src="@{/js/js.js}"></script>
         <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+       
     </body>
 </html>

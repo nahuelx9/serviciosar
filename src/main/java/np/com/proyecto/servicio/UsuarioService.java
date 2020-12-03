@@ -12,7 +12,9 @@ public interface UsuarioService {
     public void eliminar(Usuario usuario);
 
     public Usuario encontrarUsuario(Usuario usuario);
-    
+
     public Usuario encontrarUsuarioPorUsername(String username);
-    
+
+    public boolean verificarExistenciaEmail(String email);
+
 }

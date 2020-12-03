@@ -151,6 +151,13 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         return usuario;
     }
 
-
-
+    @Override
+    public boolean verificarExistenciaEmail(String email) {
+       String emailIngresado = usuarioDao.verificarExistenciaEmail(email);
+       if("".equals(emailIngresado) || emailIngresado ==null){
+           return true;
+       }else{
+           return false;
+       }
+    }
 }

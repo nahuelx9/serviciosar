@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 public class Util {
 
@@ -240,5 +241,19 @@ public class Util {
             }
         }
     }
-
+    
+    /* validar el ingreso de imagenes */
+    public boolean validar(MultipartFile[] files){
+      int cantFiles = 0;
+          for (MultipartFile file : files) {
+              if(!file.isEmpty()){
+                  cantFiles++;
+              }
+          }
+          if(cantFiles > 0){
+              return true;
+          }else{
+              return false;
+          }
+    }
 }

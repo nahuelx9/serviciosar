@@ -1,5 +1,6 @@
 package np.com.proyecto.web;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import np.com.proyecto.domain.DBFile;
@@ -42,6 +44,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,18 +71,18 @@ public class ControladorInicio {
 
     @GetMapping("/")
     public String inicio(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
-        log.info("Usuario que hizo login:" + user);
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
-            log.info("id Usuario que hizo login:" + usuario.getIdUsuario());
             Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
             model.addAttribute("id", id);
         }
+         model.addAttribute("usuario", usuario);
         return "index";
     }
 
     @GetMapping("/agregarUsuario")
-    public String agregarUsuario(Model model, Provincia provincia, Departamento departamento) {
+    public String agregarUsuario(Model model,Usuario usuario, Provincia provincia, Departamento departamento) {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         model.addAttribute("provincias", provincias);
@@ -88,38 +91,46 @@ public class ControladorInicio {
     }
 
     @PostMapping("/guardarUsuario")
-    public String guardarUsuario(@Valid Usuario usuario, Errors errores) {
-        if (errores.hasErrors()) {
+    public String guardarUsuario(@Valid Usuario usuario, BindingResult result) {
+        System.out.println("email==========" + usuarioService.verificarExistenciaEmail(usuario.getUsername()));
+        if (result.hasErrors() || usuarioService.verificarExistenciaEmail(usuario.getUsername()) == false) {
+              result.rejectValue("username", "error.user", "Ya existe una cuenta con ese email");
             return "registroUsuario";
         }
+        
         usuarioService.guardar(usuario);
         return "redirect:/new-user.html";
     }
 
     @GetMapping("/agregarServicio")
-    public String agregarServicio(Servicio servicio) {
-        return "registroServicio";
+    public String agregarServicio(Servicio servicio, @AuthenticationPrincipal User user, Usuario usuario) {
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        if (usuario.getServicios().size() <= 3) {
+            return "registroServicio";
+        } else {
+            return "redirect:/";
+        }
     }
 
-    @PostMapping("/guardarServicio")
-    public String guardar(@Valid Servicio servicio, Errors errores, Usuario usuario, @AuthenticationPrincipal User user, @RequestParam("files") MultipartFile[] files) {
-        if (errores.hasErrors()) {
-            log.info("error = " + errores);
+    @RequestMapping(value="/guardarServicio",method=RequestMethod.POST)
+    public String guardar(@Valid Servicio servicio, BindingResult result,  Usuario usuario, @AuthenticationPrincipal User user, @RequestParam("files") MultipartFile[] files, Util util) throws IOException {
+        if (result.hasErrors() || !util.validar(files)) {
             return "registroServicio";
         }
-        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
-        Long id = usuario.getIdUsuario();
-        int idU = id.intValue();
-        servicio.setIdUsuario(idU);
-        servicioService.guardar(servicio);
-        Long idS = servicio.getIdServicio();
-        int idServicio = idS.intValue();
-        for (MultipartFile file : files) {
-            DBFile dbFile = dbFileStorageService.storeFile(file);
-            dbFile.setIdServicio(idServicio);
-            if (dbFile.getFileType().equals("image/jpeg") || dbFile.getFileType().equals("image/jpg") || dbFile.getFileType().equals("image/pneg") || dbFile.getFileType().equals("image/png")) {
-                dbFileStorageService.guardar(dbFile);
-            }
+          
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            int idU = id.intValue();
+            servicio.setIdUsuario(idU);
+            servicioService.guardar(servicio);
+            Long idS = servicio.getIdServicio();
+            int idServicio = idS.intValue();
+            for (MultipartFile file : files) {
+                DBFile dbFile = dbFileStorageService.storeFile(file);
+                dbFile.setIdServicio(idServicio);
+                if (dbFile.getFileType().equals("image/jpeg") || dbFile.getFileType().equals("image/jpg") || dbFile.getFileType().equals("image/pneg") || dbFile.getFileType().equals("image/png")) {
+                    dbFileStorageService.guardar(dbFile);
+                }
         }
         return "redirect:/";
     }
@@ -182,13 +193,11 @@ public class ControladorInicio {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
-        
+
         filtro.setNombre(nombre);
-        
-        
 
         /*Paginacion*/
-        /* obtenemos el parametro y si es diferente de null entonces convertimos el valor a un integer*/
+ /* obtenemos el parametro y si es diferente de null entonces convertimos el valor a un integer*/
         int page = params.get("page") != null ? Integer.valueOf(params.get("page").toString()) - 1 : 0;
         PageRequest pageRequest = PageRequest.of(page, 7);
 
@@ -212,120 +221,115 @@ public class ControladorInicio {
         model.addAttribute("next", page + 2);
         model.addAttribute("prev", page);
         model.addAttribute("last", totalPage);
-        
 
         return "buscadorServicios";
     }
 
     @GetMapping("/buscarPorFiltros")
-    public String buscarPorFiltros(Model model, Provincia provincia, Departamento departamento, Usuario usuario, @RequestParam("nombre") String nombreFiltro, @RequestParam("provincia") String provinciaFiltro, @RequestParam("departamento") String departamentoFiltro, @RequestParam("horario") String horarioFiltro, @RequestParam("rangoPrecio") String rangoPrecioFiltro,@RequestParam Map<String, Object> params, Util util, Filtro filtro) throws UnsupportedEncodingException {
+    public String buscarPorFiltros(Model model, Provincia provincia, Departamento departamento, Usuario usuario, @RequestParam("nombre") String nombreFiltro, @RequestParam("provincia") String provinciaFiltro, @RequestParam("departamento") String departamentoFiltro, @RequestParam("horario") String horarioFiltro, @RequestParam("rangoPrecio") String rangoPrecioFiltro, @RequestParam Map<String, Object> params, Util util, Filtro filtro) throws UnsupportedEncodingException {
         String nombreProvincia = util.obtenerNombreProvincia(provinciaFiltro);
         filtro = util.obtenerFiltros(nombreFiltro, nombreProvincia, departamentoFiltro, horarioFiltro, rangoPrecioFiltro);
-       Page<Servicio> pageServicio = null;
+        Page<Servicio> pageServicio = null;
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
 
-        
-          
-            /*Paginacion*/
-        /* obtenemos el parametro y si es diferente de null entonces convertimos el valor a un integer*/
+        /*Paginacion*/
+ /* obtenemos el parametro y si es diferente de null entonces convertimos el valor a un integer*/
         int page = params.get("page") != null ? Integer.valueOf(params.get("page").toString()) - 1 : 0;
         PageRequest pageRequest = PageRequest.of(page, 7);
-        
-        
+
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-           pageServicio = servicioService.findByAllFilters(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getPrecio(),pageRequest);
+            pageServicio = servicioService.findByAllFilters(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getPrecio(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-           pageServicio = servicioService.findAllAndNombre(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getPrecio(), filtro.getNombre(),pageRequest);
+            pageServicio = servicioService.findAllAndNombre(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getPrecio(), filtro.getNombre(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-           pageServicio = servicioService.findByProvincia(filtro.getProvincia(),pageRequest);
+            pageServicio = servicioService.findByProvincia(filtro.getProvincia(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && "".equals(filtro.getNombre())) {
-           pageServicio = servicioService.findByDepartamento(filtro.getProvincia(), filtro.getDepartamento(),pageRequest);
+            pageServicio = servicioService.findByDepartamento(filtro.getProvincia(), filtro.getDepartamento(), pageRequest);
 
         }
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-          pageServicio = servicioService.findByPrecio(filtro.getPrecio(),pageRequest);
+            pageServicio = servicioService.findByPrecio(filtro.getPrecio(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario())) {
-           pageServicio = servicioService.findByProvinciaDepartamentoHorario(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(),pageRequest);
+            pageServicio = servicioService.findByProvinciaDepartamentoHorario(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"0".equals(filtro.getPrecio())) {
-           pageServicio = servicioService.findByProvinciaDepartamentoPrecio(filtro.getProvincia(), filtro.getDepartamento(), filtro.getPrecio(),pageRequest);
+            pageServicio = servicioService.findByProvinciaDepartamentoPrecio(filtro.getProvincia(), filtro.getDepartamento(), filtro.getPrecio(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio())) {
-            pageServicio = servicioService.findByProvinciaHorarioPrecio(filtro.getProvincia(), filtro.getHorario(), filtro.getPrecio(),pageRequest);
+            pageServicio = servicioService.findByProvinciaHorarioPrecio(filtro.getProvincia(), filtro.getHorario(), filtro.getPrecio(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"No especificar".equals(filtro.getHorario())) {
-            pageServicio = servicioService.findByProvinciaHorario(filtro.getProvincia(), filtro.getHorario(),pageRequest);
+            pageServicio = servicioService.findByProvinciaHorario(filtro.getProvincia(), filtro.getHorario(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"0".equals(filtro.getPrecio())) {
-            pageServicio = servicioService.findByProvinciaPrecio(filtro.getProvincia(), filtro.getPrecio(),pageRequest);
+            pageServicio = servicioService.findByProvinciaPrecio(filtro.getProvincia(), filtro.getPrecio(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-         pageServicio = servicioService.findByNombreProvincia(filtro.getNombre(), filtro.getProvincia(),pageRequest);
+            pageServicio = servicioService.findByNombreProvincia(filtro.getNombre(), filtro.getProvincia(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-           pageServicio = servicioService.findByNombreProvinciaHorarioPrecio(filtro.getProvincia(), filtro.getHorario(), filtro.getPrecio(), filtro.getNombre(),pageRequest);
+            pageServicio = servicioService.findByNombreProvinciaHorarioPrecio(filtro.getProvincia(), filtro.getHorario(), filtro.getPrecio(), filtro.getNombre(), pageRequest);
         }
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-           pageServicio = servicioService.findByNombre(filtro.getNombre(),pageRequest);
+            pageServicio = servicioService.findByNombre(filtro.getNombre(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-           pageServicio = servicioService.findByNombreProvinciaDepartamentoHora(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getNombre(),pageRequest);
+            pageServicio = servicioService.findByNombreProvinciaDepartamentoHora(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getNombre(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-            pageServicio = servicioService.findByNombreProvinciaDepartamento(filtro.getProvincia(), filtro.getDepartamento(), filtro.getNombre(),pageRequest);
+            pageServicio = servicioService.findByNombreProvinciaDepartamento(filtro.getProvincia(), filtro.getDepartamento(), filtro.getNombre(), pageRequest);
         }
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-        pageServicio = servicioService.getAll(pageRequest);
+            pageServicio = servicioService.getAll(pageRequest);
         }
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-            pageServicio= servicioService.findByHorario(filtro.getHorario(),pageRequest);
+            pageServicio = servicioService.findByHorario(filtro.getHorario(), pageRequest);
         }
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-            pageServicio = servicioService.findByNombrePrecio(filtro.getNombre(), filtro.getPrecio(),pageRequest);
+            pageServicio = servicioService.findByNombrePrecio(filtro.getNombre(), filtro.getPrecio(), pageRequest);
         }
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-           pageServicio = servicioService.findByNombreHora(filtro.getNombre(), filtro.getHorario(),pageRequest);
+            pageServicio = servicioService.findByNombreHora(filtro.getNombre(), filtro.getHorario(), pageRequest);
         }
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-            pageServicio = servicioService.findByNombreHorarioPrecio(filtro.getHorario(), filtro.getPrecio(), filtro.getNombre(),pageRequest);
+            pageServicio = servicioService.findByNombreHorarioPrecio(filtro.getHorario(), filtro.getPrecio(), filtro.getNombre(), pageRequest);
         }
 
         if (!"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-         pageServicio = servicioService.findByPrecioHorario(filtro.getHorario(), filtro.getPrecio(),pageRequest);
+            pageServicio = servicioService.findByPrecioHorario(filtro.getHorario(), filtro.getPrecio(), pageRequest);
         }
 
         if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
-            pageServicio = servicioService.findByNombreProvinciaPrecio(filtro.getProvincia(), filtro.getPrecio(), filtro.getNombre(),pageRequest);
+            pageServicio = servicioService.findByNombreProvinciaPrecio(filtro.getProvincia(), filtro.getPrecio(), filtro.getNombre(), pageRequest);
         }
 
         util.modificarUrlImagen(pageServicio.getContent());
-        
-     
+
         int totalPage = pageServicio.getTotalPages();
         if (totalPage > 0) {
             List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -336,18 +340,16 @@ public class ControladorInicio {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
-        
+
         model.addAttribute("list", pageServicio.getContent());
         model.addAttribute("current", page + 1);
         model.addAttribute("next", page + 2);
         model.addAttribute("prev", page);
         model.addAttribute("last", totalPage);
-        
 
         return "buscadorServicios";
     }
-    
-    
+
     @GetMapping("/serviciosUsuario/{idUsuario}")
     public String serviciosUsuario(Model model, Usuario usuario) throws UnsupportedEncodingException {
         usuario = usuarioService.encontrarUsuario(usuario);
@@ -454,39 +456,4 @@ public class ControladorInicio {
         model.addAttribute("loginLogout", true);
         return "index";
     }
-
-    /* @GetMapping("/prueba")
-    public void prueba(Model model, @RequestParam("provincia") String provincia, @RequestParam("departamento") String departamento,@RequestParam("horario") String horario,@RequestParam("rangoPrecio") String rangoPrecio, Util util) {
-       
-       String nombreProvincia = util.obtenerNombreProvincia(provincia);
-        log.info("Horario filtros:" + horario);
-       log.info("provinicia filtros:" +  nombreProvincia);
-       log.info("departamento filtros:" + departamento);
-       log.info("Rango filtros:" + rangoPrecio);
-    
-    = new Filtro("");
-        
-        if(!"".equals(nombre)){
-            filtro.setNombre(nombre);
-        }
-        
-         for (Servicio s : servicios) {
-            List<DBFile> filess = s.getFiless();
-            for (DBFile f : filess) {
-                byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
-                String img = new String(encodeBase64, "UTF-8");
-                f.setUrl(img);
-            }
-        }
-         model.addAttribute("filtro",filtro);
-        model.addAttribute("usuarios", usuarios);
-        model.addAttribute("servicios", servicios);
-        model.addAttribute("provincias", provincias);
-        model.addAttribute("departamentos", departamentos);
-         
-        
-         return "buscadorServicios";
-     }
-       
-    }*/
 }

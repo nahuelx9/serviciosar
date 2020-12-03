@@ -18,11 +18,14 @@ and open the template in the editor.
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
-        
+
         <title>Registro Servicio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+    <style type="text/css">
+        .error {color: #f00;}
+    </style>
     <body>
         <header>
             <nav class="navbar navbar-light bg-dark  nav-misServicios">
@@ -32,14 +35,19 @@ and open the template in the editor.
             </nav>
         </header>
         <div class="container-md formulario">
-            <form class="was-validated" th:action="@{/guardarServicio}" method="POST" enctype="multipart/form-data" name="multipleUploadForm">
+            <form class="was-validated" th:action="@{/guardarServicio}" method="POST" enctype="multipart/form-data" id="form-servicios" name="multipleUploadForm">
+                <div th:object="${servicio}" th:remove="tag">
+                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                        <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                    </ul>
+                </div>
                 <div class="form-group">
                     <label for="nombre">Nombre Del Servicio:</label>
-                    <input type="text" class="form-control" name="nombre" placeholder="Ejemplo: Plomero,animador,conductor,etc..." required>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ejemplo: Plomero,animador,conductor,etc..." required>
                 </div>
                 <div class="form-group">
                     <label for="celular">Celular:</label>
-                    <input type="tel" class="form-control" name="celular" required>
+                    <input type="tel" class="form-control"id="celular" name="celular" required number>
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input text-secondary" name="whatsapp" id="whatsapp">
@@ -47,7 +55,7 @@ and open the template in the editor.
                 </div>
                 <div class="form-group">
                     <label for="email">Email de contacto:</label>
-                    <input type="email" class="form-control" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" required email>
                 </div>
                 <label for="precio">Precio por el servicio:</label>
                 <div class="input-group mb-3 form-group">
@@ -88,19 +96,19 @@ and open the template in the editor.
                 <label for="horario">Horario De trabajo:</label>
                 <div class="form-group borde required">
                     <div class="form-check">
-                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios1" value="Part Time" checked>
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios1" value="Part Time" checked required="">
                         <label class="form-check-label novalidate" for="exampleRadios1">
                             Part Time
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios2" value="Full Time">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios2" value="Full Time" required>
                         <label class="form-check-label novalidate" for="exampleRadios2">
                             Full Time
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios3" value="A acordar con el cliente">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios3" value="A acordar con el cliente" required>
                         <label class="form-check-label novalidate" for="exampleRadios3">
                             A acordar con el cliente
                         </label>
@@ -110,20 +118,23 @@ and open the template in the editor.
                 <div class="form-group borde">
                     <p class="aviso">Puedes agregar algunas fotos que representen tu trabajo</p>
                     <p class="aviso text-secondary">(Una imagen puede hacer que los clientes esten mas interesados al poder ver tu servicio)</p>
-                    <p class="aviso text-secondary">(Minimo de imagenes requeridas:1 &nbsp maximo de imagenes opcionales:5)</p>
-                    <input th:each="i: ${#numbers.sequence(1, 6)}"   id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple/>
+                    <p class="aviso text-secondary">("Minimo de imagenes requeridas:1 &nbsp maximo de imagenes opcionales:6")</p>
+                    <input    id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple required file />
+                    <input th:each="i: ${#numbers.sequence(1, 5)}"   id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple />
                 </div>
                 <label></label>
                 <div class="form-group">
-                    <label for="horario">Agrega una breve descripcion de tu servicio:</label>
+                    <label for="horario">Agrega una breve descripcion de tu servicio:<p class="aviso text-secondary">(cantidad de caracter min:92 max:365)</p></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Descripcion</span>
                         </div>
-                        <textarea class="form-control novalidate" name="descripcion" style="height:85px;" aria-label="With textarea" placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte."></textarea>
+                        <!--    <textarea  minlength="92" maxlength="365"  id="descripcion"class="form-control novalidate" name="descripcion" style="height:85px;" aria-label="With textarea" placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte."></textarea>-->
+                        <textarea onkeyup="contarCaracteres()" id="message" name="descripcion" class="form-control" style="height:85px;"  aria-label="With textarea" minlength="92"  maxlength="365"  placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte." required></textarea>
                     </div>
                 </div>
-                <button class="btn   botonform bg-dark" type="submit">Subir Servicio</button>
+                  <span>Caracteres ingresados:<span class="ml-2" id="caracteres" >0</span></span>
+                <button type="submit" class="btn bg-dark botonform p-3 mt-5" id="inputsubmit"   name="inputsubmit" ><i data-feather="check"></i>&nbsp;Subir Servicio</button>
             </form>
         </div>
         <!-- Footer -->
@@ -135,10 +146,12 @@ and open the template in the editor.
             </div>
             <!-- Copyright -->
         </footer>
-        <script type="text/javascript" th:src="@{/js/js.js}"></script>
-        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
+        <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+
     </body>
 </html>

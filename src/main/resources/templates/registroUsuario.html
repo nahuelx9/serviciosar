@@ -34,13 +34,18 @@ and open the template in the editor.
         </header>
         <div class="container-md formulario">
             <form class="was-validated" th:action="@{/guardarUsuario}" th:object="${usuario}" method="POST">
+                 <div th:object="${usuario}" th:remove="tag">
+                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                        <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                    </ul>
+                </div>
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" class="form-control" name="nombre" required>
+                    <input type="text" class="form-control" name="nombre" id="nombre" required>
                 </div>
                 <div class="form-group">
                     <label for="apellido">Apellido:</label>
-                    <input type="text" class="form-control" name="apellido" required>
+                    <input type="text" class="form-control" name="apellido"  id="apellido" required>
                 </div>
                 <div class="form-group">
                     <label for="provincia">Seleccion su provincia:</label>
@@ -90,17 +95,17 @@ and open the template in the editor.
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" class="form-control" name="password" id="password" required>
+                    <input type="password" class="form-control" name="password" minlength="8"  id="password" required>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                        <input  class="form-check-input" type="checkbox"  id="checkUser" required>
                         <label class="form-check-label" for="invalidCheck2">
                             He leido y acepto los terminos y condiciones
                         </label>
                     </div>
                 </div>
-                <button class="btn botonform bg-dark" type="submit">Registrarse</button>
+                <button class="btn botonform bg-dark" id="btnRegisterUser" type="submit" disabled >Registrarse</button>
             </form>
         </div>
         <!-- Footer -->
@@ -114,5 +119,8 @@ and open the template in the editor.
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+           <script type="text/javascript" th:src="@{/js/js.js}"></script>
+        <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
     </body>
 </html>

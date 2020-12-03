@@ -726,9 +726,6 @@ h4::first-letter{
   height: 100vh;
 }
 
-input[type="file"] {
-    display: none;
-}
 .custom-file-upload {
     border: 1px solid #ccc;
     display: inline-block;
