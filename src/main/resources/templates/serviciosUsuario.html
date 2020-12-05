@@ -91,7 +91,7 @@ and open the template in the editor.
                             </table>
                         </div>
                         <div class="mx-auto d-flex justify-content-center m-2">
-                            <a th:href="@{/editar/} + ${servicio.idServicio}" class="btn btn-secondary text-center edicion mr-2">
+                            <a th:href="@{/editarServicio/} + ${servicio.idServicio}" class="btn btn-secondary text-center edicion mr-2">
                                 <i class="far fa-edit "></i></i> Editar
                             </a>
                             <a href="#" class="btn btn-danger edicion" data-toggle="modal" th:data-target="'#m'+${iStat.index}">
@@ -116,7 +116,7 @@ and open the template in the editor.
                             </div>
                             <div class="modal-footer modal-eliminar ">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
-                                <a th:href="@{/eliminar(idServicio=${servicio.idServicio})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                <a th:href="@{/eliminarServicio(idServicio=${servicio.idServicio})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
                             </div>
                         </div>
                     </div>
@@ -141,8 +141,6 @@ and open the template in the editor.
     <script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/js.js}"></script>
     <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
 </body>
 </html>

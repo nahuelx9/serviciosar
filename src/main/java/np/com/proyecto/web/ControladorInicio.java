@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -77,12 +78,12 @@ public class ControladorInicio {
             model.addAttribute("usuario", usuario);
             model.addAttribute("id", id);
         }
-         model.addAttribute("usuario", usuario);
+        model.addAttribute("usuario", usuario);
         return "index";
     }
 
     @GetMapping("/agregarUsuario")
-    public String agregarUsuario(Model model,Usuario usuario, Provincia provincia, Departamento departamento) {
+    public String agregarUsuario(Model model, Usuario usuario, Provincia provincia, Departamento departamento) {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         model.addAttribute("provincias", provincias);
@@ -91,15 +92,96 @@ public class ControladorInicio {
     }
 
     @PostMapping("/guardarUsuario")
-    public String guardarUsuario(@Valid Usuario usuario, BindingResult result) {
-        System.out.println("email==========" + usuarioService.verificarExistenciaEmail(usuario.getUsername()));
-        if (result.hasErrors() || usuarioService.verificarExistenciaEmail(usuario.getUsername()) == false) {
-              result.rejectValue("username", "error.user", "Ya existe una cuenta con ese email");
+    public String guardarUsuario(@Valid Usuario usuario, BindingResult result, Model model,@RequestParam("password2")String password2 ,Provincia provincia, Departamento departamento) {
+        List<Provincia> provincias = provincia.listarProvincia();
+        List<Departamento> departamentos = departamento.listarDepartamento();
+        if (result.hasErrors()) {
+            model.addAttribute("provincias", provincias);
+            model.addAttribute("departamentos", departamentos);
             return "registroUsuario";
         }
-        
+        if (usuarioService.verificarExistenciaEmail(usuario.getUsername()) == false) {
+            result.rejectValue("username", "error.user", "Ya existe una cuenta con ese email");
+            model.addAttribute("provincias", provincias);
+            model.addAttribute("departamentos", departamentos);
+            return "registroUsuario";
+        }
+        if (!usuario.getPassword().equals(password2)) {
+            result.rejectValue("password", "error.user", "Las contraseñas no coinciden");
+            model.addAttribute("provincias", provincias);
+            model.addAttribute("departamentos", departamentos);
+            return "registroUsuario";
+        }
+
         usuarioService.guardar(usuario);
         return "redirect:/new-user.html";
+    }
+
+    /**
+     * ModificarDatosUsuario
+     */
+    @GetMapping("/datosUsuario/{idUsuario}")
+    public String editarUsuario(Model model, Usuario usuario, Provincia provincia, Departamento departamento) {
+        List<Provincia> provincias = provincia.listarProvincia();
+        List<Departamento> departamentos = departamento.listarDepartamento();
+        model.addAttribute("provincias", provincias);
+        model.addAttribute("departamentos", departamentos);
+        usuario = usuarioService.encontrarUsuario(usuario);
+        model.addAttribute("usuario", usuario);
+        return "datosUsuario";
+    }
+
+    @PostMapping("/modificarNombreUsuario")
+    public String modificarNombreUsuario(@RequestParam("nombre") String nombre, @AuthenticationPrincipal User user, Usuario usuario, HttpSession session) {
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        Long id = usuario.getIdUsuario();
+        int idFinal = Math.toIntExact(id);
+        if (!nombre.isEmpty() && nombre.length() >= 3) {
+            usuarioService.modificarNombreUsuario(nombre, idFinal);
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/modificarApellidoUsuario")
+    public String modificarApellidoUsuario(@RequestParam("apellido") String apellido, @AuthenticationPrincipal User user, Usuario usuario) {
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        Long id = usuario.getIdUsuario();
+        int idFinal = Math.toIntExact(id);
+        if (!apellido.isEmpty() && apellido.length() >= 3) {
+            usuarioService.modificarApellidoUsuario(apellido, idFinal);
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/modificarProvinciaDepartamentoUsuario")
+    public String modificarProvinciaDepartamentoUsuario(@RequestParam("provincia") String provincia, @RequestParam("departamento") String departamento, @AuthenticationPrincipal User user, Usuario usuario, Util util) {
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        Long id = usuario.getIdUsuario();
+        int idFinal = Math.toIntExact(id);
+        String nombreProvincia = util.obtenerNombreProvincia(provincia);
+        if (!nombreProvincia.isEmpty() && !departamento.isEmpty()) {
+            usuarioService.modificarProvinciaDepartamentoUsuario(nombreProvincia, departamento, idFinal);
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/modificarEmailUsuario")
+    public String modificarEmailUsuario(@RequestParam("email") String email, @AuthenticationPrincipal User user, Usuario usuario, Util util) {
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        Long id = usuario.getIdUsuario();
+        int idFinal = Math.toIntExact(id);
+        if (usuarioService.verificarExistenciaEmail(email) && !email.isEmpty() && util.ValidarMail(email) == true) {
+            usuarioService.modificarUsernameUsuario(email, idFinal);
+            SecurityContextHolder.getContext().setAuthentication(null);
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/modificarContraseñaUsuario")
+    public String modificarContraseñaUsuario(@RequestParam("passwordActual") String passwordActual, @RequestParam("password1") String password1, @RequestParam("password2") String password2, @AuthenticationPrincipal User user, Usuario usuario) {
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        usuarioService.modificarPasswordUsuario(passwordActual, password1, password2, usuario);
+        return "redirect:/";
     }
 
     @GetMapping("/agregarServicio")
@@ -112,27 +194,54 @@ public class ControladorInicio {
         }
     }
 
-    @RequestMapping(value="/guardarServicio",method=RequestMethod.POST)
-    public String guardar(@Valid Servicio servicio, BindingResult result,  Usuario usuario, @AuthenticationPrincipal User user, @RequestParam("files") MultipartFile[] files, Util util) throws IOException {
+    @RequestMapping(value = "/guardarServicio", method = RequestMethod.POST)
+    public String guardar(@Valid Servicio servicio, BindingResult result, Usuario usuario, @AuthenticationPrincipal User user, @RequestParam("files") MultipartFile[] files, Util util) throws IOException {
         if (result.hasErrors() || !util.validar(files)) {
             return "registroServicio";
         }
-          
-            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
-            Long id = usuario.getIdUsuario();
-            int idU = id.intValue();
-            servicio.setIdUsuario(idU);
-            servicioService.guardar(servicio);
-            Long idS = servicio.getIdServicio();
-            int idServicio = idS.intValue();
-            for (MultipartFile file : files) {
-                DBFile dbFile = dbFileStorageService.storeFile(file);
-                dbFile.setIdServicio(idServicio);
-                if (dbFile.getFileType().equals("image/jpeg") || dbFile.getFileType().equals("image/jpg") || dbFile.getFileType().equals("image/pneg") || dbFile.getFileType().equals("image/png")) {
-                    dbFileStorageService.guardar(dbFile);
-                }
+
+        usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        Long id = usuario.getIdUsuario();
+        int idU = id.intValue();
+        servicio.setIdUsuario(idU);
+        servicioService.guardar(servicio);
+        Long idS = servicio.getIdServicio();
+        int idServicio = idS.intValue();
+        for (MultipartFile file : files) {
+            DBFile dbFile = dbFileStorageService.storeFile(file);
+            dbFile.setIdServicio(idServicio);
+            if (dbFile.getFileType().equals("image/jpeg") || dbFile.getFileType().equals("image/jpg") || dbFile.getFileType().equals("image/pneg") || dbFile.getFileType().equals("image/png")) {
+                dbFileStorageService.guardar(dbFile);
+            }
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/serviciosUsuario/{idUsuario}")
+    public String serviciosUsuario(Model model, Usuario usuario) throws UnsupportedEncodingException {
+        usuario = usuarioService.encontrarUsuario(usuario);
+        List<Servicio> servicios = usuario.getServicios();
+        for (Servicio s : servicios) {
+            List<DBFile> filess = s.getFiless();
+            for (DBFile f : filess) {
+                byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
+                String img = new String(encodeBase64, "UTF-8");
+                f.setUrl(img);
+            }
+        }
+        model.addAttribute("servicios", servicios);
+        model.addAttribute("usuario", usuario);
+
+        return "serviciosUsuario";
+    }
+
+    @GetMapping("/editarServicio/{idServicio}")
+    public String editar(Servicio servicio, Model model, DBFile dbFile) {
+        servicio = servicioService.encontrarServicio(servicio);
+        List<DBFile> files = servicio.getFiless();
+        model.addAttribute("servicio", servicio);
+        model.addAttribute("files", files);
+        return "editarServicio";
     }
 
     @PostMapping("/guardarServicioEditado")
@@ -146,6 +255,41 @@ public class ControladorInicio {
         Long idServicio = servicio.getIdServicio();
         int idServ = idServicio.intValue();
         servicioService.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(), idServ);
+        return "redirect:/";
+    }
+
+    /**
+     * Editar fotos
+     */
+    @GetMapping("/editarImagenes/{idServicio}")
+    public String editarImagenes(Servicio servicio, Model model, DBFile dbFile) throws UnsupportedEncodingException {
+        servicio = servicioService.encontrarServicio(servicio);
+        List<DBFile> files = new ArrayList<DBFile>();
+        for (DBFile f : servicio.getFiless()) {
+            byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
+            String img = new String(encodeBase64, "UTF-8");
+            f.setUrl(img);
+            files.add(f);
+            log.info("file" + f);
+        }
+        int cantFiles = files.size();
+        model.addAttribute("cantFiles", cantFiles);
+        model.addAttribute("files", files);
+        return "editarImagenes";
+    }
+
+    @PostMapping("/modificarImagen")
+    public String modificarImagen(@Valid DBFile dbFile, Errors errores, @RequestParam("file") MultipartFile file, @RequestParam("idValue") String idValue) throws UnsupportedEncodingException {
+        if (errores.hasErrors()) {
+            log.info("error = " + errores);
+            return "registroServicio";
+        }
+        String id = idValue;
+        log.info("id imagen = " + idValue);
+        DBFile dbFileNew = dbFileStorageService.storeFile(file);
+        if (dbFileNew.getFileType().equals("image/jpeg") || dbFileNew.getFileType().equals("image/jpg") || dbFileNew.getFileType().equals("image/pneg") || dbFileNew.getFileType().equals("image/png")) {
+            dbFileStorageService.modificarImagen(dbFileNew.getData(), dbFileNew.getFileName(), dbFileNew.getFileType(), id);
+        }
         return "redirect:/";
     }
 
@@ -350,72 +494,19 @@ public class ControladorInicio {
         return "buscadorServicios";
     }
 
-    @GetMapping("/serviciosUsuario/{idUsuario}")
-    public String serviciosUsuario(Model model, Usuario usuario) throws UnsupportedEncodingException {
-        usuario = usuarioService.encontrarUsuario(usuario);
-        List<Servicio> servicios = usuario.getServicios();
-        for (Servicio s : servicios) {
-            List<DBFile> filess = s.getFiless();
-            for (DBFile f : filess) {
-                byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
-                String img = new String(encodeBase64, "UTF-8");
-                f.setUrl(img);
-            }
-        }
-        model.addAttribute("servicios", servicios);
-        model.addAttribute("usuario", usuario);
-
-        return "serviciosUsuario";
-    }
-
-    @GetMapping("/editar/{idServicio}")
-    public String editar(Servicio servicio, Model model, DBFile dbFile) {
-        servicio = servicioService.encontrarServicio(servicio);
-        List<DBFile> files = servicio.getFiless();
-        model.addAttribute("servicio", servicio);
-        model.addAttribute("files", files);
-        return "editarServicio";
-    }
-
-    /**
-     * Editar fotos
+        /**
+     * Eliminar Usuario
      */
-    @GetMapping("/editarImagenes/{idServicio}")
-    public String editarImagenes(Servicio servicio, Model model, DBFile dbFile) throws UnsupportedEncodingException {
-        servicio = servicioService.encontrarServicio(servicio);
-        List<DBFile> files = new ArrayList<DBFile>();
-        for (DBFile f : servicio.getFiless()) {
-            byte[] encodeBase64 = Base64.getEncoder().encode(f.getData());
-            String img = new String(encodeBase64, "UTF-8");
-            f.setUrl(img);
-            files.add(f);
-            log.info("file" + f);
-        }
-        int cantFiles = files.size();
-        model.addAttribute("cantFiles", cantFiles);
-        model.addAttribute("files", files);
-        return "editarImagenes";
-    }
-
-    @PostMapping("/modificarImagen")
-    public String modificarImagen(@Valid DBFile dbFile, Errors errores, @RequestParam("file") MultipartFile file, @RequestParam("idValue") String idValue) throws UnsupportedEncodingException {
-        if (errores.hasErrors()) {
-            log.info("error = " + errores);
-            return "registroServicio";
-        }
-        String id = idValue;
-        log.info("id imagen = " + idValue);
-        DBFile dbFileNew = dbFileStorageService.storeFile(file);
-        if (dbFileNew.getFileType().equals("image/jpeg") || dbFileNew.getFileType().equals("image/jpg") || dbFileNew.getFileType().equals("image/pneg") || dbFileNew.getFileType().equals("image/png")) {
-            dbFileStorageService.modificarImagen(dbFileNew.getData(), dbFileNew.getFileName(), dbFileNew.getFileType(), id);
-        }
+    @GetMapping("/eliminarUsuario")
+    public String eliminar(Usuario usuario) {
+        usuarioService.eliminar(usuario);
         return "redirect:/";
     }
-
+    
     /**
      * Eliminar Servicio
      */
-    @GetMapping("/eliminar")
+    @GetMapping("/eliminarServicio")
     public String eliminar(Servicio servicio) {
         servicioService.eliminar(servicio);
         return "redirect:/";
@@ -454,6 +545,7 @@ public class ControladorInicio {
     @RequestMapping("/login-logout.html")
     public String loginLogout(Model model) {
         model.addAttribute("loginLogout", true);
-        return "index";
+        return "redirect:/";
     }
+
 }

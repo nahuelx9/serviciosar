@@ -153,11 +153,51 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public boolean verificarExistenciaEmail(String email) {
-       String emailIngresado = usuarioDao.verificarExistenciaEmail(email);
-       if("".equals(emailIngresado) || emailIngresado ==null){
-           return true;
-       }else{
-           return false;
-       }
+        String emailIngresado = usuarioDao.verificarExistenciaEmail(email);
+        if ("".equals(emailIngresado) || emailIngresado == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    @Override
+    public void modificarNombreUsuario(String nombre, int id_usuario) {
+        usuarioDao.modificarNombreUsuario(nombre, id_usuario);
+    }
+
+    @Override
+    public void modificarApellidoUsuario(String apellido, int id_usuario) {
+        usuarioDao.modificarApellidoUsuario(apellido, id_usuario);
+    }
+
+    @Override
+    public void modificarProvinciaDepartamentoUsuario(String provincia, String departamento, int id_usuario) {
+        usuarioDao.modificarProvinciaDepartamentoUsuario(provincia, departamento, id_usuario);
+    }
+
+    @Override
+    public void modificarUsernameUsuario(String username, int id_usuario) {
+        usuarioDao.modificarUsernameUsuario(username, id_usuario);
+    }
+
+    @Override
+    public void modificarPasswordUsuario(String passwordActual, String password1, String password2, Usuario usuario) {
+        if (!passwordActual.isEmpty() && !password1.isEmpty() && !password2.isEmpty()) {
+            if (usuario.compararPassword(passwordActual,usuario.getPassword())) {
+                if (password1.equals(password2)) {
+                    int idFinal = Math.toIntExact(usuario.getIdUsuario());
+                    String  encriptada = usuario.encriptarPassword(password1);
+                    usuarioDao.modificarPasswordUsuario(encriptada, idFinal);
+                }else{
+                     log.info("las contraseñas son distintas");
+                }
+            }else{
+                 log.info("las contrseña ingresada es incorrecta");
+            }
+        }else{
+              log.info("campos vacios");
+        }
+    }
+
 }

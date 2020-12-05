@@ -17,4 +17,14 @@ public interface UsuarioService {
 
     public boolean verificarExistenciaEmail(String email);
 
+    public void modificarNombreUsuario(String nombre, int id_usuario);
+
+    public void modificarApellidoUsuario(String apellido, int id_usuario);
+
+    public void modificarProvinciaDepartamentoUsuario(String provincia, String departamento, int id_usuario);
+
+    public void modificarUsernameUsuario(String username, int id_usuario);
+
+    public void modificarPasswordUsuario(String passwordActual, String password1,String password2, Usuario usuario);
+
 }

@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import np.com.proyecto.domain.DBFile;
 import np.com.proyecto.domain.Filtro;
 import np.com.proyecto.domain.Servicio;
@@ -256,4 +258,17 @@ public class Util {
               return false;
           }
     }
+    
+    /**
+     *
+     * @param email
+     * @return
+     */
+    public static boolean ValidarMail(String email) {
+        // Patron para validar el email
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(email);
+        return mather.find();
+    }
+    
 }

@@ -44,12 +44,20 @@
                 </form>
                 <h1 class="text-light text-right titulo">Servicios.com</h1>
                 <div class="boton">
-                    <button type="button" class="btn btn-outline-success botoncito botonIndex" data-toggle="modal" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</button>
-                    <a th:href="@{/agregarUsuario}"><button type="button" class="btn btn-outline-success botoncito" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</button></a>
-                    <a th:href="@{/serviciosUsuario/} + ${id}"><button type="button" class="btn btn-outline-success botoncito botonIndex" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</button></a>
-                    <form method="POST" class="cerrar-sesion"  th:action="@{/logout}">
-                        <button onclick="this.parentNode.submit();" class="btn btn-outline-success botoncito"  sec:authorize="hasRole('ROLE_USER')">Cerrar sesion</button>
-                    </form>
+                    <button type="button" class=" serviciosbtn nav-link float-left text-light" data-toggle="modal" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</button>
+                    <a th:href="@{/agregarUsuario}"><button type="button" class=" serviciosbtn nav-link float-left text-light" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</button></a>
+                    <a th:href="@{/serviciosUsuario/} + ${id}"><button type="button" class=" nav-link serviciosbtn  float-left  text-light" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</button></a>
+                    <div sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown float-left">
+                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cuenta
+                        </a>
+                        <div  id="myDiv" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item " th:href="@{/datosUsuario/} +  ${id}">Mis datos</a>
+                             <form method="POST" class="cerrar-sesion"  th:action="@{/logout}">
+                                <button onclick="this.parentNode.submit();" class="dropdown-item"  >Cerrar sesion</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </header>
@@ -128,8 +136,8 @@
             <section class="seccion contenedor">
                 <h2 class="titulomenu">conoce todos los servicios diponibles a continuacion</h2>
                 <a th:href="@{/buscar}"><button type="button" class="btn btn-outline-success  btn-lg btn-block lista">Ir a la lista de servicios</button></a>
-                <button type="button" class="btn btn-outline-success btn-lg btn-block lista" data-toggle="modal" data-target="#exampleModal" sec:authorize="hasRole('ROLE_ANONYMOUS')">Promociona tu Servicio</button>
-                <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-success btn-lg btn-block lista"   >Promociona tu Servicio</button></a>
+                <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-success btn-lg btn-block lista" data-toggle="modal" data-target="#exampleModal" >Promociona tu Servicio</button>
+            <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-success btn-lg btn-block lista"   >Promociona tu Servicio</button></a>
                 <button  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" type="button" class="btn btn-outline-success btn-lg btn-block lista pop"   data-container="body" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario" >Promociona tu Servicio</button></a>
             </section><!--seccion-->
         </main>
@@ -203,11 +211,11 @@
         <!-- Footer -->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-         <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
         <script type="text/javascript" th:src="@{/js/js.js}"></script>
         <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-       
+
     </body>
 </html>

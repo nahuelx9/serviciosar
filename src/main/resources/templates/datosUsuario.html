@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
+        <link href="carrousel.css" rel="stylesheet">
+        <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
+        <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
+        <link th:href="@{/css/carrousel.css}" rel="stylesheet">
+
+        <title>Registro Usuario</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-light bg-dark nav-misServicios ">
+                <a th:href="@{/}" class="volver tituloRegistroUsuario"><h1 class=" text-right titulo text-success">Servicios.com</h1></a>
+                <h1 class="text-light text-center tituloregistro">Datos Usuario</h1>
+                <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
+            </nav>
+        </header>
+        <div class="container-fluid centeDatos">
+            <div class="card">
+                <div class="card-header text-center font-weight-bold">
+                    INFORMACION 
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p  class="text-capitalize" th:text="'Nombre: ' + ${usuario.nombre}" >Nombre:</p>
+                        <a href="#"data-toggle="modal" data-target="#modificarNombre">  <i class="far fa-edit d-flex justify-content-end"style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize"  th:text="'Apellido: ' + ${usuario.apellido}">Apellido:</p>
+                        <a href="" data-toggle="modal" data-target="#modificarApellido"><i class="far fa-edit d-flex justify-content-end" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize"  th:utext="'Provincia: ' + ${usuario.provincia}+ '<br /><br />' + 'Departamento: ' + ${usuario.departamento}">Provincia: <br><br>Departamento:</p>
+                        <a href=""   data-toggle="modal" data-target="#modificarProvinciaDepartamento"> <i class="far fa-edit d-flex justify-content-end mt-3" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize"  th:text="'Email: ' + ${usuario.username}">Email:</p>
+                        <a href=""   data-toggle="modal" data-target="#modificarEmail"> <i class="far fa-edit d-flex justify-content-end" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize">Contraseña: ***************</p>
+                        <a href=""   data-toggle="modal" data-target="#modificarContraseña"><i class="far fa-edit d-flex justify-content-end" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- Modal modificar nombre -->
+        <div class="modal fade" id="modificarNombre" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-light">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Nombre</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" th:action="@{/modificarNombreUsuario}">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nombre">Nuevo nombre:</label>
+                                <input type="text" class="form-control" th:name="nombre" id="nombre" aria-describedby="emailHelp" minlength="3"  required>
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-dark">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal modificar apellido -->
+        <div class="modal fade" id="modificarApellido" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-light">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Apellido</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" th:action="@{/modificarApellidoUsuario}">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nombre">Nuevo apellido:</label>
+                                <input type="text" class="form-control" th:name="apellido" id="apellido" aria-describedby="emailHelp" minlength="3" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-dark">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal modificar prov dept -->
+        <div class="modal fade" id="modificarProvinciaDepartamento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-light">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Provincia y Departamento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" th:action="@{/modificarProvinciaDepartamentoUsuario}">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="provincia">Seleccion su provincia:</label>
+                                    <select th:name="provincia" class="custom-select" id="listaProvincias"   onclick="mostrarListado()" required>
+                                        <option selected value="">Provincia</option>
+                                        <option  th:each="provincias: ${provincias}"   th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
+                                    </select>
+                                    <div class="invalid-feedback">Debe Selccionar una Provincia</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ciudad">Seleccione su Departamento:</label>
+                                    <select class="custom-select" th:name="departamento"   id="listaDepartamentos"  required>
+                                        <option value="">Departamento</option>
+                                        <script th:inline="javascript">
+                                            function mostrarListado() {
+                                                /* Obtenemos el value de la provincia selecciona*/
+                                                var idProvincia = document.getElementById("listaProvincias").value;
+                                                var idDepartamento = document.getElementById("listaDepartamentos");
+                                                /* El value es un String lo pasamos a un int para que se pueda comparar*/
+                                                var idResultado = parseInt(idProvincia);
+                                                /* Traemos la lista de deparmentos*/
+                                                var departamentos = /*[[${departamentos}]]*/ null;
+                                                /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
+                                                document.getElementById("listaProvincias").addEventListener('change', limpiar, false);
+                                                /* Recorremos la lista de departamentos si existe un id =  listaProvincia lo agregamos al select*/
+                                                for (var i in departamentos) {
+                                                    let opcion = document.createElement('option');
+                                                    if (departamentos[i].id == idResultado) {
+                                                        opcion.value = departamentos[i].nombre;
+                                                        opcion.text = departamentos[i].nombre;
+                                                        idDepartamento.add(opcion);
+                                                    }
+                                                }
+                                            }
+                                            function limpiar() {
+                                                /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
+                                                var idDepartamento = document.getElementById("listaDepartamentos");
+                                                idDepartamento.innerHTML = '<option selected value="">Departamento</option>';
+                                            }
+                                        </script>
+                                    </select>
+                                    <div class="invalid-feedback">Debe Selccionar su ciudad</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-dark">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal modificar email -->
+        <div class="modal fade" id="modificarEmail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-light">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modificar email</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" th:action="@{/modificarEmailUsuario}">
+                            <div class="form-group">
+                                <label for="email">Nuevo email:</label>
+                                <input type="email" class="form-control" th:name="email" id="username" aria-describedby="emailHelp" required>
+                            </div>
+                    </div>
+                    <div class="modal-footer bg-dark">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal modificar Contraseña -->
+        <div class="modal fade" id="modificarContraseña" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-light">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Contraseña</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" th:action="@{/modificarContraseñaUsuario}">
+                            <div class="form-group">
+                                <label for="username">Ingrese la contraseña actual:</label>
+                                <input type="password" class="form-control" th:name="passwordActual" minlength="8" id="password"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Ingrese la nueva contraseña:</label>
+                                <input type="password" class="form-control" th:name="password1" id="password"  minlength="8"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Vuela a ingreser  la nueva contraseña:</label>
+                                <input type="password" class="form-control" th:name="password2" id="password" minlength="8"  required>
+                            </div>
+                    </div>
+                    <div class="modal-footer bg-dark">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <footer class="page-footer font-small blue footerRegistro">
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
+                <a th:href="@{/}" class="text-success"> Servicios.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
+        <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+    </body>
+</html>

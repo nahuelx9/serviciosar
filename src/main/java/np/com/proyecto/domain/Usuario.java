@@ -47,6 +47,8 @@ public class Usuario implements Serializable {
     @NotEmpty
     @Size(min=8)
     private String password;
+    
+    
     @OneToMany
     @JoinColumn(name = "id_usuario")
     private List<Servicio> servicios;
@@ -57,7 +59,13 @@ public class Usuario implements Serializable {
      public  String encriptarPassword(String password){
          BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
          return encoder.encode(password);
-        
     }
+     
+     public boolean compararPassword(String passwordNew,String passwordOld){
+         BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
+         return encoder.matches(passwordNew, passwordOld);
+     }
+     
+
 
 }
