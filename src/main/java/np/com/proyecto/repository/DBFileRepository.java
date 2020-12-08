@@ -12,4 +12,6 @@ public interface DBFileRepository extends JpaRepository<DBFile, String> {
      @Modifying
     @Query(value = "UPDATE files SET data=?,file_name=?,file_type=? where id=?",nativeQuery= true)
     public void modificarImagen(byte[] data,String file_name,String file_type,String id);
+    
+    
 }

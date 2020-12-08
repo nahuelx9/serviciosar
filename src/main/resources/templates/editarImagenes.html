@@ -41,7 +41,7 @@ and open the template in the editor.
                         </ul>
                         <div class="card-body ">
                             <div class="mx-auto d-flex justify-content-center ">
-                                <a  th:href="@{/modificarImagen/} + ${f.id}" class="btn btn-outline-secondary text-center edicion m-1" data-toggle="modal" th:data-target="'#modificar'+${iStat.index}">
+                                <a  href="# " class="btn btn-outline-secondary text-center edicion m-1" data-toggle="modal" th:data-target="'#modificar'+${iStat.index}">
                                     <i class="far fa-edit"></i></i> Modificar
 
                                 </a>
@@ -55,13 +55,13 @@ and open the template in the editor.
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header modal-eliminar">
-                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
+                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Imagen</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Esta segur@ de elimiar su servicio, no podra revertir cambios
+                                        Esta segur@ de elimiar la imagen, no podra revertir cambios
                                     </div>
                                     <div class="modal-footer modal-eliminar ">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
@@ -101,18 +101,18 @@ and open the template in the editor.
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
-
                     </div>
+
+
                     <div th:if="${cantFiles == 5}">
                         <div th:each="i: ${#numbers.sequence(1, 1)}" class="card imagenes-card float-left mr-5 mb-4 ">
                             <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
                             <div class="card-body ">
                                 <div class="mx-auto d-flex justify-content-center ">
-                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
-                                        <i class="far fa-edit "></i></i> Agregar
+                                  <a href="#" class="btn btn-outline-success text-center edicion m-1" data-toggle="modal" th:data-target="'#guardar'">
+                                        <i  class="far fa-edit "></i></i> Agregar
                                     </a>
 
                                 </div>
@@ -124,7 +124,7 @@ and open the template in the editor.
                             <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
                             <div class="card-body ">
                                 <div class="mx-auto d-flex justify-content-center ">
-                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                     <a href="#" class="btn btn-outline-success text-center edicion m-1" data-toggle="modal" th:data-target="'#guardar'">
                                         <i class="far fa-edit "></i></i> Agregar
                                     </a>
 
@@ -137,7 +137,7 @@ and open the template in the editor.
                             <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
                             <div class="card-body ">
                                 <div class="mx-auto d-flex justify-content-center ">
-                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                    <a href="#" class="btn btn-outline-success text-center edicion m-1" data-toggle="modal" th:data-target="'#guardar'">
                                         <i class="far fa-edit "></i></i> Agregar
                                     </a>
 
@@ -154,7 +154,7 @@ and open the template in the editor.
                             <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
                             <div class="card-body ">
                                 <div class="mx-auto d-flex justify-content-center ">
-                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                    <a href="#" class="btn btn-outline-success text-center edicion m-1" data-toggle="modal" th:data-target="'#guardar'">
                                         <i class="far fa-edit "></i></i> Agregar
                                     </a>
 
@@ -171,7 +171,7 @@ and open the template in the editor.
                             <img th:src="@{/img/agregarImagen.jpg}" class="d-block img-thumbnail rounded "  alt="...">
                             <div class="card-body ">
                                 <div class="mx-auto d-flex justify-content-center ">
-                                    <a href="#" class="btn btn-outline-success text-center edicion m-1">
+                                      <a href="#" class="btn btn-outline-success text-center edicion m-1" data-toggle="modal" th:data-target="'#guardar'">
                                         <i class="far fa-edit "></i></i> Agregar
                                     </a>
 
@@ -182,7 +182,38 @@ and open the template in the editor.
                 </div>
             </div>
 
-
+            <!-- Modal para guardar imagenes -->
+            <form  th:action="@{/guardarImagen}"  method="POST" enctype="multipart/form-data" name="multipleUploadForm">
+                <div class="modal fade" th:id="guardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Guardar imagen</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" th:name="file" id="inputGroupFile01"
+                                               aria-describedby="inputGroupFileAddon01"  multiple/>
+                                        <label class="custom-file-label" for="inputGroupFile01">Presione para elegir imagen</label>
+                                    </div>
+                                    <input type="text" th:name="idServicio" th:value="${servicio.idServicio}" hidden >
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit"  class="btn btn-success">Subir imagen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
         </body>
         <!-- Footer -->

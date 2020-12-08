@@ -60,7 +60,7 @@ and open the template in the editor.
                                                 <p class="datos-tabla"  th:text="'Email: ' + ${servicio.email}" >email</p>
                                                 <p  class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}" > <i class="fa fa-whatsapp" aria-hidden="true"></i></p>
                                                 <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
-                                                <p class="datos-tabla" th:if="${servicio.precio} != null" th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                <p class="datos-tabla" th:if="${servicio.precio} != null" th:text="'Precio: ' + '$'+ ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
                                                 <p class="datos-tabla" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
                                                 <p class="datos-tabla text-capitalize" th:text="'Provincia: ' + ${usuario.provincia}">Provincia</p><p class="datos-tabla text-capitalize" th:text="'Departamento: ' + ${usuario.departamento}" >Departamento</p>
                                                 <p class="datos-tabla text-capitalize" th:text="'Usuario: ' + ${usuario.nombre} + ' ' + ${usuario.apellido}">Usuario</p>

@@ -43,8 +43,8 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     @Transactional
-   public void actualizarServicio(String nombre, String celular,boolean whatsaap,String precio_descripcion, String horario, String descripcion,int id_servicio) {
-        servicioDao.actualizarServicio(nombre,celular,whatsaap,precio_descripcion,horario,descripcion,id_servicio);
+   public void actualizarServicio(String nombre, String celular,boolean whatsaap,String email,String precio,String precio_descripcion, String horario, String descripcion,int id_servicio) {
+        servicioDao.actualizarServicio(nombre,celular,whatsaap,email,precio,precio_descripcion,horario,descripcion,id_servicio);
     }
 
     @Override

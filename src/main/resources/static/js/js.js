@@ -1,5 +1,7 @@
 addEventListener('load', inicio, false);
 
+
+
 function inicio()
 {
 
@@ -22,18 +24,18 @@ function deshabilitarBtnBusquedaIndex() {
     }
 }
 
-function contarCaracteres(){
-   let texto =  document.getElementById("message").value;
-   let cantidadDeCaracteres =texto.length;
+function contarCaracteres() {
+    let texto = document.getElementById("message").value;
+    let cantidadDeCaracteres = texto.length;
     document.getElementById("caracteres").innerHTML = cantidadDeCaracteres;
 }
 
 var checkbox = document.getElementById('checkUser');
 const btnUserRegister = document.getElementById('btnRegisterUser');
-checkbox.addEventListener( 'change', function() {
-    if(this.checked) {
-       btnUserRegister.removeAttribute('disabled');
-    }else{
+checkbox.addEventListener('change', function () {
+    if (this.checked) {
+        btnUserRegister.removeAttribute('disabled');
+    } else {
         btnUserRegister.setAttribute('disabled', "true");
     }
 });
@@ -44,18 +46,18 @@ $(function () {
 });
 
 $('.pop').popover().click(function () {
-       setTimeout(function () {
-           $('.pop').popover('hide');
-       }, 7000);
+    setTimeout(function () {
+        $('.pop').popover('hide');
+    }, 7000);
 });
 
 //VALIDACIONES
 $("#form-servicios").validate();
-  
 
-  
 
-  
+
+
+
 
 
 function cambioPrecio()
@@ -121,3 +123,4 @@ function showDivs(n) {
     x[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].className += " w3-white";
 }
+

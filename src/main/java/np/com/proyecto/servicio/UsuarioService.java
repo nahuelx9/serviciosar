@@ -25,6 +25,6 @@ public interface UsuarioService {
 
     public void modificarUsernameUsuario(String username, int id_usuario);
 
-    public void modificarPasswordUsuario(String passwordActual, String password1,String password2, Usuario usuario);
+    public int  modificarPasswordUsuario(String passwordActual, String password1,String password2, Usuario usuario);
 
 }

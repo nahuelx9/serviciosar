@@ -163,12 +163,16 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public void modificarNombreUsuario(String nombre, int id_usuario) {
+        if(!nombre.isEmpty()){
         usuarioDao.modificarNombreUsuario(nombre, id_usuario);
+        }
     }
 
     @Override
     public void modificarApellidoUsuario(String apellido, int id_usuario) {
+          if(!apellido.isEmpty()){
         usuarioDao.modificarApellidoUsuario(apellido, id_usuario);
+          }
     }
 
     @Override
@@ -182,22 +186,24 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public void modificarPasswordUsuario(String passwordActual, String password1, String password2, Usuario usuario) {
-        if (!passwordActual.isEmpty() && !password1.isEmpty() && !password2.isEmpty()) {
+    public int modificarPasswordUsuario(String passwordActual, String password1, String password2, Usuario usuario) {
+        int error = 0;
+        if (!passwordActual.isEmpty() && !password1.isEmpty() && !password2.isEmpty() && password1.length() >=8 &&  password2.length() >=8) {
             if (usuario.compararPassword(passwordActual,usuario.getPassword())) {
                 if (password1.equals(password2)) {
                     int idFinal = Math.toIntExact(usuario.getIdUsuario());
                     String  encriptada = usuario.encriptarPassword(password1);
                     usuarioDao.modificarPasswordUsuario(encriptada, idFinal);
                 }else{
-                     log.info("las contraseñas son distintas");
+                      error = 3;//las contraseñas son  distintas
                 }
             }else{
-                 log.info("las contrseña ingresada es incorrecta");
+                 error = 2;//Contraseña icorrecta
             }
         }else{
-              log.info("campos vacios");
+             error = 1;//Campos vacios
         }
+        return error;
     }
 
 }

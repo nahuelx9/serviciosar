@@ -243,22 +243,22 @@ public class Util {
             }
         }
     }
-    
+
     /* validar el ingreso de imagenes */
-    public boolean validar(MultipartFile[] files){
-      int cantFiles = 0;
-          for (MultipartFile file : files) {
-              if(!file.isEmpty()){
-                  cantFiles++;
-              }
-          }
-          if(cantFiles > 0){
-              return true;
-          }else{
-              return false;
-          }
+    public boolean validar(MultipartFile[] files) {
+        int cantFiles = 0;
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                cantFiles++;
+            }
+        }
+        if (cantFiles > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
-    
+
     /**
      *
      * @param email
@@ -270,5 +270,8 @@ public class Util {
         Matcher mather = pattern.matcher(email);
         return mather.find();
     }
+
     
+    
+  
 }

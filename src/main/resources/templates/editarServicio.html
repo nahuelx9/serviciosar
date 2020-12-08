@@ -115,9 +115,10 @@ and open the template in the editor.
                         <div class="input-group-prepend">
                             <span class="input-group-text">Descripcion</span>
                         </div>
-                        <textarea class="form-control novalidate" name="descripcion" style="height:85px;" aria-label="With textarea" th:field="*{descripcion}"></textarea>
+                        <textarea onkeyup="contarCaracteres()" id="message" name="descripcion" class="form-control" style="height:85px;"  aria-label="With textarea" minlength="92"  maxlength="365"th:field="*{descripcion}"></textarea>
                     </div>
                 </div>
+                 <span>Caracteres ingresados:<span class="ml-2" id="caracteres" ></span></span>
                 <button class="btn   botonform bg-dark" type="submit" th:text='Guardar'>submit</button>
             </form>
         </div>
@@ -130,10 +131,11 @@ and open the template in the editor.
             </div>
             <!-- Copyright -->
         </footer>
-        <script type="text/javascript" th:src="@{/js/js.js}"></script>
-        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+       
     </body>
 </html>

@@ -92,7 +92,7 @@ public class ControladorInicio {
     }
 
     @PostMapping("/guardarUsuario")
-    public String guardarUsuario(@Valid Usuario usuario, BindingResult result, Model model,@RequestParam("password2")String password2 ,Provincia provincia, Departamento departamento) {
+    public String guardarUsuario(@Valid Usuario usuario, BindingResult result, Model model, @RequestParam("password2") String password2, Provincia provincia, Departamento departamento) {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         if (result.hasErrors()) {
@@ -132,14 +132,12 @@ public class ControladorInicio {
     }
 
     @PostMapping("/modificarNombreUsuario")
-    public String modificarNombreUsuario(@RequestParam("nombre") String nombre, @AuthenticationPrincipal User user, Usuario usuario, HttpSession session) {
+    public String modificarNombreUsuario(@RequestParam("nombre") String nombre, @AuthenticationPrincipal User user, Usuario usuario) {
         usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
         Long id = usuario.getIdUsuario();
         int idFinal = Math.toIntExact(id);
-        if (!nombre.isEmpty() && nombre.length() >= 3) {
-            usuarioService.modificarNombreUsuario(nombre, idFinal);
-        }
-        return "redirect:/";
+        usuarioService.modificarNombreUsuario(nombre, idFinal);
+        return "redirect:/datosModificados";
     }
 
     @PostMapping("/modificarApellidoUsuario")
@@ -147,10 +145,8 @@ public class ControladorInicio {
         usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
         Long id = usuario.getIdUsuario();
         int idFinal = Math.toIntExact(id);
-        if (!apellido.isEmpty() && apellido.length() >= 3) {
-            usuarioService.modificarApellidoUsuario(apellido, idFinal);
-        }
-        return "redirect:/";
+       usuarioService.modificarApellidoUsuario(apellido, idFinal);
+        return "redirect:/datosModificados";
     }
 
     @PostMapping("/modificarProvinciaDepartamentoUsuario")
@@ -159,10 +155,8 @@ public class ControladorInicio {
         Long id = usuario.getIdUsuario();
         int idFinal = Math.toIntExact(id);
         String nombreProvincia = util.obtenerNombreProvincia(provincia);
-        if (!nombreProvincia.isEmpty() && !departamento.isEmpty()) {
             usuarioService.modificarProvinciaDepartamentoUsuario(nombreProvincia, departamento, idFinal);
-        }
-        return "redirect:/";
+        return "redirect:/datosModificados";
     }
 
     @PostMapping("/modificarEmailUsuario")
@@ -173,15 +167,23 @@ public class ControladorInicio {
         if (usuarioService.verificarExistenciaEmail(email) && !email.isEmpty() && util.ValidarMail(email) == true) {
             usuarioService.modificarUsernameUsuario(email, idFinal);
             SecurityContextHolder.getContext().setAuthentication(null);
+                    return "redirect:/datosModificados";
+        }else{
+            return "redirect:/datosModificadosErrorEmail";
         }
-        return "redirect:/";
     }
 
     @PostMapping("/modificarContraseñaUsuario")
     public String modificarContraseñaUsuario(@RequestParam("passwordActual") String passwordActual, @RequestParam("password1") String password1, @RequestParam("password2") String password2, @AuthenticationPrincipal User user, Usuario usuario) {
         usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
-        usuarioService.modificarPasswordUsuario(passwordActual, password1, password2, usuario);
-        return "redirect:/";
+        int error = usuarioService.modificarPasswordUsuario(passwordActual, password1, password2, usuario);
+          if(error == 1 || error == 3){
+              return "redirect:/passwordCamposError";
+          }
+            if(error == 2){
+                    return "redirect:/passwordInvalida";
+        }
+            return "redirect:/datosModificados";
     }
 
     @GetMapping("/agregarServicio")
@@ -214,7 +216,7 @@ public class ControladorInicio {
                 dbFileStorageService.guardar(dbFile);
             }
         }
-        return "redirect:/";
+        return "redirect:/servicioCreado";
     }
 
     @GetMapping("/serviciosUsuario/{idUsuario}")
@@ -248,19 +250,34 @@ public class ControladorInicio {
     public String guardarEditado(@Valid Servicio servicio, Errors errores, Usuario usuario, DBFile dbFile, @AuthenticationPrincipal User user) throws UnsupportedEncodingException {
         if (errores.hasErrors()) {
             log.info("error = " + errores);
-            return "registroServicio";
+            return "error";
         }
 
-        log.info("Servicio = " + servicio.getIdServicio());
         Long idServicio = servicio.getIdServicio();
         int idServ = idServicio.intValue();
-        servicioService.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(), idServ);
-        return "redirect:/";
+        servicioService.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getEmail(), servicio.getPrecio(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(), idServ);
+        return "redirect:/servicioModificado";
     }
 
     /**
-     * Editar fotos
+     * IMAGENES
+     * 
      */
+    
+    @PostMapping("/guardarImagen")
+    public String guardarImagen( Model model,DBFile dbfile,Servicio servicio,@RequestParam("file") MultipartFile file,@RequestParam("idServicio") long  idServicio){
+        DBFile dbFileNew = dbFileStorageService.storeFile(file);
+        int id = (int) idServicio;
+       if (dbFileNew.getFileType().equals("image/jpeg") || dbFileNew.getFileType().equals("image/jpg") || dbFileNew.getFileType().equals("image/pneg") || dbFileNew.getFileType().equals("image/png")) {
+         dbFileNew.setIdServicio(id);
+         dbFileStorageService.guardar(dbFileNew);
+         return "redirect:/imagenGuardada";
+                }else{
+           return "redirect:/imagenModificadaError";
+       }
+         
+    } 
+    
     @GetMapping("/editarImagenes/{idServicio}")
     public String editarImagenes(Servicio servicio, Model model, DBFile dbFile) throws UnsupportedEncodingException {
         servicio = servicioService.encontrarServicio(servicio);
@@ -275,22 +292,21 @@ public class ControladorInicio {
         int cantFiles = files.size();
         model.addAttribute("cantFiles", cantFiles);
         model.addAttribute("files", files);
+        model.addAttribute("servicio", servicio);
         return "editarImagenes";
     }
 
     @PostMapping("/modificarImagen")
     public String modificarImagen(@Valid DBFile dbFile, Errors errores, @RequestParam("file") MultipartFile file, @RequestParam("idValue") String idValue) throws UnsupportedEncodingException {
-        if (errores.hasErrors()) {
-            log.info("error = " + errores);
-            return "registroServicio";
-        }
+       
         String id = idValue;
-        log.info("id imagen = " + idValue);
         DBFile dbFileNew = dbFileStorageService.storeFile(file);
         if (dbFileNew.getFileType().equals("image/jpeg") || dbFileNew.getFileType().equals("image/jpg") || dbFileNew.getFileType().equals("image/pneg") || dbFileNew.getFileType().equals("image/png")) {
             dbFileStorageService.modificarImagen(dbFileNew.getData(), dbFileNew.getFileName(), dbFileNew.getFileType(), id);
+             return "redirect:/imagenGuardada";
+        }else{
+            return"redirect:/imagenModificadaError";
         }
-        return "redirect:/";
     }
 
     @GetMapping("/buscar")
@@ -299,7 +315,6 @@ public class ControladorInicio {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
-
         Filtro filtro = new Filtro();
 
         /*Paginacion*/
@@ -377,6 +392,7 @@ public class ControladorInicio {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
+        boolean sinServicios = false;
 
         /*Paginacion*/
  /* obtenemos el parametro y si es diferente de null entonces convertimos el valor a un integer*/
@@ -471,6 +487,12 @@ public class ControladorInicio {
         if (!"".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() != null || !"".equals(filtro.getNombre()))) {
             pageServicio = servicioService.findByNombreProvinciaPrecio(filtro.getProvincia(), filtro.getPrecio(), filtro.getNombre(), pageRequest);
         }
+        if (pageServicio.isEmpty()) {
+            pageServicio = servicioService.getAll(pageRequest);
+            sinServicios = true;
+        }
+
+        System.out.println("Servicios" + pageServicio.getContent().size());
 
         util.modificarUrlImagen(pageServicio.getContent());
 
@@ -484,6 +506,7 @@ public class ControladorInicio {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
+        model.addAttribute("sinServicios", sinServicios);
 
         model.addAttribute("list", pageServicio.getContent());
         model.addAttribute("current", page + 1);
@@ -494,7 +517,7 @@ public class ControladorInicio {
         return "buscadorServicios";
     }
 
-        /**
+    /**
      * Eliminar Usuario
      */
     @GetMapping("/eliminarUsuario")
@@ -502,14 +525,14 @@ public class ControladorInicio {
         usuarioService.eliminar(usuario);
         return "redirect:/";
     }
-    
+
     /**
      * Eliminar Servicio
      */
     @GetMapping("/eliminarServicio")
     public String eliminar(Servicio servicio) {
         servicioService.eliminar(servicio);
-        return "redirect:/";
+        return "redirect:/servicioEliminado";
     }
 
     /**
@@ -518,7 +541,7 @@ public class ControladorInicio {
     @GetMapping("/eliminarImagen")
     public String eliminarImagen(DBFile dbFile) {
         dbFileStorageService.eliminar(dbFile);
-        return "redirect:/";
+        return "redirect:/imagenEliminada";
     }
 
     /**
@@ -548,4 +571,144 @@ public class ControladorInicio {
         return "redirect:/";
     }
 
+    /**
+     * Datos del usuario modificados
+     */
+    @RequestMapping("/datosModificados")
+    public String datosModificados(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("datosModificados", true);
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        return "index";
+    }
+    
+    @RequestMapping("/datosModificadosErrorEmail")
+    public String datosModificadosErrorEmail(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("datosModificadosErrorEmail", true);
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        return "index";
+    }
+    
+      @RequestMapping("/passwordCamposError")
+    public String contraseñaCamposError(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("passwordCamposError", true);
+        return "index";
+    }
+    
+     @RequestMapping("/passwordInvalida")
+    public String contraseñaInvalida(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("passwordInvalida", true);
+        return "index";
+    }
+    
+     @RequestMapping("/servicioCreado")
+    public String servicioCreado(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("servicioCreado", true);
+        return "index";
+    }
+     @RequestMapping("/servicioModificado")
+    public String servicioModificado(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("servicioModificado", true);
+        return "index";
+    }
+    
+     @RequestMapping("/servicioEliminado")
+    public String servicioEliminado(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("servicioEliminado", true);
+        return "index";
+    }
+
+      @RequestMapping("/imagenGuardada")
+    public String imagenGuardada(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("imagenGuardada", true);
+        return "index";
+    }
+    
+    
+    @RequestMapping("/imagenEliminada")
+    public String imagenEliminada(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("imagenEliminada", true);
+        return "index";
+    }
+    
+    @RequestMapping("/imagenModificadaError")
+    public String imagenModificadaError(Usuario usuario, Model model, @AuthenticationPrincipal User user){
+         if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            Long id = usuario.getIdUsuario();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("imagenModificadaError", true);
+        return "index";
+    }
+    
 }

@@ -41,8 +41,10 @@ public class Servicio implements Serializable {
     @Email
     private String email;
     
-    
+     @Size(max=5)
     private String precio;
+    
+    
     @NotEmpty
     private String precioDescripcion;
     @NotEmpty

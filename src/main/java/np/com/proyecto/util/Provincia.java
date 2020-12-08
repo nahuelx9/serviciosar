@@ -71,8 +71,9 @@ public class Provincia {
             for (int i = 0; i < objA.length(); i++) {
                 JSONObject elemento = objA.getJSONObject(i);
                 int id = elemento.getInt("id");
-                String nombre = elemento.getString("nombre");
-                Provincia provincias = new Provincia(id, nombre);
+             String nombreIso = elemento.getString("nombre");
+                String nombreUtf = new String(nombreIso.getBytes("ISO-8859-1"), "UTF-8");
+                Provincia provincias = new Provincia(id, nombreUtf);
                 provinciasListM.add(provincias);
             }
             conn.disconnect();

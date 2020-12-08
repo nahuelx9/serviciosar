@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface ServicioDao extends JpaRepository<Servicio, Long> {
     
     @Modifying
-    @Query(value = "UPDATE servicio SET nombre=?,celular=?,whatsapp=?,precio_descripcion=?,horario=?,descripcion=? where id_servicio=?",nativeQuery= true)
-   public void actualizarServicio(String nombre, String celular,boolean whatsaap,String precio_descripcion, String horario, String descripcion,int id_servicio);
+    @Query(value = "UPDATE servicio SET nombre=?,celular=?,whatsapp=?,email=?,precio=?,precio_descripcion=?,horario=?,descripcion=? where id_servicio=?",nativeQuery= true)
+   public void actualizarServicio(String nombre, String celular,boolean whatsaap,String email,String precio,String precio_descripcion, String horario, String descripcion,int id_servicio);
    
    /*Buscar por precio*/
    @Query(value = "SELECT * FROM servicio WHERE precio IS NULL OR precio <=?", nativeQuery = true)

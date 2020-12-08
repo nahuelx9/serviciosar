@@ -7,8 +7,7 @@ and open the template in the editor.
 <html  xmlns:th="http://www.thymeleaf.org">
     <head>
         <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
         <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
         <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
@@ -35,27 +34,31 @@ and open the template in the editor.
                     <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
                 </nav>
             </header>
+            <section class="filtros">
             <!-- Filtros -->
-            <p>
+            <div >
                 <a class="btn btn-outline-success btn-filtros" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Filtros
                 </a>
+                  <a   th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'} and ${!sinServicios}"  class="btn btn-danger btn-filtros text-light"  role="button" th:href="@{/buscar}">
+                    Borrar filtros
+                </a>
 
-            </p>
-            <div class="container-fluid clearfix contenedor-filtros collapse" id="collapseExample">
+            </div>
+            <div class="container-fluid clearfix contenedor-filtros collapse mt-3" id="collapseExample">
                 <div class="row">
                     <div class="col-sm">
                         <div class="ciudades">
                             <div class="col-md-3 mb-3"  >
                                 <label for="validationDefault04" class="labelbuscador">Provincia:</label>
-                                <select class="custom-select  buscadorciudad " name="provincia" id="listaProvincias"    onclick="mostrarListado()" >
+                                <select class="custom-select  buscadorciudad " name="provincia" id="listaProvincias"  onclick="mostrarListado()" >
                                     <option selected  value="">No especificar</option>
                                     <option  th:each="provincias: ${provincias}"  th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
                                 </select>
                                 <label for="validationDefault04" class="labelbuscador">Departamento:</label>
                                 <select class="custom-select buscadorciudad" name="departamento"   id="listaDepartamentos" >
                                     <option selected  value="">No especificar</option>
-                                    <script th:inline="javascript">
+                                    <script type="text/javascript" th:inline="javascript" charset="UTF-8">
                                         function mostrarListado() {
                                             /* Obtenemos el value de la provincia selecciona*/
                                             var idProvincia = document.getElementById("listaProvincias").value;
@@ -81,6 +84,7 @@ and open the template in the editor.
                                             var idDepartamento = document.getElementById("listaDepartamentos");
                                             idDepartamento.innerHTML = '<option selected value="">No especificar</option>';
                                         }
+
                                     </script>
                                 </select>
                             </div>
@@ -123,6 +127,7 @@ and open the template in the editor.
                 </div>
                 <button class="btn btn-success botoncito btnfiltros" type="submit">Aplicar</button>
             </div>
+            </section>
         </form>
 
 
@@ -130,6 +135,12 @@ and open the template in the editor.
 
         <div class="container ajustar-lista">
             <div th:if="${!list.isEmpty()}">
+                <div th:if="${sinServicios}" class="alert alert-danger text-center fade show mt-4" role="alert">
+                    Lo sentimos no se encontraron servicios con los datos ingresados
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <ul th:each="servicio, iStat: ${list}" class="list-group">
                     <li class="list-group">
                         <div class="row">
@@ -156,7 +167,7 @@ and open the template in the editor.
                                                 <td>
                                                     <div class="datos-div">
                                                         <p class="datos-tabla"  th:text="'Email: ' + ${servicio.email}" >email</p>
-                                                        <p class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}">Celular<i class="fa fa-whatsapp " aria-hidden="true"></i></p>
+                                                        <p class="datos-tabla wsp-cel"  th:text="'Celular: ' +${servicio.celular}">Celular</p>
                                                         <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
                                                         <p class="datos-tabla" th:if="${servicio.precio} != null" th:text="'Precio: ' + ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
                                                         <p class="datos-tabla" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
@@ -170,7 +181,7 @@ and open the template in the editor.
                                                     <div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
                                                         <div class="carousel-inner clearfix" >
                                                             <div  th:each="file, iterstat : ${servicio.filess}"  class="carousel-item  slider" th:class="${iterstat.index}!=0 ? 'carousel-item slider':'carousel-item slider active'">
-                                                                <a th:href="*{'data:image/jpg;base64,' + file.url}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="*{'data:image/jpg;base64,'+ file.url}" class="d-block " alt="..."></a>
+                                                                <a th:href="*{'data:image/jpg;base64,' + file.url}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="*{'data:image/jpg;base64,'+ file.url}" class="d-block " th:alt="${servicio.nombre}"></a>
                                                             </div>
                                                         </div>
                                                         <a class="carousel-control-prev" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="prev">
@@ -200,7 +211,7 @@ and open the template in the editor.
                 <li class="page-item" th:classappend="${prev == 0 ? 'disabled': ''}">
                     <a th:if="${#httpServletRequest.requestURI == '/buscar'}"  class="page-link" th:href="@{|/buscar?page=${prev}|}">Anterior</a>
                     <a th:if="${#httpServletRequest.requestURI == '/buscarPorNombre'}"  class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
-                      <a th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}"  class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
+                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}"  class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
                 </li>
                 <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active': ''}">
                     <a th:if="${#httpServletRequest.requestURI == '/buscar'}"class="page-link" th:href="@{|/buscar?page=${page}|}" th:text="${page}"></a>
@@ -223,11 +234,11 @@ and open the template in the editor.
             <!-- Copyright -->
         </footer>
         <!-- Footer -->
-        <script type="text/javascript" th:src="@{/js/js.js}"></script>
-        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/js.js}"></script>
+        <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
     </body>
 </html>

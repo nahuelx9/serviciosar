@@ -15,7 +15,7 @@ public interface ServicioService {
 
     public Servicio encontrarServicio(Servicio servicio);
 
-    public void actualizarServicio(String nombre, String celular, boolean whatsaap, String precio_descripcion, String horario, String descripcion, int id_servicio);
+    public void actualizarServicio(String nombre, String celular, boolean whatsaap,String email,String precio, String precio_descripcion, String horario, String descripcion, int id_servicio);
 
    public Page<Servicio>  findByPrecio(String precioRango,Pageable pageable);
 

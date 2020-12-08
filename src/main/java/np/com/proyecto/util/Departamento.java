@@ -1,18 +1,18 @@
-
 package np.com.proyecto.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 public class Departamento extends Provincia {
-    
+
     private int id;
     private String nombre;
 
@@ -23,9 +23,7 @@ public class Departamento extends Provincia {
         super(id, nombre);
     }
 
-
-        
-     public List<Departamento> listarDepartamento() {
+    public List<Departamento> listarDepartamento() {
         List<Departamento> DepartamentoListM = new ArrayList<Departamento>();
         try {
             //creamos una URL donde esta nuestro webservice
@@ -53,10 +51,13 @@ public class Departamento extends Provincia {
             for (int i = 0; i < objA.length(); i++) {
                 JSONObject elemento = objA.getJSONObject(i);
                 int id = elemento.getJSONObject("provincia").getInt("id");
-                String nombre = elemento.getString("nombre");
-                Departamento departamento = new Departamento(id, nombre);
+                String nombre = new String(elemento.getString("nombre").replace("Ã‘", "N").getBytes("ISO-8859-1"), "UTF-8");
+                String nl = nombre.replace("?", "A");
+                System.out.println(nl);
+                Departamento departamento = new Departamento(id, nl);
                 DepartamentoListM.add(departamento);
             }
+
             conn.disconnect();
         } catch (Exception e) {
             System.out.println(e.getMessage());
