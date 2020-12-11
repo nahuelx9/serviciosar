@@ -1,6 +1,7 @@
 package np.com.proyecto.servicio;
 
 import java.util.List;
+import java.util.Optional;
 import np.com.proyecto.domain.DBFile;
 
 public interface DBFileService {
@@ -15,5 +16,5 @@ public interface DBFileService {
     
     public void modificarImagen(byte[] data,String file_name,String file_type,String id);
     
-    
+        public DBFile encontrarDBFileById(String id);
 }

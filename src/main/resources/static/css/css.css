@@ -3,76 +3,20 @@ body{
     font-family: 'Open Sans', sans-serif!important;
 }
 
-.form-inline .form-control{
-    width: 350px;
-
-}
-.botoncito{
-    width: 160px!important;
+/*navabar*/
+.btn-nav-buscador{
+    width: 120px!important;
     margin: 3px;
     border-radius: 20px!important;
 }
+#mensaje{
+    width: 300px;
+}
 .titulo{
-    margin-right: 165px;
-    margin-bottom: 0px;
+    font-size: 40px;
     font-family: 'Old Standard TT', serif;
 }
-@media only screen and (max-width:1500px){
-    .titulo{
-        margin:0px!important;
-        text-align: center;
-    }
-}
 
-@media only screen and (max-width:768px){
-    .form-inline .form-control{
-        width: 300px;
-        margin-right: 8px!important;
-    }
-}
-@media only screen and (max-width: 599px){
-    .titulo {
-        margin: auto!important;
-    }
-    .botoncito{
-        margin: auto!important;
-    }
-    .form-inline .form-control{
-        margin: auto!important;
-    }
-    .botonbuscar{
-        margin: auto!important;
-        margin-top: 8px!important;
-        border-radius: 20px!important;
-    }
-    .boton{
-        margin: auto!important;
-    }
-    .bservicios{
-        margin-left: 10px!important;
-    }
-    .carousel-caption{
-        text-align: center!important;
-    }
-}
-@media only screen and (max-width: 436px){
-    .form-inline .form-control{
-        width: 272px;
-    }
-
-
-}
-@media only screen and (max-width: 356px){
-    .boton{
-        margin-left: 68px!important;
-    }
-
-}
-@media only screen and (max-width: 320px){
-    .botonIndex{
-        margin-bottom: 8px!important;
-    }
-}
 
 .item {
     display: block;
@@ -80,95 +24,24 @@ body{
     height: 200px;
 }
 .img-slider  img {
-    width: 250px!important;
-    height: 200px!important;
-}
-/*
-@media only screen and (max-width:991px){
-    .text-descripcion {width: 220px;}
-    .datos-div{width: 265px;}
-    .img-slider img{width: 220px;
-                    height: 159px;}
-}
-@media only screen and (max-width: 767px){
-    .img-slider  img {
-        width: 110px;
-        height: 120px;
-    }
-}
-*/
-
-
-.promocion{
-    font-family: 'Caladea', serif;
-    font-weight: bold;
-
-}
-footer{
-    background-color: #343a40!important;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: auto;
-    color: white;
-}
-
-@media only screen and (max-height:1351px){
-    footer{
-        bottom: -100px!important;
-
-    }
-}
-@media only screen and (max-height:1200px){
-    footer{
-        bottom: -800px!important;
-
-    }
-}
-@media only screen and (max-height:940px){
-    footer{
-        bottom: -1000px!important;
-
-    }
-}
-@media only screen and (max-height:568px){
-    footer{
-        bottom: -1000px!important;
-
-    }
-}
-@media only screen and (max-height:500px){
-    footer{
-        bottom: -1400px!important;
-
-    }
-}
-
-@media only screen and (max-height:300px){
-    footer{
-        bottom: -1500px!important;
-
-    }
-}
-@media only screen and (min-height:1500px){
-    footer{
-        bottom: 0px!important;
-
-    }
-}
-
-@media only screen and (max-width:366px){
-    footer{
-        max-width: 4000px;
-        bottom: -710px!important;
-
-    }
-    .borde{
-        display: none;
-    }
+    width: 250px;
+    height: 200px;
 }
 
 
+
+.promocionTitle{
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+.promocionTexto{
+    color: #ffffff;
+    font-size: 1.1em;
+    letter-spacing: 0.1em;
+    line-height: 1.5em;
+    text-transform: uppercase
+}
 
 .text-muted{
     color: white!important;
@@ -180,7 +53,7 @@ footer{
 }
 .titulomenu{
     font-family: 'Oswald', sans-serif;
-    font-size: 2.4em;
+    font-size: 2.6em;
     text-transform: uppercase;
     text-align: center;
     margin-block-start: 0.83em;
@@ -188,7 +61,7 @@ footer{
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold!important;
-    color: black;
+    color: #4D4E4B;
 }
 
 /*Globales*/    
@@ -198,23 +71,7 @@ footer{
     max-width: 85%;
     margin-bottom:20px;
 }
-@media only screen and (min-width:480px){
-    .contenedor{
-        width: 95%;
-    }
-}
-@media only screen and (min-width:768px){
-    .contenedor{
-        width: 95%;
 
-    }
-}
-@media only screen and (min-width:992px){
-    .contenedor{
-        width: 90%;
-        max-width: 1100px;
-    }
-}
 
 .lista {
     text-align: center;
@@ -276,51 +133,13 @@ footer{
     border-radius: 5rem;
     padding-left: 2rem;
 }
-.footerIndex{
-    bottom: -300px!important;
-}
-@media only screen and (max-height:900px){
-    .footerIndex{
-        bottom: -600px!important;
-    }
-}
-@media only screen and (max-height:800px){
-    .footerIndex{
-        bottom: -550px!important;
-    }
-}
-@media only screen and (max-height:750px){
-    .footerIndex{
-        bottom: -650px!important;
-    }
-}
-@media only screen and (max-height:667px){
-    .footerIndex{
-        bottom: -800px!important;
-    }
-}
-@media only screen and (max-height:570px){
-    .footerIndex{
-        bottom: -900px!important;
-    }
-}
 
-/** Registro**/
-.tituloregistro{
-    margin: auto;
-    font-family: 'Caladea', serif;
-}
-.titulo2{
+
+
+.titulo-nav-simple{
     font-family: 'Old Standard TT', serif;
 }
-@media only screen and (max-width:1024px){
-    .titulo2{
-        display: none;
-    }
-    .tituloregistro{
-        margin: 0px!important;
-    }
-}
+/** Registro**/
 
 .container-md{
     margin-top: 50px;
@@ -333,16 +152,8 @@ footer{
 .botonform:hover{
     color: green;
 }
-@media only screen and (max-height:830px){
-    .footerRegistro{
-        bottom: -350px!important
-    }
-}
-@media only screen and (max-height:600px){
-    .footerRegistro{
-        bottom: -500px!important
-    }
-}
+
+
 /**Registro Servcio**/
 
 .aviso{
@@ -369,12 +180,7 @@ footer{
 a:hover{
     text-decoration: none;
 }
-@media only screen and (max-width:673px){
-    .titulobuscador{
-        margin: auto!important;
-    }
 
-}
 .custom-range{
     width: 100%;
 
@@ -390,15 +196,11 @@ a:hover{
 .row{
     padding: 20px;
 }
-@media only screen and (max-width:575px){
-    .col-sm{
-        margin: 10px;
-    }
 
-}
 .btnfiltros{
     float: right;
-    margin-bottom: 10px!important;
+    margin: 20px;
+    width: 150px;
 
 }
 .custom1{
@@ -408,7 +210,8 @@ a:hover{
     width: 30px;
 }
 .rangoSinPrecio{
-    float: right
+    float: right;
+     top:-12%;
 }
 .labelbuscador{
     display: block;
@@ -456,11 +259,6 @@ a:hover{
     padding:0;
     box-sizing:border-box;
 }
-.slider-principal{
-    max-width: 100%;
-    margin-bottom: 0px!important;
-
-}
 
 .slider{
     height: 100%;
@@ -484,96 +282,22 @@ a:hover{
 .page-link{
     color: green;
 }
-.footerBuscador{
 
-    bottom: -2800px!important;
-}
-@media only screen and (max-width:490px){
-    .footerBuscador{
-        bottom: -3600px!important;
-    }
-}
-@media only screen and (max-width:450px){
-    .footerBuscador{
-        bottom: -4800px!important;
-    }
-}
-@media only screen and (max-width:380px){
-    .footerBuscador{
-        bottom: -5000px!important;
-    }
-}
-@media only screen and (max-width:320px){
-    .footerBuscador{
-        bottom: -6000px!important;
-    }
-}
-@media only screen and (max-width:261px){
-    .footerBuscador{
-        bottom: -8000px!important;
-    }
-}
-@media only screen and (max-height:640px){
-    .footerBuscador{
-        bottom: -5300px!important;
-    }
-}
-@media only screen and (max-height:568px){
-    .footerBuscador{
-        bottom: -6200px!important;
-    }
-}
+
 /*ServicioUsuarios*/
 .edicion{
     width: 200px;
     margin-top: 5px;
 }
-.footerServicioUsuario{
-    bottom: -2000px!important;
-} 
 
-@media only screen and (max-width:768px){
-    .footerServicioUsuario{
-        bottom: -2700px!important;
-        width: 110%;
-    }
-}
-@media only screen and (max-width:390px){
-    .footerServicioUsuario{
-        bottom: -3000px!important;
-    }
-}
-@media only screen and (max-width:350px){
-    .footerServicioUsuario{
-        bottom: -3600px!important;
-    }
-    .divEdicion{
-        margin-left: 10%;
-    }
-}
+
+
 
 .modal-eliminar{
     background-color: #424a53;
     color: white;
 }
-@media only screen and (max-width:593px){
-    .tituloregistro{
-        margin: auto!important;
-    }
-    .tituloRegistroServcio{
-        margin: auto!important;
-    }
-}
-@media only screen and (max-width:587px){
-    .tituloRegistroUsuario{
-        margin: auto!important;
-    }
-}
-@media only screen and (max-width:731px){
-    .titulobuscadorServicios{
-        margin: auto!important;
-    }
-}
+
 
 .tituloMisServicios{
     font-family: 'Caladea', serif;
@@ -582,13 +306,8 @@ a:hover{
 .nav-misServicios{
     padding: .1rem 1rem!important;
 }
-.datos-tabla{
-    float:left;
-    margin-right: 25px;
-    margin-bottom: 6px!important;
-}
 .wsp-cel::after{
-     content: '\f232';
+    content: '\f232';
     font-family: FontAwesome;
     font-style: normal;
     font-weight: normal;
@@ -606,81 +325,7 @@ a:hover{
 .datos-div{
     width: 270px;
 }
-@media only screen and (max-width:500px){
-    .slider-principal{
-        display: none;
-    }
-    .mensaje-fotos{
-        display: block!important;
-    }
 
-}
-@media only screen and (max-width:800px){
-    .ajustar{
-        width: 110%;
-    }
-}
-@media only screen and (max-width: 673px){
-    .ajustar{
-        width: 120%;
-    }
-    .footerBuscador{
-        width: 120%!important;
-    }
-}
-@media only screen and (max-width:550px){
-    .ajustar{
-        width: 130%;
-    }
-    .footerBuscador{
-        width: 130%!important;
-    }
-}
-@media only screen and (max-width:521px){
-    .ajustar{
-        width: 180%;
-    }
-
-    .ajustar-lista{
-        width: 180%;
-    }
-    .ajustar-paginas{
-        margin-left: 80%!important;
-    }
-    .footerBuscador{
-        width: 180%!important;
-    }
-    .footerServicioUsuario{
-        width: 180%!important;
-    }
-    .datos-div{
-        width: 350px;
-    }
-    .img-slider img {
-        width: 250px!important;
-    }
-    .lightbox{
-        left:45%!important;
-    }
-}
-@media only screen and (max-width:320px){
-    .footerServicioUsuario{
-        width: 210%!important;
-    }
-}
-@media only screen and (max-width:408px){
-    .datos-div{
-        width: 265px;
-    }
-}
-@media only screen and (max-width:320px){
-    .footerBuscador{
-        width: 670px!important;
-    }
-    .ajustar{
-        width: 210%;
-    }
-}
 h4{
     text-transform: lowercase!important;
 
@@ -689,17 +334,6 @@ h4::first-letter{
     text-transform: capitalize!important;
 }  
 
-.text-descripcion {
-    margin: 0 auto!important;
-    text-align: justify;
-}
-
-.text-descripcion p {
-    -webkit-hyphens: auto!important;
-    -moz-hyphens: auto!important;
-    -ms-hyphens: auto!important;
-    hyphens: auto!important;
-}
 .cerrar-sesion{
     display: contents;
 }
@@ -746,9 +380,7 @@ h4::first-letter{
     background: transparent;
     border: none;
 }
-.nav-link:hover{
-    color: green!important;
-}
+
 .dropdown-item:hover{
     color:green!important;
 }
@@ -780,20 +412,240 @@ h4::first-letter{
 .contenido-lista{
     position: absolute;
     top: 50%;
-   left: 50%;
-   height: 30%;
-   width: 50%;
-   margin: -15% 0 0 -25%;
+    left: 50%;
+    height: 30%;
+    width: 50%;
+    margin: -15% 0 0 -25%;
 }
 .menu-lista-servicios:hover {
-  -ms-transform: scale(1.1); /* IE 9 */
-  -webkit-transform: scale(1.1); /* Safari 3-8 */
-  transform: scale(1.1); 
-  cursor: pointer;
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1); 
+    cursor: pointer;
 }
 .menu-promocio-servicios:hover {
-  -ms-transform: scale(1.1); /* IE 9 */
-  -webkit-transform: scale(1.1); /* Safari 3-8 */
-  transform: scale(1.1); 
-  cursor: pointer;
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1); 
+    cursor: pointer;
 }
+
+.imagen-menu {
+    clip-path: ellipse(150% 55% at 48% 44%);
+}
+.imagen-menu2 {
+    clip-path: ellipse(174% 52% at 87% 44%)
+}
+.imagen-menu3 {
+    clip-path: ellipse(190% 56% at -9% 45%)
+}
+.imagen-menu4 {
+    clip-path:  ellipse(150% 55% at 48% 44%);
+}
+#nav-link:hover{
+    color: green!important;
+}
+
+#title_hr {
+    border: 1px solid #1bd982;
+    margin: 1.8em auto 2.9em;
+    width: 67px; 
+}
+.img-opacity img {
+    filter:brightness(0.5);
+}
+
+footer{
+    background-color: #343a40!important;
+    position: relative;
+    bottom: -200px;
+    width: 100%;
+    height: auto;
+    color: white;
+}
+.titulo-card-responsive{
+    display: none;
+    font-family: auto;
+    text-align: center;
+    background-color: #343a40;
+    border-color: #454d55;
+    color: #fff;
+    border-bottom: 2px solid #dee2e6;
+    padding: .75rem;
+    border-top: 1px solid #dee2e6;
+}
+
+
+@media screen and (max-width: 1600px) {
+    body{
+        zoom: 0.8; /* Old IE only */
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .imagenes-card{
+        width: 100%;
+        
+    }
+}
+@media screen and (max-width: 991px)  and (min-width:768px) {
+    #contenedor-card{
+        max-width: 962px;
+    }
+   
+
+}
+
+@media screen and (max-width: 991px) {
+    #carteles-lista-promocion{
+        display: grid!important;
+    }
+    #carteles-lista-promocion > div{
+        margin: 20px;
+    }
+    #contenedor-card-imagenes{
+        flex-direction: column-reverse;
+        padding-right: 50px;
+    }
+ 
+}
+
+
+@media screen and (max-width: 768px) {
+    #mensaje{
+        width: 200px;;
+    }
+    .titulo-card{
+        display: none;
+    }
+    #card-responvie{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    #contenedor-filtros{
+        flex-direction: column-reverse;
+        font-size: 18px;
+    }
+    .buscadorciudad{
+        width: 100%;
+    }
+    .rangoSinPrecio{
+        float: none;
+    }
+    .precioFiltro{
+        order: -1;
+    }
+    .locaclidad{
+        order:1;
+    }
+    .titulo-card-responsive{
+        display: block;
+    }
+    .titulo-servicio{
+        text-align: center;
+    }
+    .datos-div {
+        font-size: 23px;
+        width: auto;
+        text-align: center;
+    }
+    .descripcion-servicio{
+        font-size: 25px;
+    }
+    .editar-fotos{
+        margin-left: 36%;
+    }
+    .img-slider img {
+        width: 100%;
+        height: 100%;
+    }
+
+ 
+}
+@media screen and (max-width: 540px) {
+   
+    .datos-div{
+        font-size: 18px;
+    }
+     .descripcion-servicio{
+        font-size: 18px;
+    }
+    
+}
+
+@media screen and (max-width: 488px) {
+    #nav{
+        justify-content: center;
+    }
+    #nav-lista{
+        justify-content: center;
+    }
+    .btn-nav-buscador{
+        margin-left: 30%;
+    }
+    #mensaje{
+        width: 100%;
+    }
+
+    .editar-fotos{
+        margin-left: 25%;
+    }
+    
+
+}
+
+@media screen and (max-width: 436px) {
+    #nav-simple{
+        flex-direction: column;
+    }
+}
+
+
+
+@media screen and (max-width: 430px) {
+    #carteles-lista-promocion > div{
+        width: 250px;
+        height: 250px;
+    }
+    .promocionTexto{
+        font-size: 1em;
+    }
+ 
+  
+}
+
+
+
+
+
+
+@media screen and (max-width: 320px) {
+   
+    .edicion{
+        width: 152px;
+    }
+   
+}
+
+@media screen and (max-width: 280px) {
+    .titulo-nav-simple{
+        font-size: 30px;
+    }
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

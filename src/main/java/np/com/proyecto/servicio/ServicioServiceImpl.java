@@ -163,6 +163,12 @@ public class ServicioServiceImpl implements ServicioService {
             return servicioDao.findAll(pageable);
     }
 
+    @Override
+    public Servicio encontrarServicioById(int id) {
+        return servicioDao.findById(id).orElse(null);
+    }
+
+
 
     
     

@@ -26,12 +26,14 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    private Integer idUsuario;
     
     @NotEmpty
+     @Size( max=50)
     private String nombre;
     
     @NotEmpty
+    @Size( max=50)
     private String apellido;
     
     @NotEmpty
@@ -42,6 +44,7 @@ public class Usuario implements Serializable {
     
     @NotEmpty
     @Email
+    @Size( max=50)
     private String username;
     
     @NotEmpty

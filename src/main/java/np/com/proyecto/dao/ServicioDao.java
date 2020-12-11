@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ServicioDao extends JpaRepository<Servicio, Long> {
+public interface ServicioDao extends JpaRepository<Servicio, Integer> {
     
     @Modifying
     @Query(value = "UPDATE servicio SET nombre=?,celular=?,whatsapp=?,email=?,precio=?,precio_descripcion=?,horario=?,descripcion=? where id_servicio=?",nativeQuery= true)

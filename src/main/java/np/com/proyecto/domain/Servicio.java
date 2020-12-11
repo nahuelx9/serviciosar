@@ -27,7 +27,8 @@ public class Servicio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idServicio;
+    private Integer idServicio;
+    @Size( max=50)
     @NotEmpty
     private String nombre;
     
@@ -56,7 +57,7 @@ public class Servicio implements Serializable {
     
     
     @Column(name = "id_usuario")
-    private int idUsuario = 0;
+    private Integer idUsuario = 0;
     
     @OneToMany
     @JoinColumn(name = "id_servicio")

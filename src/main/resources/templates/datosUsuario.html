@@ -6,30 +6,29 @@ and open the template in the editor.
 -->
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <head>
+          <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
-        <link href="carrousel.css" rel="stylesheet">
         <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
         <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
-        <!-- Bootstrap CSS -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/webjars/animate.css/4.1.1/animate.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/webjars/sweetalert2/10.10.4/dist/sweetalert2.min.css}" type="text/css">
+        <script th:src="@{/webjars/sweetalert2/10.10.4/dist/sweetalert2.min.js}"></script>
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
         <link th:href="@{/css/carrousel.css}" rel="stylesheet">
-
-        <title>Registro Usuario</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-light bg-dark nav-misServicios ">
-                <a th:href="@{/}" class="volver tituloRegistroUsuario"><h1 class=" text-right titulo text-success">Servicios.com</h1></a>
-                <h1 class="text-light text-center tituloregistro">Datos Usuario</h1>
-                <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
+        <nav class="navbar navbar-light bg-dark " id="nav-simple">
+                <a th:href="@{/}" class="volver tituloRegistroUsuario order-1"><h1 class="  titulo text-success">Servicios.com</h1></a>
+                <h1 class="text-light  titulo-nav-simple order-2">Datos Usuario</h1>
+                <a th:href="@{/}" class="volver tituloRegistroUsuario order-3"><h1 class="  titulo text-success">Servicios.com</h1></a>
             </nav>
         </header>
         <div class="container-fluid centeDatos">
@@ -244,13 +243,10 @@ and open the template in the editor.
         </div>
 
 
-        <!-- Footer -->
-        <footer class="page-footer font-small blue footerRegistro">
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
-                <a th:href="@{/}" class="text-success"> Servicios.com</a>
-            </div>
-            <!-- Copyright -->
+       <!-- Footer -->
+        <footer class=" d-flex justify-content-center py-3">
+                <span>©2020 Copyright:</span>
+                <a th:href="@{/}"  class="text-success text-center"> Servicios.com</a>
         </footer>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

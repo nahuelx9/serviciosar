@@ -25,7 +25,7 @@ public class DBFile {
      private String url = null;
     
     @Column(name = "id_servicio")
-    private int idServicio = 0;
+    private Integer idServicio = 0;
     
    
 

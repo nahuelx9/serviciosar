@@ -1,5 +1,15 @@
 addEventListener('load', inicio, false);
 
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
+
+
+$('#pop').popover().click(function () {
+    setTimeout(function () {
+        $('#pop').popover('hide');
+    }, 5000);
+});
 
 
 function inicio()
@@ -7,8 +17,9 @@ function inicio()
 
     document.getElementById('precio').addEventListener('change', cambioPrecio, false);
     document.getElementById('rangoSinPrecio').addEventListener('click', desabilitar, false);
-
 }
+
+
 
 
 function deshabilitarBtnBusquedaIndex() {
@@ -41,27 +52,12 @@ checkbox.addEventListener('change', function () {
 });
 
 //POPOVER
-$(function () {
-    $('[data-toggle="popover"]').popover();
-});
-
-$('.pop').popover().click(function () {
-    setTimeout(function () {
-        $('.pop').popover('hide');
-    }, 7000);
-});
-
-//VALIDACIONES
-$("#form-servicios").validate();
 
 
 
 
 
-
-
-function cambioPrecio()
-{
+function cambioPrecio() {
     document.getElementById('pre').innerHTML = document.getElementById('precio').value;
 
 }

@@ -5,142 +5,147 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
-        <link href="carrousel.css" rel="stylesheet">
-        <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
-        <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" th:href="@{/static/css/css.css}" type="text/css">
-        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
-        <title>Servicios.com</title>
-    </head>
-    <body>
-        <header>
-            <nav class="navbar navbar-light bg-dark ajustar nav-misServicios ">
-                <a th:href="@{/}" class="volver"><h1 class=" text-right  titulo text-success">Servicios.com</h1></a>
-                <h1 class="text-light text-center tituloMisServicios">Mis Servicios</h1>
-                <h1 class=" text-right titulo2 text-success">Servicios.com</h1>
-            </nav>
-        </header>
-    </body>
-    <!-- Servicios -->
-    <div class="container-md ajustar-lista">
-        <ul th:each="servicio, iStat: ${servicios}" class="list-group">
-            <li class="list-group">
-                <div class="row">
-                    <div class="col-md-25">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="text-capitalize"   style="font-family: 'DM Serif Text', serif;" th:text="${servicio.nombre}">Nombre del servicio</h3>
-                            </div>
-                            <table class="table table-stryped">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Descripcion:</th>
-                                        <th>Datos:</th>
-                                        <th>Fotos:</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <article class="text-descripcion " lang="en">
-                                                <p   th:text="${servicio.descripcion}">Descripcion</p>
-                                            </article>
-                                        </td>
-                                        <td>
-                                            <div class="datos-div">
-                                                <p class="datos-tabla"  th:text="'Email: ' + ${servicio.email}" >email</p>
-                                                <p  class="datos-tabla"  th:text="'Celular: ' +${servicio.celular}" > <i class="fa fa-whatsapp" aria-hidden="true"></i></p>
-                                                <p class="datos-tabla"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
-                                                <p class="datos-tabla" th:if="${servicio.precio} != null" th:text="'Precio: ' + '$'+ ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
-                                                <p class="datos-tabla" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
-                                                <p class="datos-tabla text-capitalize" th:text="'Provincia: ' + ${usuario.provincia}">Provincia</p><p class="datos-tabla text-capitalize" th:text="'Departamento: ' + ${usuario.departamento}" >Departamento</p>
-                                                <p class="datos-tabla text-capitalize" th:text="'Usuario: ' + ${usuario.nombre} + ' ' + ${usuario.apellido}">Usuario</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div th:id="'carrusel'+${iStat.index}" class="carousel slide slider-principal clearfix " data-ride="carousell" data-interval="false"  >
-                                                <div class="carousel-inner clearfix">
-                                                    <div  th:each="file, iterstat : ${servicio.filess}"  class="carousel-item  slider" th:class="${iterstat.index}!=0 ? 'carousel-item slider':'carousel-item slider active'">
-                                                        <a th:href="*{'data:image/jpg;base64,' + file.url}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="*{'data:image/jpg;base64,'+ file.url}" class="d-block " alt="..."></a>
-                                                    </div>
-                                                </div>
-                                                <a class="carousel-control-prev" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="carousel-control-next" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                                <a th:href="@{/editarImagenes/} + ${servicio.idServicio}" class="btn btn btn-outline-secondary text-center edicion editar-fotos ">
-                                                    <i class="far fa-edit "></i></i> Editar Fotos
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="mx-auto d-flex justify-content-center m-2">
-                            <a th:href="@{/editarServicio/} + ${servicio.idServicio}" class="btn btn-secondary text-center edicion mr-2">
-                                <i class="far fa-edit "></i></i> Editar
-                            </a>
-                            <a href="#" class="btn btn-danger edicion" data-toggle="modal" th:data-target="'#m'+${iStat.index}">
-                                <i class="fas fa-trash"></i>  Eliminar
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
+    <link href = "https://fonts.googleapis.com/css2? family = Rokkitt & display = swap" rel = "stylesheet">
+    <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/webjars/animate.css/4.1.1/animate.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/webjars/sweetalert2/10.10.4/dist/sweetalert2.min.css}" type="text/css">
+    <script th:src="@{/webjars/sweetalert2/10.10.4/dist/sweetalert2.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link th:href="@{/css/carrousel.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
 
-                <!-- Modal Eliminar -->
-                <div class="modal fade" th:id="'m'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header modal-eliminar">
-                                <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                Esta segur@ de elimiar su servicio, no podra revertir cambios
-                            </div>
-                            <div class="modal-footer modal-eliminar ">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
-                                <a th:href="@{/eliminarServicio(idServicio=${servicio.idServicio})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
-                            </div>
+    <title>Servicios.com</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-dark " id="nav-simple">
+            <a th:href="@{/}" class="volver tituloRegistroUsuario order-1"><h1 class="  titulo text-success">Servicios.com</h1></a>
+            <h1 class="text-light  titulo-nav-simple  order-2">Mis servicios</h1>
+            <a th:href="@{/}" class="volver tituloRegistroUsuario order-3"><h1 class="  titulo text-success">Servicios.com</h1></a>
+        </nav>
+    </header>
+</body>
+<!-- Servicios -->
+<div class="container-md" id="contenedor-card">
+    <ul th:each="servicio, iStat: ${servicios}" class="list-group  mb-5">
+        <li class="list-group">
+            <div class="card ">
+                <div class="card-header">
+                    <h3 class="text-capitalize titulo-servicio"   style="font-family: 'DM Serif Text', serif;" th:text="${servicio.nombre}">Nombre del servicio</h3>
+                </div>
+                <table class="table table-stryped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th class="titulo-card">Descripcion:</th>
+                            <th class="titulo-card">Datos:</th>
+                            <th class="titulo-card">Fotos:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="card-responvie">
+                            <td>
+                                <h5 class="card-title titulo-card-responsive text-break">Descripcion:</h5>
+                                <article class="text-justify m-0 descripcion-servicio" lang="en">
+                                    <p   th:text="${servicio.descripcion}">Descripcion</p>
+                                </article>
+                            </td>
+                            <td>
+                                <h5 class="card-title titulo-card-responsive">Datos:</h5>
+                                <div class="datos-div d-flex flex-column bd-highlight" >
+                                    <p class="mb-2 text-break"  th:text="'Email: ' + ${servicio.email}" >email</p>
+                                    <p  class="mb-2 wsp-cel" th:if="${servicio.whatsapp} == true"  th:text="'Celular: ' +${servicio.celular}">Celular</p>
+                                    <p th:if="${servicio.whatsapp}== false"class="mb-2"  th:text="'Celular: ' +${servicio.celular}">Celular</p>
+                                    <p class="mb-2"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
+                                    <p class="mb-2" th:if="${servicio.precio} != null" th:text="'Precio: ' + '$'+ ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                    <p class="mb-2" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                    <p class="mb-2 text-capitalize" th:text="'Provincia: ' + ${usuario.provincia}">Provincia</p><p class="datos-tabla text-capitalize" th:text="'Departamento: ' + ${usuario.departamento}" >Departamento</p>
+                                    <p class="mb-2 text-capitalize text-break" th:text="'Usuario: ' + ${usuario.nombre} + ' ' + ${usuario.apellido}">Usuario</p>
+                                </div>
+                            </td>
+                            <td>
+                                <h5 class="card-title titulo-card-responsive">Fotos:</h5>
+                                <div th:id="'carrusel'+${iStat.index}" class="carousel  m-0  " data-ride="carousell" data-interval="false"  >
+                                    <div class="carousel-inner clearfix">
+                                        <div  th:each="file, iterstat : ${servicio.filess}"  class="carousel-item  slider" th:class="${iterstat.index}!=0 ? 'carousel-item slider':'carousel-item slider active'">
+                                            <a th:href="*{'data:image/jpg;base64,' + file.url}" th:data-lightbox="'photos'+${iStat.index}" class="img-slider"><img th:src="*{'data:image/jpg;base64,'+ file.url}" class="d-block " alt="..."></a>
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" th:href="'#carrusel'+${iStat.index}" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    <a th:href="@{/editarImagenes/} + ${servicio.idServicio}" class="btn btn btn-outline-secondary text-center edicion editar-fotos ">
+                                        <i class="far fa-edit "></i></i> Editar Fotos
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mx-auto d-flex justify-content-center m-2">
+                <a th:href="@{/editarServicio/} + ${servicio.idServicio}" class="btn btn-secondary text-center edicion mr-2">
+                    <i class="far fa-edit "></i></i> Editar
+                </a>
+                <a href="#" class="btn btn-danger edicion" data-toggle="modal" th:data-target="'#m'+${iStat.index}">
+                    <i class="fas fa-trash"></i>  Eliminar
+                </a>
+            </div>
+
+            <!-- Modal Eliminar -->
+            <div class="modal fade" th:id="'m'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-eliminar">
+                            <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Esta segur@ de elimiar su servicio, no podra revertir cambios
+                        </div>
+                        <div class="modal-footer modal-eliminar ">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                            <a th:href="@{/eliminarServicio(idServicio=${servicio.idServicio})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
                         </div>
                     </div>
                 </div>
-            </li>
-        </ul>
-        <div class='container-fluid'>
-            <a th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}" <button type="button" class="btn btn-outline-success btn-lg btn-block mt-5" style="height: 60px;" ><p class="mt-2">AGREGAR SERVICIO</p></button></a>
-            <button th:if="${usuario.getServicios().size() >= 4}" type="button" class="btn btn-outline-success btn-lg btn-block mt-5 pop" style="height: 60px;" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario"><p class="mt-2">AGREGAR SERVICIO</p></button>
-        </div>
+            </div>
+        </li>
+    </ul>
+    <div class='container-fluid'>
+        <a th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}" <button type="button" class="btn btn-outline-success btn-lg btn-block mt-5" style="height: 60px;" ><p class="mt-2">AGREGAR SERVICIO</p></button></a>
+        <button th:if="${usuario.getServicios().size() >= 4}" type="button" id="pop" class="btn btn-outline-success btn-lg btn-block mt-5" style="height: 60px;" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario"><p class="mt-2">AGREGAR SERVICIO</p></button>
     </div>
-    <!-- Footer -->
-    <footer class="page-footer font-small blue footerServicioUsuario">
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
-            <a th:href="@{/}" class="text-success"> Servicios.com</a>
-        </div>
-        <!-- Copyright -->
-    </footer>
-    <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/js.js}"></script>
-    <script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+</div>
+<!-- Footer -->
+<footer class=" d-flex justify-content-center py-3">
+    <span>©2020 Copyright:</span>
+    <a th:href="@{/}"  class="text-success text-center"> Servicios.com</a>
+</footer>
+<script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/js.js}"></script>
+<script src="https://kit.fontawesome.com/9c123ffe91.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
 </body>
 </html>
+
+  <span th:each="usuario, iStat: ${usuarios}"  th:if="${servicio.idUsuario} == ${usuario.idUsuario} ">

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface UsuarioDao extends JpaRepository<Usuario, Long> {
+public interface UsuarioDao extends JpaRepository<Usuario, Integer> {
 
     Usuario findByUsername(String username);
 

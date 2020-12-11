@@ -10,13 +10,16 @@
         <link href = "https://fonts.googleapis.com/css2? family = Caladea: ital @ 1 & display = swap" rel = "stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alike&family=Great+Vibes&family=Old+Standard+TT:ital@1&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@1&display=swap" rel="stylesheet">
         <link rel="stylesheet" th:href="@{css/css.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/webjars/animate.css/4.1.1/animate.min.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/webjars/sweetalert2/10.10.4/dist/sweetalert2.min.css}" type="text/css">
         <script th:src="@{/webjars/sweetalert2/10.10.4/dist/sweetalert2.min.js}"></script>
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
         <link th:href="@{/css/carrousel.css}" rel="stylesheet">
         <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
-
 
         <title>Servicios.com</title>
         <style>
@@ -38,16 +41,16 @@
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-light bg-dark ">
-                <form  th:action="@{/buscarPorNombre}" method="GET" class="form-inline">
-                    <input onkeyup="deshabilitarBtnBusquedaIndex()" class="form-control mr-sm-2 buscador" name="nombre" id="mensaje" type="search" placeholder="Busque un Servicio" aria-label="Search" >
-                    <button class="btn btn-outline-success my-2 my-sm-1 botoncito botonbuscar" type="submit" id="btnBuscar" disabled>Buscar</button>
+            <nav class="navbar navbar-light bg-dark" id="nav">
+                <form  th:action="@{/buscarPorNombre}" method="GET" class="form-inline order-2">
+                    <input onkeyup="deshabilitarBtnBusquedaIndex()" class="form-control mr-sm-2 " name="nombre" id="mensaje" type="search" placeholder="Busque un Servicio" aria-label="Search" >
+                    <button class="btn btn-outline-success my-2 my-sm-1 btn-nav-buscador" type="submit" id="btnBuscar" disabled>Buscar</button>
                 </form>
-                <h1 class="text-light text-right titulo">Servicios.com</h1>
-                <div class="boton">
-                    <button type="button" class=" serviciosbtn nav-link float-left text-light" data-toggle="modal" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</button>
-                    <a th:href="@{/agregarUsuario}"><button type="button" class=" serviciosbtn nav-link float-left text-light" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</button></a>
-                    <a th:href="@{/serviciosUsuario/} + ${id}"><button type="button" class=" nav-link serviciosbtn  float-left  text-light" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</button></a>
+                <h1 class="text-light  titulo order-1">Servicios.com</h1>
+                <div class="d-flex justify-content-end order-3">
+                    <a class=" serviciosbtn  text-light nav-link float-left" id="nav-link" data-toggle="modal" href="#" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</a>
+                    <a th:href="@{/agregarUsuario}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</a>
+                    <a th:href="@{/serviciosUsuario/} + ${id}" class=" nav-link serviciosbtn  float-left  text-light"  id="nav-link" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</a>
                     <div sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown float-left">
                         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Cuenta
@@ -85,7 +88,7 @@
         <script th:if="${datosModificados}" type="text/javascript">
             Swal.fire({
                 icon: 'success',
-                title: 'Los datos se modificarion correctamente',
+                title: 'Los datos se modificaron correctamente',
                 showConfirmButton: false,
                 timer: 3500
             });
@@ -178,50 +181,44 @@
 
     <main role="main" class="flex-shrink-0">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-                <li data-target="#myCarousel" data-slide-to="3"></li>
-            </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img th:src="@{img/1.jpg}" alt="imagenMuestra">
-                    <svg class="bd-placeholder-img"  width="100%" height="100%"  xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+                <div class="carousel-item active img-opacity">
+                    <img th:src="@{img/1.jpg}" alt="imagenMuestra" class="imagen-menu">
+                    <svg class="bd-placeholder"  width="100%" height="100%"  xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/> 
                     <div class="container">
                         <div class="carousel-caption text-left">
-                            <h1 class="promocion">ENCONTRA LO QUE ESTAS BUSCANDO</h1>
-                            <h3 class="promocion">Encuentra los mejores animadroes,musicos,fotografos y mucho mas para volver tus fiestas mas entretenidas </h3>
+                            <h1 class="promocionTitle">ENCONTRA LO QUE ESTAS BUSCANDO</h1>
+                            <h3 class="promocionTexto">Encuentra los mejores animadroes,musicos,fotografos y mucho mas para volver tus fiestas mas entretenidas </h3>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img th:src="@{img/4.jpg}" alt="servicios de fiesta,mantenimientoentretenimiento,educacion,bienestar,finanzas">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+                <div class="carousel-item img-opacity">
+                    <img th:src="@{img/4.jpg}"  class="imagen-menu2" alt="servicios de fiesta,mantenimientoentretenimiento,educacion,bienestar,finanzas">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
                     <div class="container">
-                        <div class="carousel-caption">
-                            <h1 class="promocion">PROMOCIONA TU TRABAJO</h1>
-                            <h3 class="promocion">En SERVICIOS.COM queremos ayudarte a que mas personas conozcan lo que haces para que  tu productividad vaya en aumento</h3>
+                        <div class="carousel-caption text-right">
+                            <h1 class="promocionTitle">PROMOCIONA TU TRABAJO</h1>
+                            <h3 class="promocionTexto">En SERVICIOS.COM queremos ayudarte a que mas personas conozcan lo que haces para que  tu productividad vaya en aumento</h3>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img th:src="@{img/22.jpg}" alt="imagenMuestra">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+                <div class="carousel-item img-opacity">
+                    <img th:src="@{img/22.jpg}"  class="imagen-menu3"  alt="imagenMuestra">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
                     <div class="container">
-                        <div class="carousel-caption text-leftt">
-                            <h1 class="promocion ">CONSULTA CON LOS MEJORES</h1>
-                            <h3 class="promocion">Conoce la amplia gama de profesionales que estan registrados en nuesta plataforma  finanzas,bienestar,educacion</h3>
+                        <div class="carousel-caption ">
+                            <h1 class="promocionTitle ">CONSULTA CON LOS MEJORES</h1>
+                            <h3 class="promocionTexto">Finanzas,bienestar,educacion y mas...</h3>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img th:src="@{img/33.jpg}" alt="imagenMuestra">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+                <div class="carousel-item img-opacity">
+                    <img th:src="@{img/33.jpg}"   class="imagen-menu4" alt="imagenMuestra">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
                     <div class="container">
                         <div class="carousel-caption text-center">
-                            <h1 class="promocion">TENEMOS LA SOLUCION A TUS PROBLEMAS</h1>
-                            <h3 class="promocion">Problemas con plomeria,gas,elctridad,ventilacion entre mucho mas encontra todos los especialistas en un  solo lugar </h3>
+                            <h1 class="promocionTitle">TENEMOS LA SOLUCION A TUS PROBLEMAS</h1>
+                            <h3 class="promocionTexto">Plomeria,gas,elctridad,ventilacion entre mucho mas todos los especialistas en un  solo lugar </h3>
                         </div>
                     </div>
                 </div>
@@ -237,33 +234,25 @@
         </div> 
 
         <div class=" container">
-            <h2 class="titulomenu mb-5">conoce todos los servicios diponibles a continuacion</h2>
-            <div class="d-flex justify-content-around contenedor-img ">
+            <h2 class="titulomenu mb-5 animate__animated animate__pulse animate__repeat-2">conoce todos los servicios diponibles a continuacion</h2>
+            <hr id="title_hr">
+            <div class="d-flex justify-content-around" id="carteles-lista-promocion">
                 <div  class="menu-servicios order-1  menu-lista-servicios">
                     <div class="contenido-lista">
-                    <h3 class="text-center text-light mb-2">LISTA DE SERVICIOS</h3>
-                   <a th:href="@{/buscar}"> <button type="button" class="btn btn-outline-light  btn-lg btn-block">VER LISTA</button></a>
+                        <h3 class="text-center text-light mb-2">LISTA DE SERVICIOS</h3>
+                        <a th:href="@{/buscar}"> <button type="button" class="btn btn-outline-light  btn-lg btn-block">VER LISTA</button></a>
                     </div>
                 </div>
-                <div  class="menu-servicios order-2  menu-promocio-servicios">
-                      <div class="contenido-lista">
-                    <h3 class="text-center text-light">PROMOCIONA TU SERVICIO</h3>
-                    <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-light  btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">PROMOCIONAR</button>
-                    <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-light  btn-lg btn-block">PROMOCIONAR</button></a>
-                    <button sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" type="button" class="btn btn-outline-light  btn-lg btn-block pop" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario">PROMOCIONAR</button>
+                <div  class="menu-servicios order-2  menu-promocio-servicios mb-3">
+                    <div class="contenido-lista">
+                        <h3 class="text-center text-light">PROMOCIONA TU SERVICIO</h3>
+                        <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-light  btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">PROMOCIONAR</button>
+                        <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-light  btn-lg btn-block">PROMOCIONAR</button></a>
+                        <button sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" id="pop" type="button" class="btn btn-outline-light  btn-lg btn-block" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario">PROMOCIONAR</button>
                     </div>
                 </div>
             </div>
-
         </div>
-
-        <!-- <section class="seccion contenedor">
-               <h2 class="titulomenu">conoce todos los servicios diponibles a continuacion</h2>
-               <a th:href="@{/buscar}"><button type="button" class="btn btn-outline-success  btn-lg btn-block lista">Ir a la lista de servicios</button></a>
-               <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-success btn-lg btn-block lista" data-toggle="modal" data-target="#exampleModal" >Promociona tu Servicio</button>
-               <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-success btn-lg btn-block lista"   >Promociona tu Servicio</button></a>
-               <button  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" type="button" class="btn btn-outline-success btn-lg btn-block lista pop"   data-container="body" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario" >Promociona tu Servicio</button></a>
-           </section><!--seccion-->
     </main>
 
     <!-- Modal iniciar sesion -->
@@ -321,17 +310,10 @@
         </div>
     </div>
     <!-- Footer -->
-    <footer class="page-footer font-small blue footerIndex">
-
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3 ">© 2020 Copyright:
-            <a th:href="@{/}"  class="text-success"> Servicios.com</a>|
-            <b>User:</b><span sec:authentication="name">Usuario logueado</span>|
-        </div>
-        <!-- Copyright -->
-    </footer>
-    <!-- Footer -->
-    <!-- Footer -->
+        <footer class=" d-flex justify-content-center py-3">
+                <span>©2020 Copyright:</span>
+                <a th:href="@{/}"  class="text-success text-center"> Servicios.com</a>
+        </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
