@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Provincias y departamentos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <section th:fragment="provinciasDepartamentos">
+              <script th:inline="javascript">
+                            function mostrarListado() {
+                                /* Obtenemos el value de la provincia selecciona*/
+                                var idProvincia = document.getElementById("listaProvincias").value;
+                                var idDepartamento = document.getElementById("listaDepartamentos");
+                                /* El value es un String lo pasamos a un int para que se pueda comparar*/
+                                var idResultado = parseInt(idProvincia);
+                                /* Traemos la lista de deparmentos*/
+                                var departamentos = /*[[${departamentos}]]*/ null;
+                                /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
+                                document.getElementById("listaProvincias").addEventListener('change', limpiar, false);
+                                /* Recorremos la lista de departamentos si existe un id =  listaProvincia lo agregamos al select*/
+                                for (var i in departamentos) {
+                                    let opcion = document.createElement('option');
+                                    if (departamentos[i].id == idResultado) {
+                                        opcion.value = departamentos[i].nombre;
+                                        opcion.text = departamentos[i].nombre;
+                                        idDepartamento.add(opcion);
+                                    }
+                                }
+                            }
+                            function limpiar() {
+                                /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
+                                var idDepartamento = document.getElementById("listaDepartamentos");
+                                idDepartamento.innerHTML = '<option selected value="">Departamento</option>';
+                            }
+                        </script>
+        </section>
+    </body>
+</html>

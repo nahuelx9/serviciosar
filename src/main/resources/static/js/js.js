@@ -1,5 +1,13 @@
 addEventListener('load', inicio, false);
 
+
+VanillaTilt.init(document.querySelectorAll(".menu-servicios"), {
+    max: 15,
+    speed: 400,
+    transition: true,
+    scale: 1.1
+});
+
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
@@ -11,12 +19,24 @@ $('#pop').popover().click(function () {
     }, 5000);
 });
 
-
-function inicio()
-{
+function inicio() {
 
     document.getElementById('precio').addEventListener('change', cambioPrecio, false);
     document.getElementById('rangoSinPrecio').addEventListener('click', desabilitar, false);
+}
+
+function imagenCargada() {
+    document.getElementById("inputLabel0").innerHTML = document.getElementById('input0').files[0].name;
+    document.getElementById("inputLabel1").innerHTML = document.getElementById('input1').files[0].name;
+    document.getElementById("inputLabel2").innerHTML = document.getElementById('input2').files[0].name;
+    document.getElementById("inputLabel3").innerHTML = document.getElementById('input3').files[0].name;
+    document.getElementById("inputLabel4").innerHTML = document.getElementById('input4').files[0].name;
+    document.getElementById("inputLabel5").innerHTML = document.getElementById('input5').files[0].name;
+
+}
+
+function imagenGuardar() {
+    document.getElementById("inputGuardarLabel").innerHTML = document.getElementById('inputGuardar').files[0].name;
 }
 
 
@@ -51,7 +71,6 @@ checkbox.addEventListener('change', function () {
     }
 });
 
-//POPOVER
 
 
 

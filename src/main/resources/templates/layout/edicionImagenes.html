@@ -1,0 +1,129 @@
+<<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <html>
+    <head>
+        <title>Edicion imagenes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <section th:fragment="edicionImagenes">
+             <div class="container-md mt-5  d-flex flex-column" id="contenedor-card-imagenes">
+                    <div th:each="f, iStat : *{files}" class=" card imagenes-card m-4  order-1 " >
+                        <img th:src="*{'data:image/jpg;base64,'+ f.url}" class="card-img-top  imagenes-card"  th:alt="${f.id}">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-center" th:text="${f.fileName}"></li>
+                            <li class="list-group-item text-center"> <a  href="# " class="btn btn-outline-secondary text-center edicion m-1" data-toggle="modal" th:data-target="'#modificar'+${iStat.index}">
+                                    <i class="far fa-edit"></i></i> Modificar
+                                </a></li>
+                            <li  class="list-group-item text-center"><a href="#" class="btn btn-outline-danger text-center edicion m-1" data-toggle="modal" th:data-target="'#eliminar'+${iStat.index}">
+                                    <i class="fas fa-trash"></i>  Eliminar
+                                </a></li>
+                        </ul>
+                    
+
+
+                    <!-- Modal  eliminar imagenes -->
+                    <div class="modal fade" th:id="'eliminar'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header modal-eliminar">
+                                    <h5 class="modal-title " id="exampleModalLabel">Eliminar Imagen</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Esta segur@ de elimiar la imagen, no podra revertir cambios
+                                </div>
+                                <div class="modal-footer modal-eliminar ">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                    <a th:href="@{/eliminarImagen(id=${f.id})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Modal modificar imagenes -->
+                    <form  th:action="@{/modificarImagen}"  method="POST" enctype="multipart/form-data" name="multipleUploadForm">
+                        <div class="modal fade" th:id="'modificar'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Moodificar imagen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" th:name="file" th:id="'input'+${iStat.index}" onchange="imagenCargada()"
+                                                       aria-describedby="inputGroupFileAddon01"  multiple/>
+                                                <label class="custom-file-label" for="inputGroupFile01" th:id="'inputLabel'+${iStat.index}">Presione aqui para elegir la imagen</label>
+                                            </div>
+                                            <input type="text" th:name="idValue" th:value="${f.id}" hidden >
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit"  class="btn btn-success">Guardar Cambios</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div th:if="${cantFiles < 6}" class="card imagenes-card  m-4 ">
+                    <img th:src="@{/img/agregarImagen.jpg}" class="card-img-top  imagenes-card "  alt="...">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-center"><a href="#" class="btn btn-outline-success text-center edicion m-1" data-toggle="modal" th:data-target="'#guardar'">
+                                <i  class="far fa-edit "></i></i> Agregar
+                            </a></li>
+                    </ul>
+                </div>
+
+
+                <!-- Modal para guardar imagenes -->
+                <form  th:action="@{/guardarImagen}"  method="POST" enctype="multipart/form-data" name="multipleUploadForm">
+                    <div class="modal fade" th:id="guardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Guardar imagen</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" th:name="file"  id="inputGuardar"  onchange="imagenGuardar()"
+                                                   aria-describedby="inputGroupFileAddon01"  multiple/>
+                                            <label class="custom-file-label " for="inputGroupFile01" id="inputGuardarLabel">Presione para elegir imagen</label>
+                                        </div>
+                                        <input type="text" th:name="idServicio" th:value="${servicio.idServicio}" hidden >
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit"  class="btn btn-success">Subir imagen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

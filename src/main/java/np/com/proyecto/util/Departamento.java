@@ -52,8 +52,8 @@ public class Departamento extends Provincia {
                 JSONObject elemento = objA.getJSONObject(i);
                 int id = elemento.getJSONObject("provincia").getInt("id");
                 String nombre = new String(elemento.getString("nombre").replace("Ã‘", "N").getBytes("ISO-8859-1"), "UTF-8");
-                String nl = nombre.replace("?", "A");
-                Departamento departamento = new Departamento(id, nl);
+                String nombreLimpio = nombre.replace("?", "A");
+                Departamento departamento = new Departamento(id, nombreLimpio);
                 DepartamentoListM.add(departamento);
             }
 

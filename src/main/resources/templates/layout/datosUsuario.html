@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <html>
+    <head>
+        <title>Datos usuario</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <section th:fragment="datosUsuario">
+              <div class="container-fluid centeDatos">
+            <div class="card">
+                <div class="card-header text-center font-weight-bold">
+                    INFORMACION 
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p  class="text-capitalize" th:text="'Nombre: ' + ${usuario.nombre}" >Nombre:</p>
+                        <a href="#"data-toggle="modal" data-target="#modificarNombre">  <i class="far fa-edit d-flex justify-content-end"style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize"  th:text="'Apellido: ' + ${usuario.apellido}">Apellido:</p>
+                        <a href="" data-toggle="modal" data-target="#modificarApellido"><i class="far fa-edit d-flex justify-content-end" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize"  th:utext="'Provincia: ' + ${usuario.provincia}+ '<br /><br />' + 'Departamento: ' + ${usuario.departamento}">Provincia: <br><br>Departamento:</p>
+                        <a href=""   data-toggle="modal" data-target="#modificarProvinciaDepartamento"> <i class="far fa-edit d-flex justify-content-end mt-3" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize"  th:text="'Email: ' + ${usuario.username}">Email:</p>
+                        <a href=""   data-toggle="modal" data-target="#modificarEmail"> <i class="far fa-edit d-flex justify-content-end" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                    <li class="list-group-item  d-flex justify-content-between mt-2 text-capitalize">
+                        <p class="text-capitalize">Contraseña: ***************</p>
+                        <a href=""   data-toggle="modal" data-target="#modificarContraseña"><i class="far fa-edit d-flex justify-content-end" style="font-size: 20px; color: gray"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </section>
+    </body>
+</html>

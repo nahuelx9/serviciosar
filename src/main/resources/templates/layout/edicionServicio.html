@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <html>
+    <head>
+        <title>Edicicion Servicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <section th:fragment="edicionServicio">
+              <div class="container-md formulario">
+            <form class="was-validated" th:action="@{/guardarServicioEditado}" method="POST" th:object="${servicio}" >
+                <input type="hidden" name="idServicio" th:field="*{idServicio}"/>
+                <div class="form-group">
+                    <label for="nombre">Nombre Del Servicio:</label>
+                    <input type="text" class="form-control" name="nombre" th:field="*{nombre}" required>
+                </div>
+                <div class="form-group">
+                    <label for="celular">Celular:</label>
+                    <input type="tel" class="form-control" name="celular" th:field="*{celular}" required>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input text-secondary" name="whatsapp" id="whatsapp" th:field="*{whatsapp}">
+                    <label class="form-check-label text-secondary" for="exampleCheck1">WhatsApp</label>  <i class="fab fa-whatsapp " aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email de contacto:</label>
+                    <input type="email" class="form-control" name="email" th:field="*{email}" required>
+                </div>
+                <label for="precio">Precio por el servicio:</label>
+                <div class="input-group mb-3 form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input  th:if="*{precioDescripcion == 'A acordar con el cliente'}" type="number" name="precio" class="form-control novalidate" id="precioNo" th:field="*{precio}" disabled>
+                    <input  th:if="*{precioDescripcion != 'A acordar con el cliente'}" type="number" name="precio" class="form-control novalidate" id="precioNo" th:field="*{precio}" >
+                    <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
+                <div class="form-group required" >
+                    <div class="form-check form-check-inline" >
+                        <input  class="form-check-input" type="radio" value="Por Hora" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio1" onclick="habilitar()" >
+                        <label class="form-check-label novalidate" for="inlineRadio1">Por Hora</label>
+                    </div>
+                    <div class="form-check form-check-inline ">
+                        <input class="form-check-input" type="radio" value="Por Dia" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio1" onclick="habilitar()" >
+                        <label class="form-check-label novalidate" for="inlineRadio1">Por Dia</label>
+                    </div>
+                    <div class="form-check form-check-inline ">
+                        <input class="form-check-input" type="radio" value="Por Mes" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio1" onclick="habilitar()" >
+                        <label class="form-check-label novalidate" for="inlineRadio1">Por Mes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="Por Jornada Laboral" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio2" onclick="habilitar()" >
+                        <label class="form-check-label novalidate" for="inlineRadio2">Por Jornada Laboral</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input " type="radio" value="Por trabajo terminado" name="precioDescripcion" th:field="*{precioDescripcion}" id="inlineRadio3" onclick="habilitar()" >
+                        <label class="form-check-label novalidate " for="inlineRadio3">Por trabajo terminado</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="A acordar con el cliente" name="precioDescripcion" th:field="*{precioDescripcion}" id=""  onclick="desabilitar2()">
+                        <label class="form-check-label novalidate" for="inlineRadio4">A acordar con el cliente</label>
+                    </div>
+                </div>
+                <label for="horario">Horario De trabajo:</label>
+                <div class="form-group borde required" >
+                    <div class="form-check">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios1" value="Part Time"  th:field="*{horario}">
+                        <label class="form-check-label novalidate" for="exampleRadios1">
+                            Part Time
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios2" value="Full Time" th:field="*{horario}">
+                        <label class="form-check-label novalidate" for="exampleRadios2">
+                            Full Time
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios3" value="A acordar con el cliente" th:field="*{horario}">
+                        <label class="form-check-label novalidate" for="exampleRadios3">
+                            A acordar con el cliente
+                        </label>
+                    </div>
+                </div>
+                <label></label>
+                <div class="form-group">
+                    <label for="horario">Agrega una breve descripcion de tu servicio:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Descripcion</span>
+                        </div>
+                        <textarea onkeyup="contarCaracteres()" id="message" name="descripcion" class="form-control" style="height:85px;"  aria-label="With textarea" minlength="92"  maxlength="365"th:field="*{descripcion}"></textarea>
+                    </div>
+                </div>
+                <span>Caracteres ingresados:<span class="ml-2" id="caracteres" ></span></span>
+                <button class="btn   botonform bg-dark" type="submit" th:text='Guardar'>submit</button>
+            </form>
+        </div>
+        </section>
+    </body>
+</html>

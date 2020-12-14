@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <html>
+        <head>
+            <title>Alertans</title>
+            <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    </head>
+                    <body>
+                        <section th:fragment="alerts">
+                            <!--alertas -->
+                            <script th:if="${loginError}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Usuario o contraseña incorrecto!',
+                                    showConfirmButton: false,
+                                    timer: 5000
+                                });
+                            </script>
+                            <script th:if="${newUser}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Usuario creado correctamente',
+                                    text: 'Ya puedes inciar sesion',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+                            <script th:if="${datosModificados}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Los datos se modificaron correctamente',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+                            </script>
+                            <script th:if="${datosModificadosErrorEmail}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'El email ingresado es incorrecto o ya existe en el sistema!'
+                                });
+                            </script>
+                            <script th:if="${passwordCamposError}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Las contraseñas ingresadas son distintas!'
+                                });
+                            </script>
+                            <script th:if="${passwordInvalida}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'La contraseña ingresada es invalida!'
+                                });
+                            </script>
+
+                            <script th:if="${servicioCreado}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'El servicio fue creado correctamente',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+
+                            <script th:if="${servicioModificado}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'El servicio fue modifcado correctamente',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+
+
+                            <script th:if="${servicioEliminado}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'El servicio fue eliminado',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+
+                            <script th:if="${imagenModificada}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'La imagen fue modificada con exito',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+
+                            <script th:if="${imagenGuardada}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'La imagen fue guardada con exito',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+                            <script th:if="${imagenEliminada}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'La imagen fue eliminada',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                });
+                            </script>
+
+                            <script th:if="${imagenMinima}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'La imagen no fue eliminada',
+                                    text: 'Es necesario que exista al menos una imagen'
+                                });
+                            </script>
+
+
+                            <script th:if="${imagenModificadaError}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'El formato de la imagen es invalido!'
+                                });
+                            </script>
+                        </section>
+                    </body>
+                    </html>

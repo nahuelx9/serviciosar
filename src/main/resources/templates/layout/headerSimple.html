@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>header simple</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header th:fragment="navSimple">
+             <nav class="navbar navbar-light bg-dark " id="nav-simple">
+                <a th:href="@{/}" class="volver tituloRegistroUsuario order-1"><h1 class="  titulo text-success">Servicios.com</h1></a>
+                <h1 th:if="${#httpServletRequest.requestURI} == '/agregarUsuario'" class="text-light  titulo-nav-simple order-2">Registro Usuario</h1>
+                <h1 th:if="${#httpServletRequest.requestURI}== '/agregarServicio'" class="text-light  titulo-nav-simple order-2">Registro  Servicio</h1>
+                <a th:href="@{/}" class="volver tituloRegistroUsuario order-3"><h1 class="  titulo text-success">Servicios.com</h1></a>
+            </nav>
+        </header>
+    </body>
+</html>

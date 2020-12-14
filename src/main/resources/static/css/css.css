@@ -211,7 +211,7 @@ a:hover{
 }
 .rangoSinPrecio{
     float: right;
-     top:-12%;
+    top:-12%;
 }
 .labelbuscador{
     display: block;
@@ -307,10 +307,10 @@ a:hover{
     padding: .1rem 1rem!important;
 }
 .wsp-cel::after{
-    content: '\f232';
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Brands";
+    content: "\f232";
+    font-weight: 400;
     font-style: normal;
-    font-weight: normal;
     text-decoration: inherit;
     margin-left:5px;
     color:green;
@@ -346,9 +346,7 @@ h4::first-letter{
 .editar-fotos{
     margin-left: 40px;
 }
-.imagenes-card{
-    width: 300px;
-}   
+
 .centerimg{
     position: absolute;
     top:50%;
@@ -396,18 +394,17 @@ h4::first-letter{
     position: relative;
     border-radius: 10px;
     box-shadow: 10px 10px 5px grey;
+    cursor: pointer;
 }
 .menu-lista-servicios{
     background: url(../img/escritorio.jpg);
     background-repeat: no-repeat;
     background-size: 400px 400px;
-    transition: all 0.5s;
 }
-.menu-promocio-servicios{
+.menu-promocion-servicios{
     background: url(../img/obrero-plano.jpg);
     background-repeat: no-repeat;
     background-size: 400px 400px;
-    transition: all 0.5s;
 }
 .contenido-lista{
     position: absolute;
@@ -417,19 +414,9 @@ h4::first-letter{
     width: 50%;
     margin: -15% 0 0 -25%;
 }
-.menu-lista-servicios:hover {
-    -ms-transform: scale(1.1); /* IE 9 */
-    -webkit-transform: scale(1.1); /* Safari 3-8 */
-    transform: scale(1.1); 
-    cursor: pointer;
+.btn-promocion{
+    width: auto;
 }
-.menu-promocio-servicios:hover {
-    -ms-transform: scale(1.1); /* IE 9 */
-    -webkit-transform: scale(1.1); /* Safari 3-8 */
-    transform: scale(1.1); 
-    cursor: pointer;
-}
-
 .imagen-menu {
     clip-path: ellipse(150% 55% at 48% 44%);
 }
@@ -482,18 +469,19 @@ footer{
     }
 }
 
-@media screen and (max-width: 1199px) {
-    .imagenes-card{
-        width: 100%;
-        
-    }
-}
+
 @media screen and (max-width: 991px)  and (min-width:768px) {
     #contenedor-card{
         max-width: 962px;
     }
-   
 
+
+}
+
+@media screen and (min-width: 991px) {
+    #contenedor-card-imagenes{
+        width: 500px;
+    }
 }
 
 @media screen and (max-width: 991px) {
@@ -504,10 +492,14 @@ footer{
         margin: 20px;
     }
     #contenedor-card-imagenes{
-        flex-direction: column-reverse;
+        flex-direction: column;
         padding-right: 50px;
     }
- 
+    .imagenes-card{
+        width: 100%;
+
+    }
+
 }
 
 
@@ -559,18 +551,21 @@ footer{
         width: 100%;
         height: 100%;
     }
+    .text-promocion{
+        font-size: 18px;
+    }
 
- 
+
 }
 @media screen and (max-width: 540px) {
-   
+
     .datos-div{
         font-size: 18px;
     }
-     .descripcion-servicio{
+    .descripcion-servicio{
         font-size: 18px;
     }
-    
+
 }
 
 @media screen and (max-width: 488px) {
@@ -590,7 +585,11 @@ footer{
     .editar-fotos{
         margin-left: 25%;
     }
-    
+    .btn-promocion{
+        position: relative;
+        right: 14%;
+    }
+
 
 }
 
@@ -610,21 +609,15 @@ footer{
     .promocionTexto{
         font-size: 1em;
     }
- 
-  
+
+
 }
 
 
-
-
-
-
 @media screen and (max-width: 320px) {
-   
     .edicion{
         width: 152px;
     }
-   
 }
 
 @media screen and (max-width: 280px) {
@@ -632,7 +625,7 @@ footer{
         font-size: 30px;
     }
 
-  
+
 }
 
 

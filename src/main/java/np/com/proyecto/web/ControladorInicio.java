@@ -316,6 +316,9 @@ public class ControladorInicio {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
+        for(Departamento dep : departamentos){
+            System.out.println("departamentos::" + dep.getNombre() + dep.getId());
+        }
         Filtro filtro = new Filtro();
 
         /*Paginacion*/
@@ -399,11 +402,11 @@ public class ControladorInicio {
  /* obtenemos el parametro y si es diferente de null entonces convertimos el valor a un integer*/
         int page = params.get("page") != null ? Integer.valueOf(params.get("page").toString()) - 1 : 0;
         PageRequest pageRequest = PageRequest.of(page, 7);
-        
+
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-              return "redirect:/buscar";
+            return "redirect:/buscar";
         }
-        
+
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
             pageServicio = servicioService.findByAllFilters(filtro.getProvincia(), filtro.getDepartamento(), filtro.getHorario(), filtro.getPrecio(), pageRequest);
         }
@@ -563,9 +566,14 @@ public class ControladorInicio {
         Usuario usuarioLogueado = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
         DBFile db = dbFileStorageService.encontrarDBFile(dbFile);
         Servicio servicio = servicioService.encontrarServicioById(db.getIdServicio());
+        int cantidadDeImagenes = servicio.getFiless().size();
         if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario())) {
-            dbFileStorageService.eliminar(dbFile);
-            return "redirect:/imagenEliminada";
+            if (cantidadDeImagenes > 1) {
+                dbFileStorageService.eliminar(dbFile);
+                return "redirect:/imagenEliminada";
+            } else {
+                return "redirect:/imagenMinima";
+            }
         } else {
             return "error";
         }
@@ -578,7 +586,8 @@ public class ControladorInicio {
      * @return
      */
     @RequestMapping("/login-error.html")
-    public String loginError(Model model) {
+    public String loginError(Model model
+    ) {
         model.addAttribute("loginError", true);
         return "index";
     }
@@ -590,7 +599,8 @@ public class ControladorInicio {
      * @return
      */
     @RequestMapping("/new-user.html")
-    public String newUser(Model model) {
+    public String newUser(Model model
+    ) {
         model.addAttribute("newUser", true);
         return "index";
     }
@@ -602,7 +612,8 @@ public class ControladorInicio {
      * @return
      */
     @RequestMapping("/login-logout.html")
-    public String loginLogout(Model model) {
+    public String loginLogout(Model model
+    ) {
         model.addAttribute("loginLogout", true);
         return "redirect:/";
     }
@@ -616,7 +627,9 @@ public class ControladorInicio {
      * @return
      */
     @RequestMapping("/datosModificados")
-    public String datosModificados(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String datosModificados(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         model.addAttribute("datosModificados", true);
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
@@ -628,7 +641,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/datosModificadosErrorEmail")
-    public String datosModificadosErrorEmail(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String datosModificadosErrorEmail(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -646,7 +661,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/passwordCamposError")
-    public String contraseñaCamposError(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String contraseñaCamposError(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -658,7 +675,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/passwordInvalida")
-    public String contraseñaInvalida(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String contraseñaInvalida(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -670,7 +689,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/servicioCreado")
-    public String servicioCreado(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String servicioCreado(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -682,7 +703,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/servicioModificado")
-    public String servicioModificado(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String servicioModificado(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -694,7 +717,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/servicioEliminado")
-    public String servicioEliminado(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String servicioEliminado(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -706,7 +731,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/imagenGuardada")
-    public String imagenGuardada(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String imagenGuardada(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -718,7 +745,9 @@ public class ControladorInicio {
     }
 
     @RequestMapping("/imagenEliminada")
-    public String imagenEliminada(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String imagenEliminada(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -728,9 +757,25 @@ public class ControladorInicio {
         model.addAttribute("imagenEliminada", true);
         return "index";
     }
+    
+      @RequestMapping("/imagenMinima")
+    public String imagenMinima(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
+        if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", usuario.getIdUsuario());
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("imagenMinima", true);
+        return "index";
+    }
 
     @RequestMapping("/imagenModificadaError")
-    public String imagenModificadaError(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
+    public String imagenModificadaError(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
