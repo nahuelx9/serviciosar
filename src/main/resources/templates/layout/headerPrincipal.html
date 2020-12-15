@@ -10,7 +10,7 @@
     <body>
         <header th:fragment="headerPrincipal">
              <nav class="navbar navbar-light bg-dark" id="nav">
-                <form  th:action="@{/buscarPorNombre}" method="GET" class="form-inline order-2">
+                <form  th:action="@{/listaPorNombre}" method="GET" class="form-inline order-2">
                     <input onkeyup="deshabilitarBtnBusquedaIndex()" class="form-control mr-sm-2 " name="nombre" id="mensaje" type="search" placeholder="Busque un Servicio" aria-label="Search" >
                     <button class="btn btn-outline-success my-2 my-sm-1 btn-nav-buscador" type="submit" id="btnBuscar" disabled>Buscar</button>
                 </form>
@@ -33,46 +33,45 @@
                 </div>
             </nav>
             
-             <main role="main" class="flex-shrink-0">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active img-opacity">
-                    <img th:src="@{img/1.jpg}" alt="imagenMuestra" class="imagen-menu">
+                    <img th:src="@{img/djopcion1.jpg}" alt="imagenMuestra" class="imagen-menu">
                     <svg class="bd-placeholder"  width="100%" height="100%"  xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/> 
                     <div class="container">
                         <div class="carousel-caption text-left">
                             <h1 class="promocionTitle">ENCONTRA LO QUE ESTAS BUSCANDO</h1>
-                            <h3 class="promocionTexto">Encuentra los mejores animadroes,musicos,fotografos y mucho mas para volver tus fiestas mas entretenidas </h3>
+                            <h3 class="promocionTexto ">Encuentra a los mejores animadroes,musicos,fotografos y mucho mas  </h3>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item img-opacity">
-                    <img th:src="@{img/4.jpg}"  class="imagen-menu2" alt="servicios de fiesta,mantenimientoentretenimiento,educacion,bienestar,finanzas">
+                    <img th:src="@{img/operario.jpg}"  class="imagen-menu2" alt="servicios de fiesta,mantenimientoentretenimiento,educacion,bienestar,finanzas">
                     <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
                     <div class="container">
-                        <div class="carousel-caption text-right">
+                        <div class="carousel-caption ">
                             <h1 class="promocionTitle">PROMOCIONA TU TRABAJO</h1>
-                            <h3 class="promocionTexto">En SERVICIOS.COM queremos ayudarte a que mas personas conozcan lo que haces para que  tu productividad vaya en aumento</h3>
+                            <h3 class="promocionTexto ">En SERVICIOS.COM queremos ayudarte a que mas personas conozcan lo que haces para que tu productividad vaya en aumento</h3>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item img-opacity">
-                    <img th:src="@{img/22.jpg}"  class="imagen-menu3"  alt="imagenMuestra">
+                    <img th:src="@{img/consulta3.jpg}"  class="imagen-menu3"  alt="imagenMuestra">
                     <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
                     <div class="container">
                         <div class="carousel-caption ">
                             <h1 class="promocionTitle ">CONSULTA CON LOS MEJORES</h1>
-                            <h3 class="promocionTexto">Finanzas,bienestar,educacion y mas...</h3>
+                            <h3 class="promocionTexto ">Cononce a nuestros profesionales en finanzas,bienestar,educacion y mas...</h3>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item img-opacity">
-                    <img th:src="@{img/33.jpg}"   class="imagen-menu4" alt="imagenMuestra">
+                    <img th:src="@{img/soldador.jpg}"   class="imagen-menu4" alt="imagenMuestra">
                     <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
                     <div class="container">
-                        <div class="carousel-caption text-center">
+                        <div class="carousel-caption  text-right">
                             <h1 class="promocionTitle">TENEMOS LA SOLUCION A TUS PROBLEMAS</h1>
-                            <h3 class="promocionTexto">Plomeria,gas,elctridad,ventilacion entre mucho mas todos los especialistas en un  solo lugar </h3>
+                            <h3 class="promocionTexto ">Plomeria,gas,elctridad,ventilacion entre mucho mas todos los especialistas en un  solo lugar </h3>
                         </div>
                     </div>
                 </div>
@@ -86,15 +85,16 @@
                 <span class="sr-only">Next</span>
             </a>
         </div> 
-
+  </header>
+        <section th:fragment="card-listado-promocion">
         <div class=" container">
             <h2 class="titulomenu mb-5 animate__animated animate__pulse animate__repeat-2">conoce todos los servicios diponibles a continuacion</h2>
             <hr id="title_hr">
-            <div class="d-flex justify-content-around" id="carteles-lista-promocion">
+            <div class="d-flex justify-content-around " id="carteles-lista-promocion">
                 <div  class="menu-servicios order-1  menu-lista-servicios">
                     <div class="contenido-lista">
                         <h3 class="text-center text-light mb-2">LISTA DE SERVICIOS</h3>
-                        <a th:href="@{/buscar}"> <button type="button" class="btn btn-outline-light  btn-lg btn-block">VER LISTA</button></a>
+                        <a th:href="@{/listaServicios}"> <button type="button" class="btn btn-outline-light  btn-lg btn-block">VER LISTA</button></a>
                     </div>
                 </div>
                 <div  class="menu-servicios order-2  menu-promocion-servicios mb-3">
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-    </main>
-        </header>
+
+      </section>
     </body>
 </html>

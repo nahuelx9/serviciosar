@@ -63,7 +63,8 @@ function contarCaracteres() {
 
 var checkbox = document.getElementById('checkUser');
 const btnUserRegister = document.getElementById('btnRegisterUser');
-checkbox.addEventListener('change', function () {
+checkbox.addEventListener('change', function () 
+{
     if (this.checked) {
         btnUserRegister.removeAttribute('disabled');
     } else {

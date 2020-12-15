@@ -129,6 +129,14 @@
                                     text: 'El formato de la imagen es invalido!'
                                 });
                             </script>
+                            
+                               <script th:if="${sesionExpirada}" type="text/javascript">
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'La sesion finalizo al no detectar actividad!'
+                                });
+                            </script>
                         </section>
                     </body>
                     </html>

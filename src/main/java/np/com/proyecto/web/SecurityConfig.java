@@ -43,6 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login-logout.html")
+                .and()
+                .rememberMe().key("uniqueAndSecret")
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .expiredUrl("/expired")
                 ;
 
     }

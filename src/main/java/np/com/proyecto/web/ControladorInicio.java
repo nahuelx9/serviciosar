@@ -63,8 +63,10 @@ public class ControladorInicio {
     public String agregarUsuario(Model model, Usuario usuario, Provincia provincia, Departamento departamento) {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
+        List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
+        model.addAttribute("localidadesAmba", localidadesAmba );
         return "registroUsuario";
     }
 
@@ -72,21 +74,25 @@ public class ControladorInicio {
     public String guardarUsuario(@Valid Usuario usuario, BindingResult result, Model model, @RequestParam("password2") String password2, Provincia provincia, Departamento departamento) {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
+         List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         if (result.hasErrors()) {
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
+            model.addAttribute("localidadesAmba", localidadesAmba );
             return "registroUsuario";
         }
         if (usuarioService.verificarExistenciaEmail(usuario.getUsername()) == false) {
             result.rejectValue("username", "error.user", "Ya existe una cuenta con ese email");
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
+            model.addAttribute("localidadesAmba", localidadesAmba );
             return "registroUsuario";
         }
         if (!usuario.getPassword().equals(password2)) {
             result.rejectValue("password", "error.user", "Las contraseñas no coinciden");
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
+            model.addAttribute("localidadesAmba", localidadesAmba );
             return "registroUsuario";
         }
 
@@ -111,8 +117,10 @@ public class ControladorInicio {
         if (usuarioLogueado.equals(usuario)) {
             List<Provincia> provincias = provincia.listarProvincia();
             List<Departamento> departamentos = departamento.listarDepartamento();
+                 List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
+             model.addAttribute("localidadesAmba", localidadesAmba );
             model.addAttribute("usuario", usuario);
             return "datosUsuario";
         } else {
@@ -310,15 +318,13 @@ public class ControladorInicio {
         }
     }
 
-    @GetMapping("/buscar")
-    public String buscar(Model model, Provincia provincia, Departamento departamento, Usuario usuario, Util util, @RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
+    @GetMapping("/listaServicios")
+    public String listaServicios(Model model, Provincia provincia, Departamento departamento, Usuario usuario, Util util, @RequestParam Map<String, Object> params) throws UnsupportedEncodingException {
 
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
+         List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
-        for(Departamento dep : departamentos){
-            System.out.println("departamentos::" + dep.getNombre() + dep.getId());
-        }
         Filtro filtro = new Filtro();
 
         /*Paginacion*/
@@ -346,15 +352,17 @@ public class ControladorInicio {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
+           model.addAttribute("localidadesAmba", localidadesAmba);
 
         return "buscadorServicios";
     }
 
-    @GetMapping("/buscarPorNombre")
-    public String buscarPorNombre(Model model, Provincia provincia, Departamento departamento, Usuario usuario, Util util, @RequestParam("nombre") String nombre, @RequestParam Map<String, Object> params, Filtro filtro) throws UnsupportedEncodingException {
+    @GetMapping("/listaPorNombre")
+    public String listarrPorNombre(Model model, Provincia provincia, Departamento departamento, Usuario usuario, Util util, @RequestParam("nombre") String nombre, @RequestParam Map<String, Object> params, Filtro filtro) throws UnsupportedEncodingException {
         Page<Servicio> pageServicio;
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
+          List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
 
         filtro.setNombre(nombre);
@@ -378,6 +386,7 @@ public class ControladorInicio {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
+          model.addAttribute("localidadesAmba", localidadesAmba);
 
         model.addAttribute("list", pageServicio.getContent());
         model.addAttribute("current", page + 1);
@@ -388,13 +397,14 @@ public class ControladorInicio {
         return "buscadorServicios";
     }
 
-    @GetMapping("/buscarPorFiltros")
-    public String buscarPorFiltros(Model model, Provincia provincia, Departamento departamento, Usuario usuario, @RequestParam("nombre") String nombreFiltro, @RequestParam("provincia") String provinciaFiltro, @RequestParam("departamento") String departamentoFiltro, @RequestParam("horario") String horarioFiltro, @RequestParam("rangoPrecio") String rangoPrecioFiltro, @RequestParam Map<String, Object> params, Util util, Filtro filtro) throws UnsupportedEncodingException {
+    @GetMapping("/listaPorFiltros")
+    public String listarPorFiltros(Model model, Provincia provincia, Departamento departamento, Usuario usuario, @RequestParam("nombre") String nombreFiltro, @RequestParam("provincia") String provinciaFiltro, @RequestParam("departamento") String departamentoFiltro, @RequestParam("horario") String horarioFiltro, @RequestParam("rangoPrecio") String rangoPrecioFiltro, @RequestParam Map<String, Object> params, Util util, Filtro filtro) throws UnsupportedEncodingException {
         String nombreProvincia = util.obtenerNombreProvincia(provinciaFiltro);
         filtro = util.obtenerFiltros(nombreFiltro, nombreProvincia, departamentoFiltro, horarioFiltro, rangoPrecioFiltro);
         Page<Servicio> pageServicio = null;
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
+        List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
         boolean sinServicios = false;
 
@@ -512,6 +522,7 @@ public class ControladorInicio {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
+          model.addAttribute("localidadesAmba", localidadesAmba);
         model.addAttribute("sinServicios", sinServicios);
 
         model.addAttribute("list", pageServicio.getContent());
@@ -612,8 +623,7 @@ public class ControladorInicio {
      * @return
      */
     @RequestMapping("/login-logout.html")
-    public String loginLogout(Model model
-    ) {
+    public String loginLogout(Model model) {
         model.addAttribute("loginLogout", true);
         return "redirect:/";
     }
@@ -757,8 +767,8 @@ public class ControladorInicio {
         model.addAttribute("imagenEliminada", true);
         return "index";
     }
-    
-      @RequestMapping("/imagenMinima")
+
+    @RequestMapping("/imagenMinima")
     public String imagenMinima(Usuario usuario, Model model,
             @AuthenticationPrincipal User user
     ) {
@@ -783,6 +793,20 @@ public class ControladorInicio {
         }
         model.addAttribute("usuario", usuario);
         model.addAttribute("imagenModificadaError", true);
+        return "index";
+    }
+
+    @RequestMapping("/expired")
+    public String sesionExpirada(Usuario usuario, Model model,
+            @AuthenticationPrincipal User user
+    ) {
+        if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", usuario.getIdUsuario());
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("sesionExpirada", true);
         return "index";
     }
 

@@ -10,7 +10,7 @@
     </head>
     <body>
         <section th:fragment="headerAndFilters" >
-            <form th:action="@{/buscarPorFiltros}" method="GET"  th:object="${filtro}">
+            <form th:action="@{/listaPorFiltros}" method="GET"  th:object="${filtro}">
             <header>
                 <nav class="navbar navbar-light bg-dark" id="nav-lista">
                     <a th:href="@{/}" class="volver "><h1 class=" text-right titulo text-success titulobuscador">Servicios.com</h1></a>
@@ -169,19 +169,19 @@
              <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${prev == 0 ? 'disabled': ''}">
-                    <a th:if="${#httpServletRequest.requestURI == '/buscar'}"  class="page-link" th:href="@{|/buscar?page=${prev}|}">Anterior</a>
-                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorNombre'}"  class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
-                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}"  class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
+                    <a th:if="${#httpServletRequest.requestURI == '/listaServicios'}"  class="page-link" th:href="@{|/listaServicios?page=${prev}|}">Anterior</a>
+                    <a th:if="${#httpServletRequest.requestURI == '/listaPorNombre'}"  class="page-link" th:href="@{|/listaPorNombre?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
+                    <a th:if="${#httpServletRequest.requestURI == '/listaPorFiltros'}"  class="page-link" th:href="@{|/listaPorFiltros?nombre=${filtro.nombre}(page=${prev})}">Anterior</a>
                 </li>
                 <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active': ''}">
-                    <a th:if="${#httpServletRequest.requestURI == '/buscar'}"class="page-link" th:href="@{|/buscar?page=${page}|}" th:text="${page}"></a>
-                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorNombre'}"class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${page})}" th:text="${page}"></a>
-                    <a th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}"class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${page})}" th:text="${page}"></a>
+                    <a th:if="${#httpServletRequest.requestURI == '/listaServicios'}"class="page-link" th:href="@{|/listaServicios?page=${page}|}" th:text="${page}"></a>
+                    <a th:if="${#httpServletRequest.requestURI == '/listaPorNombre'}"class="page-link" th:href="@{|/listaPorNombre?nombre=${filtro.nombre}(page=${page})}" th:text="${page}"></a>
+                    <a th:if="${#httpServletRequest.requestURI == '/listaPorFiltros'}"class="page-link" th:href="@{|/listaPorFiltros?nombre=${filtro.nombre}(page=${page})}" th:text="${page}"></a>
                 </li>
                 <li  class="page-item" th:classappend="${current == last ? 'disabled': ''}">
-                    <a  th:if="${#httpServletRequest.requestURI == '/buscar'}" class="page-link" th:href="@{|/buscar?page=${next}|}">Siguiente</a>
-                    <a  th:if="${#httpServletRequest.requestURI == '/buscarPorNombre'}" class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${next})}">Siguiente</a>
-                    <a  th:if="${#httpServletRequest.requestURI == '/buscarPorFiltros'}" class="page-link" th:href="@{|/buscarPorNombre?nombre=${filtro.nombre}(page=${next})}">Siguiente</a>
+                    <a  th:if="${#httpServletRequest.requestURI == '/listaServicios'}" class="page-link" th:href="@{|/listaServicios?page=${next}|}">Siguiente</a>
+                    <a  th:if="${#httpServletRequest.requestURI == '/listaPorNombre'}" class="page-link" th:href="@{|/listaPorNombre?nombre=${filtro.nombre}(page=${next})}">Siguiente</a>
+                    <a  th:if="${#httpServletRequest.requestURI == '/listaPorFiltros'}" class="page-link" th:href="@{|/listaPorFiltros?nombre=${filtro.nombre}${filtro.provincia}(page=${next})}">Siguiente</a>
                 </li>
             </ul>
         </nav>

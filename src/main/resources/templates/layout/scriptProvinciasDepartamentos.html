@@ -5,11 +5,11 @@
     <head>
         <title>Provincias y departamentos</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <section th:fragment="provinciasDepartamentos">
-              <script th:inline="javascript">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    <section th:fragment="provinciasDepartamentos">
+                        <script th:inline="javascript">
                             function mostrarListado() {
                                 /* Obtenemos el value de la provincia selecciona*/
                                 var idProvincia = document.getElementById("listaProvincias").value;
@@ -18,15 +18,26 @@
                                 var idResultado = parseInt(idProvincia);
                                 /* Traemos la lista de deparmentos*/
                                 var departamentos = /*[[${departamentos}]]*/ null;
+                                /* listado AMBA*/
+                                var localidadesAmba = /*[[${localidadesAmba}]]*/ null;
                                 /* Se limpia la lista de departamentos por si ya hubiera otra lista antes*/
                                 document.getElementById("listaProvincias").addEventListener('change', limpiar, false);
                                 /* Recorremos la lista de departamentos si existe un id =  listaProvincia lo agregamos al select*/
-                                for (var i in departamentos) {
-                                    let opcion = document.createElement('option');
-                                    if (departamentos[i].id == idResultado) {
-                                        opcion.value = departamentos[i].nombre;
-                                        opcion.text = departamentos[i].nombre;
+                                if (idProvincia == 2) {
+                                    for (var i in localidadesAmba) {
+                                        let opcion = document.createElement('option');
+                                        opcion.value = localidadesAmba[i].nombre;
+                                        opcion.text = localidadesAmba[i].nombre;
                                         idDepartamento.add(opcion);
+                                    }
+                                } else {
+                                    for (var i in departamentos) {
+                                        let opcion = document.createElement('option');
+                                        if (departamentos[i].id == idResultado) {
+                                            opcion.value = departamentos[i].nombre;
+                                            opcion.text = departamentos[i].nombre;
+                                            idDepartamento.add(opcion);
+                                        }
                                     }
                                 }
                             }
@@ -36,6 +47,6 @@
                                 idDepartamento.innerHTML = '<option selected value="">Departamento</option>';
                             }
                         </script>
-        </section>
-    </body>
-</html>
+                    </section>
+                </body>
+                </html>

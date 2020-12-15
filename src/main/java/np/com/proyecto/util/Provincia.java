@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Provincia {
+public class Provincia  {
 
     @Id
     private int id;
