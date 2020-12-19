@@ -5,228 +5,228 @@
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <section th:fragment="ModalIncioSesion">
-                <!-- Modal iniciar sesion -->
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-dark text-light">
-                            <h5 class="modal-title" id="staticBackdropLabel">Iniciar Sesion</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form method="POST" th:action="@{/login}">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="username">Email</label>
-                                    <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Contraseña</label>
-                                    <input type="password" class="form-control" name="password" id="password">
-                                </div>
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
-                                        <label class="form-check-label" for="exampleCheck1">Recordar mi cuenta</label>
-                                </div>
-                            </div>
-                            <div class="modal-footer bg-dark">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary btn btn-success">Iniciar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section th:fragment="ModalMensajePromocion">
-            <!-- Modal Registrar Servicio Error -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="agregarServicioErrorLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-dark text-light">
-                            <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body text-promocion text-justify">
-                            Nos emociona que hayas elegido SERVICIOS.COM para promocionar tus servicio pero antes es necesario que te registres en nuestra plataforma es muy facil solo debes completar algunos de tus datos,
-                            una vez registrado vuelve a presionar este boton.
-                        </div>
-                        <div class="modal-footer bg-dark">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <a href="registro.html"><button type="submit" class="btn btn-primary btn btn-success">Registrarse</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section th:fragment="ModalModificarNombre">
-              <!-- Modal modificar nombre -->
-        <div class="modal fade" id="modificarNombre" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-light">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Nombre</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" th:action="@{/modificarNombreUsuario}">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="nombre">Nuevo nombre:</label>
-                                <input type="text" class="form-control" th:name="nombre" id="nombre" aria-describedby="emailHelp" minlength="3"  required>
-                            </div>
-                        </div>
-                        <div class="modal-footer bg-dark">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </section>
-        
-        <section th:fragment="ModalModificarApellido">
-             <!-- Modal modificar apellido -->
-        <div class="modal fade" id="modificarApellido" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-light">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Apellido</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" th:action="@{/modificarApellidoUsuario}">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="nombre">Nuevo apellido:</label>
-                                <input type="text" class="form-control" th:name="apellido" id="apellido" aria-describedby="emailHelp" minlength="3" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer bg-dark">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </section>
-        
-        <section th:fragment="ModalModificarProvDep">
-                    <!-- Modal modificar prov dept -->
-        <div class="modal fade" id="modificarProvinciaDepartamento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-light">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Provincia y Departamento</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" th:action="@{/modificarProvinciaDepartamentoUsuario}">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="provincia">Seleccion su provincia:</label>
-                                    <select th:name="provincia" class="custom-select" id="listaProvincias"   onclick="mostrarListado()" required>
-                                        <option selected value="">Provincia</option>
-                                        <option  th:each="provincias: ${provincias}"   th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
-                                    </select>
-                                    <div class="invalid-feedback">Debe Selccionar una Provincia</div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="ciudad">Seleccione su Departamento:</label>
-                                    <select class="custom-select" th:name="departamento"   id="listaDepartamentos"  required>
-                                        <option value="">Departamento</option>
-                                    </select>
-                                    <div class="invalid-feedback">Debe Selccionar su ciudad</div>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    <section th:fragment="ModalIncioSesion">
+                        <!-- Modal iniciar sesion -->
+                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Iniciar Sesion</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" th:action="@{/login}">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="username">Email</label>
+                                                <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Contraseña</label>
+                                                <input type="password" class="form-control" name="password" id="password">
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                                                    <label class="form-check-label" for="exampleCheck1">Recordar mi cuenta</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer bg-dark">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary btn btn-success">Iniciar</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer bg-dark">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                    </section>
+                    <section th:fragment="ModalMensajePromocion">
+                        <!-- Modal Registrar Servicio Error -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="agregarServicioErrorLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light">
+                                        <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-promocion text-justify">
+                                        Nos emociona que hayas elegido SERVICIOS.COM para promocionar tus servicio pero antes es necesario que te registres en nuestra plataforma es muy facil solo debes completar algunos de tus datos,
+                                        una vez registrado vuelve a presionar este boton.
+                                    </div>
+                                    <div class="modal-footer bg-dark">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                        <a href="registro.html"><button type="submit" class="btn btn-primary btn btn-success">Registrarse</button></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </section>
-        
-        <section th:fragment="ModalModificarEmail">
-             <!-- Modal modificar email -->
-        <div class="modal fade" id="modificarEmail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-light">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modificar email</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" th:action="@{/modificarEmailUsuario}">
-                            <div class="form-group">
-                                <label for="email">Nuevo email:</label>
-                                <input type="email" class="form-control" th:name="email" id="username" aria-describedby="emailHelp" required>
+                    </section>
+                    <section th:fragment="ModalModificarNombre">
+                        <!-- Modal modificar nombre -->
+                        <div class="modal fade" id="modificarNombre" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Nombre</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" th:action="@{/modificarNombreUsuario}">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="nombre">Nuevo nombre:</label>
+                                                <input type="text" class="form-control" th:name="nombre" id="nombre" aria-describedby="emailHelp" minlength="3"  required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer bg-dark">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                    </div>
-                    <div class="modal-footer bg-dark">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </section>
-        
-        <section th:fragment="ModalModificarPassword">
-            <!-- Modal modificar Contraseña -->
-        <div class="modal fade" id="modificarContraseña" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-light">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Contraseña</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" th:action="@{/modificarContraseñaUsuario}">
-                            <div class="form-group">
-                                <label for="username">Ingrese la contraseña actual:</label>
-                                <input type="password" class="form-control" th:name="passwordActual" minlength="8" id="password"  required>
+                        </div>
+                    </section>
+
+                    <section th:fragment="ModalModificarApellido">
+                        <!-- Modal modificar apellido -->
+                        <div class="modal fade" id="modificarApellido" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Apellido</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" th:action="@{/modificarApellidoUsuario}">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="nombre">Nuevo apellido:</label>
+                                                <input type="text" class="form-control" th:name="apellido" id="apellido" aria-describedby="emailHelp" minlength="3" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer bg-dark">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="username">Ingrese la nueva contraseña:</label>
-                                <input type="password" class="form-control" th:name="password1" id="password"  minlength="8"  required>
+                        </div>
+                    </section>
+
+                    <section th:fragment="ModalModificarProvDep">
+                        <!-- Modal modificar prov dept -->
+                        <div class="modal fade" id="modificarProvinciaDepartamento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Provincia y Departamento</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" th:action="@{/modificarProvinciaDepartamentoUsuario}">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="provincia">Seleccion su provincia:</label>
+                                                    <select th:name="provincia" class="custom-select" id="listaProvincias"   onclick="mostrarListado()" required>
+                                                        <option selected value="">Provincia</option>
+                                                        <option  th:each="provincias: ${provincias}"   th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
+                                                    </select>
+                                                    <div class="invalid-feedback">Debe Selccionar una Provincia</div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ciudad">Seleccione su Departamento:</label>
+                                                    <select class="custom-select" th:name="departamento"   id="listaDepartamentos"  required>
+                                                        <option value="">Departamento</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">Debe Selccionar su ciudad</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer bg-dark">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="username">Vuela a ingreser  la nueva contraseña:</label>
-                                <input type="password" class="form-control" th:name="password2" id="password" minlength="8"  required>
+                        </div>
+                    </section>
+
+                    <section th:fragment="ModalModificarEmail">
+                        <!-- Modal modificar email -->
+                        <div class="modal fade" id="modificarEmail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Modificar email</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" th:action="@{/modificarEmailUsuario}">
+                                            <div class="form-group">
+                                                <label for="email">Nuevo email:</label>
+                                                <input type="email" class="form-control" th:name="email" id="username" aria-describedby="emailHelp" required>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer bg-dark">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                                    </div>
+                                    </form>
+                                </div>
                             </div>
-                    </div>
-                    <div class="modal-footer bg-dark">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </section>
-        
-        
-    </body>
-</html>
+                        </div>
+                    </section>
+
+                    <section th:fragment="ModalModificarPassword">
+                        <!-- Modal modificar Contraseña -->
+                        <div class="modal fade" id="modificarContraseña" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark text-light">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Modificar Contraseña</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" th:action="@{/modificarContraseñaUsuario}">
+                                            <div class="form-group">
+                                                <label for="username">Ingrese la contraseña actual:</label>
+                                                <input type="password" class="form-control" th:name="passwordActual" minlength="8" id="password"  required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="username">Ingrese la nueva contraseña:</label>
+                                                <input type="password" class="form-control" th:name="password1" id="password"  minlength="8"  required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="username">Vuela a ingreser  la nueva contraseña:</label>
+                                                <input type="password" class="form-control" th:name="password2" id="password" minlength="8"  required>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer bg-dark">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary btn btn-success">Guardar Cambios</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                </body>
+                </html>

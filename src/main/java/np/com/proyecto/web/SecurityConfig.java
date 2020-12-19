@@ -31,10 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/agregarServicio/**", "/guardarServicio/**", "/guardarServicioEditado","/serviciosUsuario/**", "/editarServicio/**", "/eliminarServicio", "/editarImagenes/**",
                         "/modificarImagen","/eliminarImagen", "/datosUsuario/**","/modificarNombreUsuario","/modificarApellidoUsuario","/modificarProvinciaDepartamentoUsuario",
-                        "/modificarEmailUsuario","/modificarContraseñaUsuario","/eliminarUsuario")
-                .hasRole("USER")
+                        "/modificarEmailUsuario","/modificarContraseñaUsuario","/eliminarUsuario").hasAnyRole("USER", "ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login-logout.html")
+                .permitAll()
                 .and()
                 .rememberMe().key("uniqueAndSecret")
                 .and()

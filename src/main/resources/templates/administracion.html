@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/headFooter :: head">  
+                <body>
+                    <header th:replace="layout/headers :: headerAdmin"></header>
+                    <section th:replace="layout/adminLayout :: menuDesplegable"></section>
+                    <section th:replace="layout/adminLayout :: listUsuarios"></section>
+                    <section th:replace="layout/adminLayout :: listServicios"></section> 
+                    <section th:replace="layout/adminLayout :: listImagenes"></section>
+                    <section th:replace="layout/adminLayout :: analisis"></section>
+                      <section th:replace="layout/adminLayout :: buzon"></section>
+                       <section th:replace="layout/adminLayout :: alertas"></section>
+                    <footer th:replace="layout/headFooter :: footer"></footer>
+
+
+                </body>
+                </html>

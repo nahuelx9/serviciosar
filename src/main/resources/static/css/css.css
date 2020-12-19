@@ -445,7 +445,7 @@ h4::first-letter{
 footer{
     background-color: #343a40!important;
     position: relative;
-    bottom: -200px;
+    bottom: -330px;
     width: 100%;
     height: auto;
     color: white;
@@ -461,6 +461,100 @@ footer{
     padding: .75rem;
     border-top: 1px solid #dee2e6;
 }
+
+
+/*MENU LATERAL */
+/* The side navigation menu */
+.btnHamburger{
+    width: 35px;
+    height: 7px;
+    background-color: #fff;
+    margin: 6px 9px;
+    cursor: pointer
+}
+
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #333; /* Black*/
+    box-shadow: 3px 3px 3px rgba(51, 51, 51, 0.5);
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,100&display=swap');
+/* The navigation menu links */
+
+.sidenav a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    color: #fff;
+    border: 0;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    background: #444;
+}
+
+
+.headerSide{
+    padding: 40px 20px;
+    border-bottom: 1px solid #444;
+    font-family: none;
+    transition: all .3s;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* Formaulario contacto */
+.headerContact {
+    font-size: 27px;
+    padding: 10px;
+}
+
+.bigicon {
+    font-size: 35px;
+}
+/* Formaulario contacto Fin */
+
+ #reportar:hover{
+        cursor: pointer;
+        color:firebrick!important;
+    }
+
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+/*MENU LATERAL FIN */
+
 
 
 @media screen and (max-width: 1600px) {
@@ -504,6 +598,9 @@ footer{
 
 
 @media screen and (max-width: 768px) {
+    body{
+        zoom: normal;
+    }
     #mensaje{
         width: 200px;;
     }
@@ -554,9 +651,8 @@ footer{
     .text-promocion{
         font-size: 18px;
     }
-
-
 }
+
 @media screen and (max-width: 540px) {
 
     .datos-div{
@@ -607,7 +703,7 @@ footer{
         height: 250px;
     }
     .promocionTexto{
-        font-size: 1em;
+        font-size: 0.9em;
     }
 
 
@@ -618,12 +714,16 @@ footer{
     .edicion{
         width: 152px;
     }
+    .promocionTexto{
+        font-size: 0.7em;
+    }
 }
 
 @media screen and (max-width: 280px) {
     .titulo-nav-simple{
         font-size: 30px;
     }
+
 
 
 }

@@ -94,7 +94,6 @@ public class Departamento extends Provincia {
                 String nombre = new String(elemento.getString("nombre").replace("Ã‘", "N").getBytes("ISO-8859-1"), "UTF-8");
                 String nombreLimpio = nombre.replace("?", "A");
                 Departamento localidad = new Departamento(i, nombreLimpio);
-                System.out.println(localidad.getNombre());
                 LocalidadesAmba.add(localidad);
             }
 

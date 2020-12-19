@@ -4,16 +4,21 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import np.com.proyecto.domain.Alerta;
+import np.com.proyecto.domain.Buzon;
 import np.com.proyecto.domain.DBFile;
 import np.com.proyecto.domain.Filtro;
 import np.com.proyecto.domain.Servicio;
 import np.com.proyecto.domain.Usuario;
+import np.com.proyecto.servicio.AlertaService;
+import np.com.proyecto.servicio.BuzonService;
 import np.com.proyecto.servicio.DBFileStorageService;
 import np.com.proyecto.servicio.ServicioService;
 import np.com.proyecto.servicio.UsuarioService;
@@ -23,6 +28,7 @@ import np.com.proyecto.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -47,6 +53,11 @@ public class ControladorInicio {
     private UsuarioService usuarioService;
     @Autowired
     private DBFileStorageService dbFileStorageService;
+    @Autowired
+    private BuzonService buzonService;
+
+    @Autowired
+    private AlertaService alertaService;
 
     @GetMapping("/")
     public String inicio(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
@@ -66,7 +77,7 @@ public class ControladorInicio {
         List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
-        model.addAttribute("localidadesAmba", localidadesAmba );
+        model.addAttribute("localidadesAmba", localidadesAmba);
         return "registroUsuario";
     }
 
@@ -74,25 +85,25 @@ public class ControladorInicio {
     public String guardarUsuario(@Valid Usuario usuario, BindingResult result, Model model, @RequestParam("password2") String password2, Provincia provincia, Departamento departamento) {
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
-         List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
+        List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         if (result.hasErrors()) {
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
-            model.addAttribute("localidadesAmba", localidadesAmba );
+            model.addAttribute("localidadesAmba", localidadesAmba);
             return "registroUsuario";
         }
         if (usuarioService.verificarExistenciaEmail(usuario.getUsername()) == false) {
             result.rejectValue("username", "error.user", "Ya existe una cuenta con ese email");
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
-            model.addAttribute("localidadesAmba", localidadesAmba );
+            model.addAttribute("localidadesAmba", localidadesAmba);
             return "registroUsuario";
         }
         if (!usuario.getPassword().equals(password2)) {
             result.rejectValue("password", "error.user", "Las contraseñas no coinciden");
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
-            model.addAttribute("localidadesAmba", localidadesAmba );
+            model.addAttribute("localidadesAmba", localidadesAmba);
             return "registroUsuario";
         }
 
@@ -117,10 +128,10 @@ public class ControladorInicio {
         if (usuarioLogueado.equals(usuario)) {
             List<Provincia> provincias = provincia.listarProvincia();
             List<Departamento> departamentos = departamento.listarDepartamento();
-                 List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
+            List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
             model.addAttribute("provincias", provincias);
             model.addAttribute("departamentos", departamentos);
-             model.addAttribute("localidadesAmba", localidadesAmba );
+            model.addAttribute("localidadesAmba", localidadesAmba);
             model.addAttribute("usuario", usuario);
             return "datosUsuario";
         } else {
@@ -230,7 +241,7 @@ public class ControladorInicio {
     public String editar(Servicio servicio, Model model, DBFile dbFile, @AuthenticationPrincipal User user) {
         Usuario usuarioLogueado = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
         servicio = servicioService.encontrarServicio(servicio);
-        if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario())) {
+        if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario()) || user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
             List<DBFile> files = servicio.getFiless();
             model.addAttribute("servicio", servicio);
             model.addAttribute("files", files);
@@ -243,12 +254,20 @@ public class ControladorInicio {
     @PostMapping("/guardarServicioEditado")
     public String guardarEditado(@Valid Servicio servicio, Errors errores, @AuthenticationPrincipal User user) throws UnsupportedEncodingException {
         Usuario usuarioLogueado = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
-        if (errores.hasErrors() || usuarioLogueado.getIdUsuario().equals(servicio.getIdServicio())) {
+        if (errores.hasErrors()) {
             log.info("error = " + errores);
             return "error";
         }
-        servicioService.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getEmail(), servicio.getPrecio(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(), servicio.getIdServicio());
-        return "redirect:/servicioModificado";
+        if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario()) || user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+            servicioService.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getEmail(), servicio.getPrecio(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(),servicio.getIdUsuario(),servicio.getIdServicio());
+            if (user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+                return "redirect:/admin";
+            } else {
+                return "redirect:/servicioModificado";
+            }
+        } else {
+            return "error";
+        }
     }
 
     /**
@@ -288,7 +307,6 @@ public class ControladorInicio {
                 String img = new String(encodeBase64, "UTF-8");
                 f.setUrl(img);
                 files.add(f);
-                log.info("file" + f);
             }
             int cantFiles = files.size();
             model.addAttribute("cantFiles", cantFiles);
@@ -305,11 +323,16 @@ public class ControladorInicio {
         Usuario usuarioLogueado = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
         DBFile dbFile = dbFileStorageService.encontrarDBFileById(idValue);
         Servicio servicio = servicioService.encontrarServicioById(dbFile.getIdServicio());
-        if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario())) {
+        if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario()) || user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
             DBFile dbFileNew = dbFileStorageService.storeFile(file);
             if (dbFileNew.getFileType().equals("image/jpeg") || dbFileNew.getFileType().equals("image/jpg") || dbFileNew.getFileType().equals("image/pneg") || dbFileNew.getFileType().equals("image/png")) {
                 dbFileStorageService.modificarImagen(dbFileNew.getData(), dbFileNew.getFileName(), dbFileNew.getFileType(), idValue);
-                return "redirect:/imagenGuardada";
+                if (user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+                    return "redirect:/admin";
+                } else {
+                    return "redirect:/imagenGuardada";
+                }
+
             } else {
                 return "redirect:/imagenModificadaError";
             }
@@ -323,7 +346,7 @@ public class ControladorInicio {
 
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
-         List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
+        List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
         Filtro filtro = new Filtro();
 
@@ -352,7 +375,7 @@ public class ControladorInicio {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
-           model.addAttribute("localidadesAmba", localidadesAmba);
+        model.addAttribute("localidadesAmba", localidadesAmba);
 
         return "buscadorServicios";
     }
@@ -362,7 +385,7 @@ public class ControladorInicio {
         Page<Servicio> pageServicio;
         List<Provincia> provincias = provincia.listarProvincia();
         List<Departamento> departamentos = departamento.listarDepartamento();
-          List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
+        List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
 
         filtro.setNombre(nombre);
@@ -386,7 +409,7 @@ public class ControladorInicio {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
-          model.addAttribute("localidadesAmba", localidadesAmba);
+        model.addAttribute("localidadesAmba", localidadesAmba);
 
         model.addAttribute("list", pageServicio.getContent());
         model.addAttribute("current", page + 1);
@@ -414,7 +437,7 @@ public class ControladorInicio {
         PageRequest pageRequest = PageRequest.of(page, 7);
 
         if ("".equals(filtro.getProvincia()) && "".equals(filtro.getDepartamento()) && "No especificar".equals(filtro.getHorario()) && "0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
-            return "redirect:/buscar";
+            return "redirect:/listaServicios";
         }
 
         if (!"".equals(filtro.getProvincia()) && !"".equals(filtro.getDepartamento()) && !"No especificar".equals(filtro.getHorario()) && !"0".equals(filtro.getPrecio()) && (filtro.getNombre() == null || "".equals(filtro.getNombre()))) {
@@ -519,10 +542,11 @@ public class ControladorInicio {
         }
 
         model.addAttribute("filtro", filtro);
+        model.addAttribute("provinciaFiltro", provinciaFiltro);
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
-          model.addAttribute("localidadesAmba", localidadesAmba);
+        model.addAttribute("localidadesAmba", localidadesAmba);
         model.addAttribute("sinServicios", sinServicios);
 
         model.addAttribute("list", pageServicio.getContent());
@@ -538,12 +562,32 @@ public class ControladorInicio {
      * Eliminar Usuario
      *
      * @param usuario
+     * @param user
      * @return
      */
     @GetMapping("/eliminarUsuario")
-    public String eliminar(Usuario usuario) {
-        usuarioService.eliminar(usuario);
-        return "redirect:/";
+    public String eliminar(Usuario usuario, @AuthenticationPrincipal User user) {
+        Usuario usuarioLogueado = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+        Usuario usuarioEncontrado = usuarioService.encontrarUsuario(usuario);
+        if (usuarioLogueado.getIdUsuario().equals(usuarioEncontrado.getIdUsuario()) || user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+            List<Servicio> servicios = usuarioEncontrado.getServicios();
+            for (Servicio servicio : servicios) {
+                List<DBFile> imagenes = servicio.getFiless();
+                for (DBFile imagen : imagenes) {
+                    dbFileStorageService.eliminar(imagen);
+                }
+                servicioService.eliminar(servicio);
+            }
+            usuarioService.eliminar(usuario);
+            if (user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+                return "redirect:/admin";
+            } else {
+                return "redirect:/";
+            }
+        } else {
+            return "error";
+        }
+
     }
 
     /**
@@ -557,12 +601,21 @@ public class ControladorInicio {
     public String eliminar(Servicio servicio, @AuthenticationPrincipal User user) {
         Usuario usuarioLogueado = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
         Servicio servicioEncontrado = servicioService.encontrarServicio(servicio);
-        if (usuarioLogueado.getIdUsuario().equals(servicioEncontrado.getIdUsuario())) {
+        if (usuarioLogueado.getIdUsuario().equals(servicioEncontrado.getIdUsuario()) || user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+            List<DBFile> imagenes = servicioEncontrado.getFiless();
+            for (DBFile imagen : imagenes) {
+                dbFileStorageService.eliminar(imagen);
+            }
             servicioService.eliminar(servicio);
-            return "redirect:/servicioEliminado";
+            if (user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+                return "redirect:/admin";
+            } else {
+                return "redirect:/servicioEliminado";
+            }
         } else {
             return "error";
         }
+
     }
 
     /**
@@ -578,10 +631,14 @@ public class ControladorInicio {
         DBFile db = dbFileStorageService.encontrarDBFile(dbFile);
         Servicio servicio = servicioService.encontrarServicioById(db.getIdServicio());
         int cantidadDeImagenes = servicio.getFiless().size();
-        if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario())) {
+        if (usuarioLogueado.getIdUsuario().equals(servicio.getIdUsuario()) || user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
             if (cantidadDeImagenes > 1) {
                 dbFileStorageService.eliminar(dbFile);
-                return "redirect:/imagenEliminada";
+                if (user.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+                    return "redirect:/admin";
+                } else {
+                    return "redirect:/imagenEliminada";
+                }
             } else {
                 return "redirect:/imagenMinima";
             }
@@ -796,10 +853,32 @@ public class ControladorInicio {
         return "index";
     }
 
+    @RequestMapping("/mensajeEnviado")
+    public String mensajeEnviado(Model model, Usuario usuario, @AuthenticationPrincipal User user) {
+        if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", usuario.getIdUsuario());
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("mensajeEnviado", true);
+        return "index";
+    }
+    
+     @RequestMapping("/reporteEnviado")
+    public String reporteEnviado(Model model, Usuario usuario, @AuthenticationPrincipal User user) {
+        if (user != null) {
+            usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("id", usuario.getIdUsuario());
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("reporteEnviado", true);
+        return "index";
+    }
+
     @RequestMapping("/expired")
-    public String sesionExpirada(Usuario usuario, Model model,
-            @AuthenticationPrincipal User user
-    ) {
+    public String sesionExpirada(Usuario usuario, Model model, @AuthenticationPrincipal User user) {
         if (user != null) {
             usuario = usuarioService.encontrarUsuarioPorUsername(user.getUsername());
             model.addAttribute("usuario", usuario);
@@ -810,4 +889,78 @@ public class ControladorInicio {
         return "index";
     }
 
+    @GetMapping("/admin")
+    public String admin(Model model) throws UnsupportedEncodingException {
+        List<Usuario> usuarios = usuarioService.listarUsuarios();
+        List<Servicio> servicios = servicioService.listarServicios();
+        List<Buzon> buzones = buzonService.listarBuzon();
+         List<Alerta> alertas = alertaService.listarAlertas();
+        List<DBFile> imagenes = dbFileStorageService.listarDBFiles();
+        for (DBFile i : imagenes) {
+            byte[] encodeBase64 = Base64.getEncoder().encode(i.getData());
+            String img = new String(encodeBase64, "UTF-8");
+            i.setUrl(img);
+        }
+        int cantidadUsuarios = usuarios.size();
+        int cantidadServicios = servicios.size();
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("servicios", servicios);
+        model.addAttribute("buzones", buzones);
+        model.addAttribute("alertas", alertas);
+        model.addAttribute("imagenes", imagenes);
+        model.addAttribute("cantidadUsuarios", cantidadUsuarios);
+        model.addAttribute("cantidadServicios", cantidadServicios);
+        return "administracion";
+    }
+
+    @GetMapping("/admin/editarUsuario/{idUsuario}")
+    public String adminEditarUsuario(Model model, Usuario usuario, Provincia provincia, Departamento departamento) {
+        List<Provincia> provincias = provincia.listarProvincia();
+        List<Departamento> departamentos = departamento.listarDepartamento();
+        List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
+        usuario = usuarioService.encontrarUsuario(usuario);
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("provincias", provincias);
+        model.addAttribute("departamentos", departamentos);
+        model.addAttribute("localidadesAmba", localidadesAmba);
+        return "adminEdicionUsuario";
+    }
+
+    @PostMapping("/admin/editarUsuario")
+    public String adminEditarUsuario(Usuario usuario) {
+        usuarioService.guardar(usuario);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/contacto")
+    public String contacto(Buzon buzon) {
+        return "buzon";
+    }
+
+    @PostMapping("/enviarMensaje")
+    public String enviarMensaje(@Valid Buzon buzon, BindingResult result) {
+        if (result.hasErrors()) {
+            return "buzon";
+        }
+        buzonService.guardar(buzon);
+        return "redirect:/mensajeEnviado";
+    }
+
+    @GetMapping("/admin/eliminarMensaje")
+    public String eliminarMensaje(Buzon buzon) {
+        buzonService.eliminar(buzon);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/enviarReporte")
+    public String enviarReporte(Alerta alerta) {
+        alertaService.guardar(alerta);
+        return "redirect:/reporteEnviado";
+    }
+
+       @GetMapping("/admin/eliminarAlerta")
+    public String eliminarMensaje(Alerta alerta) {
+       alertaService.eliminar(alerta);
+        return "redirect:/admin";
+    }
 }

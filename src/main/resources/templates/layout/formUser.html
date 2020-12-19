@@ -11,7 +11,7 @@
         <section th:fragment="formUser">
              <div class="container-md formulario">
             <form class="was-validated" th:action="@{/guardarUsuario}" th:object="${usuario}" method="POST">
-                <input type="hidden" name="idPersona" th:field="*{idUsuario}"/>
+                <input type="hidden" name="idUsuario" th:field="*{idUsuario}"/>
                 <div th:object="${usuario}" th:remove="tag">
                     <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
                         <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>

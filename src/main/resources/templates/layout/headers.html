@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -32,6 +33,24 @@
                         <nav class="navbar navbar-light bg-dark " id="nav-simple">
                             <a th:href="@{/}" class="volver tituloRegistroUsuario order-1"><h1 class="  titulo text-success">Servicios.com</h1></a>
                             <h1 class="text-light  titulo-nav-simple  order-2">Mis servicios</h1>
+                            <a th:href="@{/}" class="volver tituloRegistroUsuario order-3"><h1 class="  titulo text-success">Servicios.com</h1></a>
+                        </nav>
+                    </header>
+                       <header th:fragment="headerEdicionUsuariosAdmin">
+                        <nav class="navbar navbar-light bg-dark " id="nav-simple">
+                            <a th:href="@{/admin}" class="volver tituloRegistroUsuario order-1"><h1 class="  titulo text-success">Servicios.com</h1></a>
+                            <h1 class="text-light  titulo-nav-simple  order-2">Edicion Usuario</h1>
+                            <a th:href="@{/admin}" class="volver tituloRegistroUsuario order-3"><h1 class="  titulo text-success">Servicios.com</h1></a>
+                        </nav>
+                    </header>
+                    <header th:fragment="headerAdmin">
+                        <nav class="navbar navbar-light bg-dark " id="nav-simple">
+                            <div onclick="openNav()" order-1>
+                                <div class="btnHamburger"></div>
+                                <div class="btnHamburger"></div>
+                                <div class="btnHamburger"></div>
+                            </div>
+                            <h1 class="text-light  titulo-nav-simple  order-2">Administración</h1>
                             <a th:href="@{/}" class="volver tituloRegistroUsuario order-3"><h1 class="  titulo text-success">Servicios.com</h1></a>
                         </nav>
                     </header>

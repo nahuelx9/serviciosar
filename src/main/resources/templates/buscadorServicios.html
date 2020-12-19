@@ -1,12 +1,13 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head th:replace="layout/headFooter :: head">
     <body>
         <section th:replace="layout/servicios :: headerAndFilters"></section>
-        <section th:replace="layout/servicios :: allServicios"></section>
-         <section th:replace="layout/servicios :: pagination"></section>
-         <footer th:replace="layout/headFooter :: footer"></footer>
-         <section th:replace="layout/scriptProvinciasDepartamentos :: provinciasDepartamentos"></section>
+         <section th:replace="layout/servicios :: allServicios"></section>
+          <section th:replace="layout/servicios :: pagination"></section>
+            <footer th:replace="layout/headFooter :: footer"></footer>
+            <section th:replace="layout/scriptProvinciasDepartamentos :: provinciasDepartamentos"></section>
     </body>
 </html>

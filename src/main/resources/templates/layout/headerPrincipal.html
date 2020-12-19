@@ -5,109 +5,113 @@
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <header th:fragment="headerPrincipal">
-             <nav class="navbar navbar-light bg-dark" id="nav">
-                <form  th:action="@{/listaPorNombre}" method="GET" class="form-inline order-2">
-                    <input onkeyup="deshabilitarBtnBusquedaIndex()" class="form-control mr-sm-2 " name="nombre" id="mensaje" type="search" placeholder="Busque un Servicio" aria-label="Search" >
-                    <button class="btn btn-outline-success my-2 my-sm-1 btn-nav-buscador" type="submit" id="btnBuscar" disabled>Buscar</button>
-                </form>
-                <h1 class="text-light  titulo order-1">Servicios.com</h1>
-                <div class="d-flex justify-content-end order-3">
-                    <a class=" serviciosbtn  text-light nav-link float-left" id="nav-link" data-toggle="modal" href="#" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</a>
-                    <a th:href="@{/agregarUsuario}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</a>
-                    <a th:href="@{/serviciosUsuario/} + ${id}" class=" nav-link serviciosbtn  float-left  text-light"  id="nav-link" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</a>
-                    <div sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown float-left">
-                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Cuenta
-                        </a>
-                        <div  id="myDiv" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item " th:href="@{/datosUsuario/} +  ${id}">Mis datos</a>
-                            <form method="POST" class="cerrar-sesion"  th:action="@{/logout}">
-                                <button onclick="this.parentNode.submit();" class="dropdown-item"  >Cerrar sesion</button>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    <header th:fragment="headerPrincipal">
+                        <nav class="navbar navbar-light bg-dark" id="nav">
+                            <form  th:action="@{/listaPorNombre}" method="GET" class="form-inline order-2">
+                                <input onkeyup="deshabilitarBtnBusquedaIndex()" class="form-control mr-sm-2 " name="nombre" id="mensaje" type="search" placeholder="Busque un Servicio" aria-label="Search" >
+                                    <button class="btn btn-outline-success my-2 my-sm-1 btn-nav-buscador" type="submit" id="btnBuscar" disabled>Buscar</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-            
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active img-opacity">
-                    <img th:src="@{img/djopcion1.jpg}" alt="imagenMuestra" class="imagen-menu">
-                    <svg class="bd-placeholder"  width="100%" height="100%"  xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/> 
-                    <div class="container">
-                        <div class="carousel-caption text-left">
-                            <h1 class="promocionTitle">ENCONTRA LO QUE ESTAS BUSCANDO</h1>
-                            <h3 class="promocionTexto ">Encuentra a los mejores animadroes,musicos,fotografos y mucho mas  </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item img-opacity">
-                    <img th:src="@{img/operario.jpg}"  class="imagen-menu2" alt="servicios de fiesta,mantenimientoentretenimiento,educacion,bienestar,finanzas">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
-                    <div class="container">
-                        <div class="carousel-caption ">
-                            <h1 class="promocionTitle">PROMOCIONA TU TRABAJO</h1>
-                            <h3 class="promocionTexto ">En SERVICIOS.COM queremos ayudarte a que mas personas conozcan lo que haces para que tu productividad vaya en aumento</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item img-opacity">
-                    <img th:src="@{img/consulta3.jpg}"  class="imagen-menu3"  alt="imagenMuestra">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
-                    <div class="container">
-                        <div class="carousel-caption ">
-                            <h1 class="promocionTitle ">CONSULTA CON LOS MEJORES</h1>
-                            <h3 class="promocionTexto ">Cononce a nuestros profesionales en finanzas,bienestar,educacion y mas...</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item img-opacity">
-                    <img th:src="@{img/soldador.jpg}"   class="imagen-menu4" alt="imagenMuestra">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
-                    <div class="container">
-                        <div class="carousel-caption  text-right">
-                            <h1 class="promocionTitle">TENEMOS LA SOLUCION A TUS PROBLEMAS</h1>
-                            <h3 class="promocionTexto ">Plomeria,gas,elctridad,ventilacion entre mucho mas todos los especialistas en un  solo lugar </h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div> 
-  </header>
-        <section th:fragment="card-listado-promocion">
-        <div class=" container">
-            <h2 class="titulomenu mb-5 animate__animated animate__pulse animate__repeat-2">conoce todos los servicios diponibles a continuacion</h2>
-            <hr id="title_hr">
-            <div class="d-flex justify-content-around " id="carteles-lista-promocion">
-                <div  class="menu-servicios order-1  menu-lista-servicios">
-                    <div class="contenido-lista">
-                        <h3 class="text-center text-light mb-2">LISTA DE SERVICIOS</h3>
-                        <a th:href="@{/listaServicios}"> <button type="button" class="btn btn-outline-light  btn-lg btn-block">VER LISTA</button></a>
-                    </div>
-                </div>
-                <div  class="menu-servicios order-2  menu-promocion-servicios mb-3">
-                    <div class="contenido-lista">
-                        <h3 class="text-center text-light ">PROMOCIONA TU SERVICIO</h3>
-                        <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-light  btn-lg btn-block btn-promocion" data-toggle="modal" data-target="#exampleModal">PROMOCIONAR</button>
-                        <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-light  btn-lg btn-block">PROMOCIONAR</button></a>
-                        <button sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" id="pop" type="button" class="btn btn-outline-light  btn-lg btn-block" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario">PROMOCIONAR</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <h1 class="text-light  titulo order-1">Servicios.com</h1>
+                            <div class="d-flex justify-content-end order-3">
+                                <a class=" serviciosbtn  text-light nav-link float-left" id="nav-link" data-toggle="modal" href="#" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</a>
+                                <a th:href="@{/admin}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" >Administracion</a>
+                                <form method="POST"   th:action="@{/logout}"  sec:authorize="hasRole('ROLE_ADMIN')" >
+                                    <button onclick="this.parentNode.submit();" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" >Cerrar sesion</button>
+                                </form>
+                                <a th:href="@{/agregarUsuario}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</a>
+                                <a th:href="@{/serviciosUsuario/} + ${id}" class=" nav-link serviciosbtn  float-left  text-light"  id="nav-link" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</a>
+                                <div sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown float-left">
+                                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Cuenta
+                                    </a>
+                                    <div  id="myDiv" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item " th:href="@{/datosUsuario/} +  ${id}">Mis datos</a>
+                                        <form method="POST" class="cerrar-sesion"  th:action="@{/logout}">
+                                            <button onclick="this.parentNode.submit();" class="dropdown-item"  >Cerrar sesion</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
 
-      </section>
-    </body>
-</html>
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active img-opacity">
+                                    <img th:src="@{img/djopcion1.jpg}" alt="musica animador fiesta evento catering" class="imagen-menu">
+                                        <svg class="bd-placeholder"  width="100%" height="100%"  xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/> 
+                                            <div class="container">
+                                                <div class="carousel-caption text-left">
+                                                    <h1 class="promocionTitle">ENCONTRA LO QUE ESTAS BUSCANDO</h1>
+                                                    <h3 class="promocionTexto ">Encuentra a los mejores animadroes,musicos,fotografos y mucho mas  </h3>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="carousel-item img-opacity">
+                                                <img th:src="@{img/operario.jpg}"  class="imagen-menu2" alt="servicios de fiesta,mantenimientoentretenimiento,educacion,bienestar,finanzas">
+                                                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
+                                                    <div class="container">
+                                                        <div class="carousel-caption ">
+                                                            <h1 class="promocionTitle">PROMOCIONA TU TRABAJO</h1>
+                                                            <h3 class="promocionTexto ">En SERVICIOS.COM queremos ayudarte a que mas personas conozcan lo que haces para que tu productividad vaya en aumento</h3>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div class="carousel-item img-opacity">
+                                                <img th:src="@{img/consulta3.jpg}"  class="imagen-menu3"  alt="psicologo bienestar salud psicologa finanzas arquitecto">
+                                                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
+                                                    <div class="container">
+                                                        <div class="carousel-caption ">
+                                                            <h1 class="promocionTitle ">CONSULTA CON LOS MEJORES</h1>
+                                                            <h3 class="promocionTexto ">Cononce a nuestros profesionales en finanzas,bienestar,educacion y mas...</h3>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div class="carousel-item img-opacity">
+                                                <img th:src="@{img/soldador.jpg}"   class="imagen-menu4" alt="plomero electricista tecnico">
+                                                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
+                                                    <div class="container">
+                                                        <div class="carousel-caption  text-right">
+                                                            <h1 class="promocionTitle">TENEMOS LA SOLUCION A TUS PROBLEMAS</h1>
+                                                            <h3 class="promocionTexto ">Plomeria, gas, elctridad entre mucho mas todos los especialistas en un  solo lugar </h3>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                            </div> 
+                                            </header>
+                                            <section th:fragment="card-listado-promocion">
+                                                <div class=" container">
+                                                    <h2 class="titulomenu mb-5 animate__animated animate__pulse animate__repeat-2">conoce todos los servicios diponibles a continuacion</h2>
+                                                    <hr id="title_hr">
+                                                        <div class="d-flex justify-content-around " id="carteles-lista-promocion">
+                                                            <div  class="menu-servicios order-1  menu-lista-servicios">
+                                                                <div class="contenido-lista">
+                                                                    <h3 class="text-center text-light mb-2">LISTA DE SERVICIOS</h3>
+                                                                    <a th:href="@{/listaServicios}"> <button type="button" class="btn btn-outline-light  btn-lg btn-block">VER LISTA</button></a>
+                                                                </div>
+                                                            </div>
+                                                            <div  class="menu-servicios order-2  menu-promocion-servicios mb-3">
+                                                                <div class="contenido-lista">
+                                                                    <h3 class="text-center text-light ">PROMOCIONA TU SERVICIO</h3>
+                                                                    <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-light  btn-lg btn-block btn-promocion" data-toggle="modal" data-target="#exampleModal">PROMOCIONAR</button>
+                                                                    <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-light  btn-lg btn-block">PROMOCIONAR</button></a>
+                                                                    <button sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" id="pop" type="button" class="btn btn-outline-light  btn-lg btn-block" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario">PROMOCIONAR</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+
+                                            </section>
+                                            </body>
+                                            </html>

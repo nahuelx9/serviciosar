@@ -1,13 +1,12 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-         <head th:replace="layout/headFooter :: head">
+    <head th:replace="layout/headFooter :: head">
         <body>
             <header th:replace="layout/headers :: headerEdicionImagenes"></header>
-          <footer th:replace="layout/edicionImagenes :: edicionImagenes"></footer>
+            <section th:replace="layout/edicionImagenes :: edicionImagenes"></section>
+            <footer th:replace="layout/headFooter :: footer"></footer>
         </body>
-       <footer th:replace="layout/headFooter :: footer"></footer>
 
-
-        
-    </html>
+</html>

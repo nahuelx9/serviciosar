@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Admin</title>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    <section th:fragment="menuDesplegable">
+                        <div id="mySidenav" class="sidenav">
+                            <div class="headerSide mb-3">
+                                <h3 class="text-light ">Adimistrador  Nahuel</h3>
+                                <div href="javascript:void(0)" class="closebtn mt-3" onclick="closeNav()" >
+                                    <div class="btnHamburger"></div>
+                                    <div class="btnHamburger"></div>
+                                    <div class="btnHamburger"></div>
+                                </div>
+                            </div>
+                            <a href="#" style="" id="btnUsuarios"><i class="fas fa-users"></i>&nbsp&nbspUsuarios</a>
+                            <a href="#"  id="btnServicios"><i class="fab fa-stripe-s"></i>&nbsp&nbsp Servicios</a>
+                            <a href="#"  id="btnImagenes"><i class="fas fa-image"></i>&nbsp&nbspImagenes</a>
+                            <a href="#"  id="btnAnalisis"><i class="fas fa-chart-line"></i>&nbsp&nbspAnanlisis</a>
+                            <a href="#"  id="btnMensajes"><i class="fas fa-envelope"></i>&nbsp&nbspMensajes</a>
+                            <a href="#"  id="btnAlertas"><i class="fas fa-exclamation-circle"></i>&nbsp&nbsp Alertas</a>
+                        </div>
+                    </section>
+                    <section th:fragment='listUsuarios' id="fragment-usuarios">
+                        <div class= container-fluid" mt-4">
+                            <table id="dtUsuarios" class="table table-striped table-bordered" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th class="th-sm">Id
+                                        </th>
+                                        <th class="th-sm">Nombre Apellido
+                                        </th>
+                                        <th class="th-sm">Provincia
+                                        </th>
+                                        <th class="th-sm">Departamento
+                                        </th>
+                                        <th class="th-sm">Email
+                                        </th>
+                                        <th class="th-sm">Id rol
+                                        </th>
+                                        <th class="th-sm">Fecha Registro
+                                        </th>
+                                        <th class="th-sm">Password
+                                        </th>
+                                        <th class="th-sm">Editar
+                                        </th>
+                                        <th class="th-sm">Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="usuario, iStat: ${usuarios}">
+                                        <td th:text="${usuario.idUsuario}">id</td>
+                                        <td th:text="${usuario.nombre} + ' ' + ${usuario.apellido} ">Nombre Apellido</td>
+                                        <td th:text='${usuario.provincia}'>Provincia</td>
+                                        <td th:text='${usuario.departamento}'>Departamento</td>
+                                        <td th:text='${usuario.username}'>Email</td>
+                                        <td th:text='${usuario.idRol}'>Rol</td>
+                                        <td th:text='${usuario.fecha}'>Fecha</td>
+                                        <td th:text='${usuario.password}'>password</td>
+                                        <td ><a  th:href="@{/admin/editarUsuario/} + ${usuario.idUsuario}" class="btn btn-warning ml-3" >
+                                                <i class="fas fa-edit"></i></a></td>
+                                        <td ><a  href="#"  class="btn btn-danger ml-3" data-toggle="modal" th:data-target="'#m'+${iStat.index}">
+                                                <i class="fas fa-trash"></i>
+                                            </a></td>
+
+                                        <!-- Modal Eliminar -->
+                                        <div class="modal fade" th:id="'m'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header modal-eliminar">
+                                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Usuario</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Esta segur@ de elimiar el usuario, no podra revertir cambios
+                                                    </div>
+                                                    <div class="modal-footer modal-eliminar ">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                                        <a th:href="@{/eliminarUsuario(idUsuario=${usuario.idUsuario})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id
+                                        </th>
+                                        <th>Nombre Apellido
+                                        </th>
+                                        <th>Provincia
+                                        </th>
+                                        <th>Departamento
+                                        </th>
+                                        <th>Email
+                                        </th>
+                                        <th>idRol
+                                        </th>
+                                        <th>Fecha Registro
+                                        </th>
+                                        <th>Password
+                                        </th>
+                                        <th>Editar
+                                        </th> 
+                                        <th>Eliminar
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </section>
+                    <section th:fragment='listServicios' id="fragment-servicios">
+                        <div class= container-fluid" mt-4">
+                            <table id="dtServicios" class="table table-striped table-bordered" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th class="th-sm">Id
+                                        </th>
+                                        <th class="th-sm">Nombre
+                                        </th>
+                                        <th class="th-sm">Celular
+                                        </th>
+                                        <th class="th-sm">Whatsaap
+                                        </th>
+                                        <th class="th-sm">Email
+                                        </th>
+                                        <th class="th-sm">Precio
+                                        </th>
+                                        <th class="th-sm">Precio descripción
+                                        </th>
+                                        <th class="th-sm">Horario
+                                        </th>
+                                        </th>
+                                        <th class="th-sm">Descripción
+                                        </th>
+                                        <th class="th-sm">Fecha Registro
+                                        </th>
+                                        </th>
+                                        <th class="th-sm">Id usuario
+                                        </th>
+                                        <th class="th-sm">Editar
+                                        </th>
+                                        <th class="th-sm">Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="servicio,iStat : ${servicios}">
+                                        <td th:text="${servicio.idServicio}">id</td>
+                                        <td th:text="${servicio.nombre}">Nombre</td>
+                                        <td th:text="${servicio.celular}">celular</td>
+                                        <td th:text="${servicio.whatsapp}">whatsaap</td>
+                                        <td th:text="${servicio.email}">Email</td>
+                                        <td th:text="${servicio.precio}">precio</td>
+                                        <td th:text="${servicio.precioDescripcion}">precioDescripcion</td>
+                                        <td th:text="${servicio.horario}">horario</td>
+                                        <td th:text="${servicio.descripcion}">descripcion</td>
+                                        <td th:text="${servicio.fecha}">fecha</td>
+                                        <td th:text="${servicio.idUsuario}">idUsuario</td>
+                                        <td ><a  th:href="@{/editarServicio/} + ${servicio.idServicio}"  class="btn btn-warning  ml-3">
+                                                <i class="fas fa-edit "></i> 
+                                            </a></td>
+                                        <td ><a  href="#"  class="btn btn-danger ml-3" data-toggle="modal" th:data-target="'#m1'+${iStat.index}">
+                                                <i class="fas fa-trash"></i>
+                                            </a></td>
+                                        <!-- Modal Eliminar -->
+                                        <div class="modal fade" th:id="'m1'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header modal-eliminar">
+                                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Esta segur@ de elimiar este servicio, no podra revertir cambios
+                                                    </div>
+                                                    <div class="modal-footer modal-eliminar ">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                                        <a th:href="@{/eliminarServicio(idServicio=${servicio.idServicio})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </li>
+                                        </ul>
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id
+                                        </th>
+                                        <th>Nombre 
+                                        </th>
+                                        <th>Celular
+                                        </th>
+                                        <th>Whatsaap
+                                        </th>
+                                        <th>Email
+                                        </th>
+                                        <th>Precio
+                                        </th>
+                                        <th>Precio descripción
+                                        </th>
+                                        <th>Horario
+                                        </th> 
+                                        <th>Descripción
+                                        </th>
+                                        <th>Fecha Registro
+                                        </th>
+                                        <th>Id usuario
+                                        </th>
+                                        <th>Editar
+                                        </th> 
+                                        <th>Eliminar
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </section>
+                    <section th:fragment='listImagenes' id="fragment-imagenes">
+                        <div class= container-fluid" mt-4">
+                            <table id="dtImagenes" class="table table-striped table-bordered" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th class="th-sm">Nombre
+                                        </th>
+                                        <th class="th-sm">Formato
+                                        </th>
+                                        <th class="th-sm">Imagen
+                                        </th>
+                                        <th class="th-sm">id Servicio
+                                        </th>
+                                        <th class="th-sm">Editar
+                                        </th>
+                                        <th class="th-sm">Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="imagen,iStat : ${imagenes}">
+                                        <td th:text="${imagen.fileName}">Nombre</td>
+                                        <td th:text="${imagen.fileType}">Formato</td>
+                                        <td><img th:src="*{'data:image/jpg;base64,'+ imagen.url}" style="max-width: 200px;  position: relative; left: 20%;" alt="..."></td>
+                                        <td th:text="${imagen.idServicio}">Id Servicio</td>
+                                        <td ><a  href="#"  class="btn btn-warning ml-2 "  data-toggle="modal" th:data-target="'#modificar'+${iStat.index}">
+                                                <i class="fas fa-edit "></i> 
+                                            </a></td>
+                                        <td ><a  href="#" class="btn btn-danger ml-3" data-toggle="modal" th:data-target="'#m2'+${iStat.index}">
+                                                <i class="fas fa-trash "></i>
+                                            </a></td>
+
+
+                                        <!-- Modal modificar imagenes -->
+
+                                        <div class="modal fade" th:id="'modificar'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <form  th:action="@{/modificarImagen}"  method="POST" enctype="multipart/form-data" name="multipleUploadForm">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Moodificar imagen</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                                                                </div>
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" th:name="file" th:id="'input'+${iStat.index}" onchange="imagenCargada()"
+                                                                           aria-describedby="inputGroupFileAddon01"  multiple/>
+                                                                    <label class="custom-file-label" for="inputGroupFile01" th:id="'inputLabel'+${iStat.index}">Presione aqui para elegir la imagen</label>
+                                                                </div>
+                                                                <input type="text" th:name="idValue" th:value="${imagen.id}" hidden >
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                            <button type="submit"  class="btn btn-success">Guardar Cambios</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                        <!-- Modal Eliminar -->
+                                        <div class="modal fade" th:id="'m2'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header modal-eliminar">
+                                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Imagen</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Esta segur@ de elimiar esta imagen, no podra revertir cambios
+                                                    </div>
+                                                    <div class="modal-footer modal-eliminar ">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                                        <a th:href="@{/eliminarImagen(id=${imagen.id})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Nombre 
+                                        </th>
+                                        <th>Formato
+                                        </th>
+                                        <th>Imagen
+                                        </th>
+                                        <th>id Servicio
+                                        </th>
+                                        <th>Editar
+                                        </th> 
+                                        <th>Eliminar
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section th:fragment="analisis"  id="fragment-analisis">
+                        <div class="d-flex justify-content-center align-items-center minh-100">
+                            <div class=" container">
+                                <div class="card text-center bg-success text-white m-3">
+                                    <div class="card-body">
+                                        <h3 >Usuarios Registrados</h3>
+                                        <h4 class="display-4">
+                                            <i class="fas fa-users"></i>
+                                            <span th:text="${cantidadUsuarios}"> Cantidad Usuarios</span>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="card text-center bg-info text-white m-3">
+                                    <div class="card-body">
+                                        <h3>Servicios Registrados</h3>
+                                        <h4 class="display-4">
+                                            <i class="far fa-list-alt"></i>
+                                            <span th:text="${cantidadServicios}"> Cantidad Servicios</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="card text-center bg-secondary text-white m-3">
+                                    <div class="card-body">
+                                        <h3>Google Analytics</h3>
+                                        <h4 class="display-4">
+                                            <a href="https://analytics.google.com/analytics/web/#/p256614631/reports/defaulthome?params=_u..nav%3Ddefault" class="text-light"><i class="fab fa-google"></i> <i class="fas fa-chart-bar"></i></a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section th:fragment="buzon"  id="fragment-buzon">
+                        <div class= "container-fluid mt-4" >
+                            <table id="dtBuzon" class="table table-striped table-bordered" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th class="th-sm">Id
+                                        </th>
+                                        <th class="th-sm">Nombre 
+                                        </th>
+                                        <th class="th-sm">Apellido
+                                        </th>
+                                        <th class="th-sm">Email
+                                        </th>
+                                        <th class="th-sm">Celular
+                                        </th>
+                                        <th class="th-sm">Fecha y hora
+                                        </th>
+                                        <th class="th-sm">Mensaje
+                                        </th>
+                                        <th class="th-sm">Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="buzon, iStat: ${buzones}">
+                                        <td th:text="${buzon.idBuzon}">id</td>
+                                        <td th:text="${buzon.nombre}">Nombre </td>
+                                        <td th:text='${buzon.apellido}'>Apellido</td>
+                                        <td th:text='${buzon.email}'>Email</td>
+                                        <td th:text='${buzon.celular}'>Celular</td>
+                                        <td th:text='${buzon.fecha}'>Celular</td>
+                                        <td th:text='${buzon.mensaje}'>Mensaje</td>
+                                        <td ><a  href="#"  class="btn btn-danger ml-3" data-toggle="modal" th:data-target="'#m3'+${iStat.index}">
+                                                <i class="fas fa-trash"></i>
+                                            </a></td>
+
+                                        <!-- Modal Eliminar -->
+                                        <div class="modal fade" th:id="'m3'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header modal-eliminar">
+                                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Mensaje</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Esta segur@ de elimiar el mensaje, no podra revertir cambios
+                                                    </div>
+                                                    <div class="modal-footer modal-eliminar ">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                                        <a th:href="@{/admin/eliminarMensaje(idBuzon=${buzon.idBuzon})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id
+                                        </th>
+                                        <th>Nombre 
+                                        </th>
+                                        <th>Apellido
+                                        </th>
+                                        <th>Email
+                                        </th>
+                                        <th>Celular
+                                        </th>
+                                        <th>Fecha y hora
+                                        </th>
+                                        <th>Mensaje
+                                        </th>
+                                        <th>Eliminar
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </section>
+                    <section th:fragment="alertas"  id="fragment-alertas">
+                        <div class= "container-fluid mt-4" >
+                            <table id="dtAlerta" class="table table-striped table-bordered" width="100%">
+                                <thead >
+                                    <tr>
+                                        <th class="th-sm">Id Alerta
+                                        </th>
+                                        <th class="th-sm">tipo 
+                                        </th>
+                                        <th class="th-sm">Mensaje
+                                        </th>
+                                        <th class="th-sm">id Servicio
+                                        </th>
+                                        <th class="th-sm">Fecha y hora
+                                        </th>
+                                        <th class="th-sm">Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="alerta, iStat: ${alertas}">
+                                        <td th:text="${alerta.idAlerta}">idAlerta</td>
+                                        <td th:text="${alerta.tipo}">tipo </td>
+                                        <td th:text='${alerta.textReporte}'>textReporte</td>
+                                        <td th:text='${alerta.idServicio}'>idServicio</td>
+                                        <td th:text='${alerta.fecha}'>fecha</td>
+                                        <td ><a  href="#"  class="btn btn-danger ml-3" data-toggle="modal" th:data-target="'#m4'+${iStat.index}">
+                                                <i class="fas fa-trash"></i>
+                                            </a></td>
+
+                                        <!-- Modal Eliminar -->
+                                        <div class="modal fade" th:id="'m4'+${iStat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header modal-eliminar">
+                                                        <h5 class="modal-title " id="exampleModalLabel">Eliminar Alerta</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Esta segur@ de elimiar la alerta, no podra revertir cambios
+                                                    </div>
+                                                    <div class="modal-footer modal-eliminar ">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                                        <a th:href="@{/admin/eliminarAlerta(idAlerta=${alerta.idAlerta})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id Alerta
+                                        </th>
+                                        <th>tipo 
+                                        </th>
+                                        <th>Mensaje
+                                        </th>
+                                        <th>id Servicio
+                                        </th>
+                                        <th>Fecha y hora
+                                        </th>
+                                        <th>Eliminar
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </section>
+
+                </body>
+                </html>

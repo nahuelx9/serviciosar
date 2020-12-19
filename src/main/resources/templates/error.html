@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -13,13 +14,14 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
         <link th:href="@{/css/let.css}" rel="stylesheet">
-        <title>Acceso Denegado</title>
+        <title>Error</title>
     </head>
     <body>
         <div class="center">
             <h1 class="letter" >Ups...  Error</h1>
             <i class="fas fa-cogs fa-8x icono"></i>
             <p class="text-center "><span th:text="${error}"> - </span> <span th:text="${status}"></span></p>
+            <a th:href="@{/}" class="text-light">Volver</a>
         </div>
 
 

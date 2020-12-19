@@ -1,6 +1,7 @@
 package np.com.proyecto.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,6 +51,11 @@ public class Usuario implements Serializable {
     @NotEmpty
     @Size(min=8)
     private String password;
+    
+     @Column(name = "id_rol")
+    private Integer idRol = 1;
+     
+    private Date fecha  = new Date();
     
     
     @OneToMany

@@ -139,7 +139,9 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 
         for (Rol rol : rolDao.findAll()) {
-            roles.add(new SimpleGrantedAuthority(rol.getNombre()));
+            if(rol.getIdRol().equals(usuario.getIdRol())){
+                 roles.add(new SimpleGrantedAuthority(rol.getNombre()));
+            }
         }
         return new org.springframework.security.core.userdetails.User(usuario.getUsername(), usuario.getPassword(), roles);
     }

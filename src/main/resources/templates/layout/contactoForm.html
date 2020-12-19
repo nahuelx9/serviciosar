@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Contacto Form</title>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    <section th:fragment="contactoForm">
+                        <div class=" container-md ">
+                            <form class="form-horizontal"  th:action="@{/enviarMensaje}" method="POST">
+                                <div th:object="${buzon}" th:remove="tag">
+                                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                                        <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                                    </ul>
+                                </div>
+                                <fieldset>
+                                    <legend class="text-center headerContact text-secondary">Formulario de contacto</legend>
+
+                                    <div class="form-group">
+                                        <input id="name" name="nombre" type="text" placeholder="Nombre" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="name" name="apellido" type="text" placeholder="Apellido" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="email" name="email" type="text" placeholder="Email de contacto" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input id="phone" name="celular" type="text" placeholder="Telefono de contacto" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="message" name="mensaje" placeholder="Escriba un mensaje y  trataremos de responder lo antes posible" rows="7"></textarea>
+                                    </div>
+                                    <div class="form-group d-flex justify-content-end ">
+                                        <div>
+                                            <button type="submit" class="btn btn-success btn-lg ">Enviar</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </section>
+                </body>
+                </html>
