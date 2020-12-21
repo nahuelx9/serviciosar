@@ -541,10 +541,10 @@ footer{
 }
 /* Formaulario contacto Fin */
 
- #reportar:hover{
-        cursor: pointer;
-        color:firebrick!important;
-    }
+#reportar:hover{
+    cursor: pointer;
+    color:firebrick!important;
+}
 
 
 
@@ -651,6 +651,12 @@ footer{
     .text-promocion{
         font-size: 18px;
     }
+    #footer{
+        display: inline-grid!important;
+    }
+    .contacto{
+        margin-left: 5rem!important;
+    }
 }
 
 @media screen and (max-width: 540px) {
@@ -705,10 +711,13 @@ footer{
     .promocionTexto{
         font-size: 0.9em;
     }
-
-
 }
 
+@media screen and (max-width: 360px) {
+    .descripcion-servicio{
+        font-size: 17px;
+    }
+}
 
 @media screen and (max-width: 320px) {
     .edicion{

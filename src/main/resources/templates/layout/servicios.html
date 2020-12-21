@@ -35,7 +35,7 @@
                                                         <div class="container-fluid clearfix contenedor-filtros mt-3 collapse"  id="collapseExample">
                                                             <div class="d-flex justify-content-between mt-2 ml-4 mr-4 font-italic" id="contenedor-filtros">
                                                                 <div class=" mb-4 locaclidad">
-                                                                    <label for="validationDefault04" class="labelbuscador">Provincia:</label>
+                                                                    <label for="validationDefault04" class="labelbuscador">Provincia o Localidad:</label>
                                                                     <select class="custom-select  buscadorciudad " name="provincia" id="listaProvincias"  onclick="mostrarListado()" >
                                                                         <option selected  value="">No especificar</option>
                                                                         <option  th:each="provincias: ${provincias}"  th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
@@ -101,7 +101,7 @@
                                                                         <div class="row">
                                                                             <div class="card">
                                                                                 <div class="card-header">
-                                                                                    <h3 class="text-capitalize titulo-servicio"   style="font-family: 'DM Serif Text', serif;" th:text="${servicio.nombre}">Nombre del servicio</h3>
+                                                                                    <h3 class="text-capitalize titulo-servicio text-break"   style="font-family: 'DM Serif Text', serif;" th:text="${servicio.nombre}">Nombre del servicio</h3>
                                                                                 </div>
                                                                                 <table class="table table-stryped">
                                                                                     <thead class="thead-dark">
@@ -142,7 +142,7 @@
                                                                                                                         </div>
                                                                                                                         <div class="input-group" id="text-area-reporte">
                                                                                                                             <div class="form-floating">
-                                                                                                                                <textarea  name="textReporte" class="form-control"  placeholder="Cuentanos la razon por la que decis reportar este servicio" id="floatingTextarea"style="width: 450px;" ></textarea>
+                                                                                                                                <textarea  name="textReporte" class="form-control"  placeholder="Cuentanos la razon por la que decis reportar este servicio. Tu comentario es totalmente anonimo" id="floatingTextarea"style="width: 450px;" ></textarea>
                                                                                                                             </div>
                                                                                                                         </div>
                                                                                                                     </div>

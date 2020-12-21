@@ -137,8 +137,8 @@
                     timer: 3500
                 });
             </script>
-            
-            
+
+
             <script th:if="${sesionExpirada}" type="text/javascript">
                 Swal.fire({
                     icon: 'error',
@@ -153,6 +153,41 @@
                     title: 'Gracias por enviar el reporte, revisaremos el servicio',
                     showConfirmButton: false,
                     timer: 4500
+                });
+            </script>
+
+
+            <script th:if="${enlaceEnviado}" type="text/javascript">
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Se envio el enlace de restablecimiento correctamente',
+                    text: 'Si no encuentre el mensaje en la bandeja de entrada revise en la seccion de Spam!',
+                    showConfirmButton: true
+                });
+            </script>
+
+            <script th:if="${enlaceEnviado} == false" type="text/javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Algo salio mal.',
+                    text: 'Verifica que el email ingresado sea correcto!'
+                });
+            </script>
+
+            <script th:if="${tokenInvalido}" type="text/javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Token invalido.',
+                    text: 'El enlace es invalido o ya expiro!'
+                });
+            </script>
+
+            <script th:if="${passwordRestablecida}" type="text/javascript">
+                Swal.fire({
+                    icon: 'success',
+                    title: 'La contrasña fue restablecida con exito',
+                    text: 'ya puede iniciar sesion!',
+                    showConfirmButton: true
                 });
             </script>
 

@@ -14,6 +14,8 @@
                 <h1 th:if="${#httpServletRequest.requestURI} == '/agregarUsuario'" class="text-light  titulo-nav-simple order-2">Registro Usuario</h1>
                 <h1 th:if="${#httpServletRequest.requestURI}== '/agregarServicio'" class="text-light  titulo-nav-simple order-2">Registro  Servicio</h1>
                      <h1 th:if="${#httpServletRequest.requestURI}== '/contacto'" class="text-light  titulo-nav-simple order-2">Contacto</h1>
+                     <h1 th:if="${#httpServletRequest.requestURI}== '/forgot_password'" class="text-light  titulo-nav-simple order-2">Restablecer Contraseña</h1>
+                      <h1 th:if="${#httpServletRequest.requestURI}== '/reset_password'" class="text-light  titulo-nav-simple order-2">Modificar Contraseña</h1>
                 <a th:href="@{/}" class="volver tituloRegistroUsuario order-3"><h1 class="  titulo text-success">Servicios.com</h1></a>
             </nav>
         </header>

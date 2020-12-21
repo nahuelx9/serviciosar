@@ -11,7 +11,7 @@
                     <section th:fragment="menuDesplegable">
                         <div id="mySidenav" class="sidenav">
                             <div class="headerSide mb-3">
-                                <h3 class="text-light ">Adimistrador  Nahuel</h3>
+                                <h3 class="text-light text-center ">Area de Adimistracion</h3>
                                 <div href="javascript:void(0)" class="closebtn mt-3" onclick="closeNav()" >
                                     <div class="btnHamburger"></div>
                                     <div class="btnHamburger"></div>
@@ -45,8 +45,6 @@
                                         </th>
                                         <th class="th-sm">Fecha Registro
                                         </th>
-                                        <th class="th-sm">Password
-                                        </th>
                                         <th class="th-sm">Editar
                                         </th>
                                         <th class="th-sm">Eliminar
@@ -62,7 +60,6 @@
                                         <td th:text='${usuario.username}'>Email</td>
                                         <td th:text='${usuario.idRol}'>Rol</td>
                                         <td th:text='${usuario.fecha}'>Fecha</td>
-                                        <td th:text='${usuario.password}'>password</td>
                                         <td ><a  th:href="@{/admin/editarUsuario/} + ${usuario.idUsuario}" class="btn btn-warning ml-3" >
                                                 <i class="fas fa-edit"></i></a></td>
                                         <td ><a  href="#"  class="btn btn-danger ml-3" data-toggle="modal" th:data-target="'#m'+${iStat.index}">
@@ -107,8 +104,6 @@
                                         <th>idRol
                                         </th>
                                         <th>Fecha Registro
-                                        </th>
-                                        <th>Password
                                         </th>
                                         <th>Editar
                                         </th> 
@@ -367,7 +362,7 @@
                                     <div class="card-body">
                                         <h3>Google Analytics</h3>
                                         <h4 class="display-4">
-                                            <a href="https://analytics.google.com/analytics/web/#/p256614631/reports/defaulthome?params=_u..nav%3Ddefault" class="text-light"><i class="fab fa-google"></i> <i class="fas fa-chart-bar"></i></a>
+                                            <a href="https://analytics.google.com/analytics/web/#/p256614631/reports/defaulthome?params=_u..nav%3Ddefault" target="_blank" class="text-light"><i class="fab fa-google"></i> <i class="fas fa-chart-bar"></i></a>
                                         </h4>
                                     </div>
                                 </div>

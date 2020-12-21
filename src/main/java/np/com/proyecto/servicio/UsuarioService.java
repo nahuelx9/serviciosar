@@ -11,6 +11,8 @@ public interface UsuarioService {
 
     public void eliminar(Usuario usuario);
 
+    public void modificarUsuario(Usuario usuario);
+
     public Usuario encontrarUsuario(Usuario usuario);
 
     public Usuario encontrarUsuarioPorUsername(String username);
@@ -25,6 +27,12 @@ public interface UsuarioService {
 
     public void modificarUsernameUsuario(String username, int id_usuario);
 
-    public int  modificarPasswordUsuario(String passwordActual, String password1,String password2, Usuario usuario);
+    public int modificarPasswordUsuario(String passwordActual, String password1, String password2, Usuario usuario);
+
+    public void updateResetPasswordToken(String token, String email);
+
+    public Usuario getByResetPasswordToken(String token);
+
+    public void updatePassword(Usuario usuario, String newPassword);
 
 }

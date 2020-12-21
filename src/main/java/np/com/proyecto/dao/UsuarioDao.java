@@ -14,6 +14,12 @@ public interface UsuarioDao extends JpaRepository<Usuario, Integer> {
 
     @Query(value = "SELECT username FROM usuario WHERE username =? ", nativeQuery = true)
     public String verificarExistenciaEmail(String email);
+    
+    
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE usuario SET nombre=?,apellido=?,provincia=?, departamento=?, username=?, id_rol=? WHERE id_usuario=?", nativeQuery = true)
+    public void modificarUsuario(String nombre,String apellido,String provincia,String depertamento, String Username, int id_rol,  int id_usuario);
 
     @Transactional
     @Modifying
@@ -39,5 +45,10 @@ public interface UsuarioDao extends JpaRepository<Usuario, Integer> {
     @Modifying
     @Query(value = "UPDATE usuario SET password=? WHERE id_usuario=?", nativeQuery = true)
     public void modificarPasswordUsuario(String password, int id_usuario);
+    
+     @Query("SELECT u FROM Usuario u WHERE u.username = ?1")
+    public Usuario findByEmail(String email); 
+    
+    public Usuario findByResetPasswordToken(String token);
 
 }

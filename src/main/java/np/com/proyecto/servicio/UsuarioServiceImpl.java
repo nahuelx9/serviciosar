@@ -15,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,6 +124,13 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
+    @Transactional
+     public void modificarUsuario(Usuario usuario){
+         usuarioDao.modificarUsuario(usuario.getNombre(), usuario.getApellido(), usuario.getProvincia(), usuario.getDepartamento(), usuario.getUsername(), usuario.getIdRol(), usuario.getIdUsuario());
+     }
+
+    
+    @Override
     @Transactional(readOnly = true)
     public Usuario encontrarUsuario(Usuario usuario) {
         return usuarioDao.findById(usuario.getIdUsuario()).orElse(null);
@@ -139,8 +147,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 
         for (Rol rol : rolDao.findAll()) {
-            if(rol.getIdRol().equals(usuario.getIdRol())){
-                 roles.add(new SimpleGrantedAuthority(rol.getNombre()));
+            if (rol.getIdRol().equals(usuario.getIdRol())) {
+                roles.add(new SimpleGrantedAuthority(rol.getNombre()));
             }
         }
         return new org.springframework.security.core.userdetails.User(usuario.getUsername(), usuario.getPassword(), roles);
@@ -165,16 +173,16 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public void modificarNombreUsuario(String nombre, int id_usuario) {
-        if(!nombre.isEmpty()){
-        usuarioDao.modificarNombreUsuario(nombre, id_usuario);
+        if (!nombre.isEmpty()) {
+            usuarioDao.modificarNombreUsuario(nombre, id_usuario);
         }
     }
 
     @Override
     public void modificarApellidoUsuario(String apellido, int id_usuario) {
-          if(!apellido.isEmpty()){
-        usuarioDao.modificarApellidoUsuario(apellido, id_usuario);
-          }
+        if (!apellido.isEmpty()) {
+            usuarioDao.modificarApellidoUsuario(apellido, id_usuario);
+        }
     }
 
     @Override
@@ -190,22 +198,58 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public int modificarPasswordUsuario(String passwordActual, String password1, String password2, Usuario usuario) {
         int error = 0;
-        if (!passwordActual.isEmpty() && !password1.isEmpty() && !password2.isEmpty() && password1.length() >=8 &&  password2.length() >=8) {
-            if (usuario.compararPassword(passwordActual,usuario.getPassword())) {
+        if (!passwordActual.isEmpty() && !password1.isEmpty() && !password2.isEmpty() && password1.length() >= 8 && password2.length() >= 8) {
+            if (usuario.compararPassword(passwordActual, usuario.getPassword())) {
                 if (password1.equals(password2)) {
                     int idFinal = Math.toIntExact(usuario.getIdUsuario());
-                    String  encriptada = usuario.encriptarPassword(password1);
+                    String encriptada = usuario.encriptarPassword(password1);
                     usuarioDao.modificarPasswordUsuario(encriptada, idFinal);
-                }else{
-                      error = 3;//las contraseñas son  distintas
+                } else {
+                    error = 3;//las contraseñas son  distintas
                 }
-            }else{
-                 error = 2;//Contraseña icorrecta
+            } else {
+                error = 2;//Contraseña icorrecta
             }
-        }else{
-             error = 1;//Campos vacios
+        } else {
+            error = 1;//Campos vacios
         }
         return error;
     }
+
+    @Override
+    public void updateResetPasswordToken(String token, String email){
+        Usuario usuario = usuarioDao.findByEmail(email);
+        if (usuario != null) {
+            usuario.setResetPasswordToken(token);
+            usuarioDao.save(usuario);
+        }
+    }
+
+    /**
+     *
+     * @param token
+     * @return
+     */
+    @Override
+    public Usuario getByResetPasswordToken(String token) {
+        return usuarioDao.findByResetPasswordToken(token);
+    }
+
+    /**
+     *
+     * @param usuario
+     * @param newPassword
+     */
+    @Override
+    public void updatePassword(Usuario usuario, String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        usuario.setPassword(encodedPassword);
+
+        usuario.setResetPasswordToken(null);
+        usuarioDao.save(usuario);
+    }
+    
+   
 
 }

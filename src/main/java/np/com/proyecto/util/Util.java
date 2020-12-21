@@ -6,6 +6,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpServletRequest;
 import np.com.proyecto.domain.DBFile;
 import np.com.proyecto.domain.Filtro;
 import np.com.proyecto.domain.Servicio;
@@ -30,7 +31,7 @@ public class Util {
         System.out.println(id);
     }*/
  /*Obtener nombre de las provincias segun su id*/
-    public String obtenerNombreProvincia(String idProvincia) {
+    public static String obtenerNombreProvincia(String idProvincia) {
         String provincia = "";
         switch (idProvincia) {
             case "54":
@@ -110,7 +111,7 @@ public class Util {
     }
 
     /*Obtiene los valores por paametro y le asigna el valor a los filtros*/
-    public Filtro obtenerFiltros(String nombre, String provincia, String departamento, String horario, String precio) {
+    public static Filtro obtenerFiltros(String nombre, String provincia, String departamento, String horario, String precio) {
 
         Filtro filtro = new Filtro();
 
@@ -235,7 +236,7 @@ public class Util {
      */
 
  /* convertir el codigo en imgen */
-    public void modificarUrlImagen(List<Servicio> servicios) throws UnsupportedEncodingException {
+    public static void modificarUrlImagen(List<Servicio> servicios) throws UnsupportedEncodingException {
         for (Servicio s : servicios) {
             List<DBFile> filess = s.getFiless();
             for (DBFile f : filess) {
@@ -246,8 +247,9 @@ public class Util {
         }
     }
 
+
     /* validar el ingreso de imagenes */
-    public boolean validar(MultipartFile[] files) {
+    public static boolean validar(MultipartFile[] files) {
         int cantFiles = 0;
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
@@ -273,8 +275,13 @@ public class Util {
         return mather.find();
     }
 
-}
-    
-    
-  
+    public static boolean ValidarFormatoImagen(DBFile dbFileNew) {
+        return dbFileNew.getFileType().equals("image/jpeg") || dbFileNew.getFileType().equals("image/jpg") || dbFileNew.getFileType().equals("image/pneg") || dbFileNew.getFileType().equals("image/png");
+    }
 
+    public static String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
+
+}

@@ -21,7 +21,7 @@
                                 <form method="POST"   th:action="@{/logout}"  sec:authorize="hasRole('ROLE_ADMIN')" >
                                     <button onclick="this.parentNode.submit();" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" >Cerrar sesion</button>
                                 </form>
-                                <a th:href="@{/agregarUsuario}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</a>
+                                <a th:href="@{/crearCuenta}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</a>
                                 <a th:href="@{/serviciosUsuario/} + ${id}" class=" nav-link serviciosbtn  float-left  text-light"  id="nav-link" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</a>
                                 <div sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown float-left">
                                     <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
