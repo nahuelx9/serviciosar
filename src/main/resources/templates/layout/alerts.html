@@ -22,7 +22,7 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Usuario creado correctamente',
-                    text: 'Ya puedes inciar sesion',
+                    text: 'Ya puedes iniciar sesión',
                     showConfirmButton: false,
                     timer: 3500
                 });
@@ -54,7 +54,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'La contraseña ingresada es invalida!'
+                    text: 'La contraseña ingresada es inválida!'
                 });
             </script>
 
@@ -70,7 +70,7 @@
             <script th:if="${servicioModificado}" type="text/javascript">
                 Swal.fire({
                     icon: 'success',
-                    title: 'El servicio fue modifcado correctamente',
+                    title: 'El servicio fue modificado correctamente',
                     showConfirmButton: false,
                     timer: 3500
                 });
@@ -89,7 +89,7 @@
             <script th:if="${imagenModificada}" type="text/javascript">
                 Swal.fire({
                     icon: 'success',
-                    title: 'La imagen fue modificada con exito',
+                    title: 'La imagen fue modificada con éxito',
                     showConfirmButton: false,
                     timer: 3500
                 });
@@ -98,7 +98,7 @@
             <script th:if="${imagenGuardada}" type="text/javascript">
                 Swal.fire({
                     icon: 'success',
-                    title: 'La imagen fue guardada con exito',
+                    title: 'La imagen fue guardada con éxito',
                     showConfirmButton: false,
                     timer: 3500
                 });
@@ -125,14 +125,14 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'El formato de la imagen es invalido!'
+                    text: 'El formato de la imagen es inválido!'
                 });
             </script>
 
             <script th:if="${mensajeEnviado}" type="text/javascript">
                 Swal.fire({
                     icon: 'success',
-                    title: 'El mensaje fue enviado con exito',
+                    title: 'El mensaje fue enviado con éxito',
                     showConfirmButton: false,
                     timer: 3500
                 });
@@ -143,7 +143,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'La sesion finalizo al no detectar actividad!'
+                    text: 'La sesión finalizo al no detectar actividad!'
                 });
             </script>
 
@@ -160,8 +160,8 @@
             <script th:if="${enlaceEnviado}" type="text/javascript">
                 Swal.fire({
                     icon: 'info',
-                    title: 'Se envio el enlace de restablecimiento correctamente',
-                    text: 'Si no encuentre el mensaje en la bandeja de entrada revise en la seccion de Spam!',
+                    title: 'Se envió el enlace de restablecimiento correctamente',
+                    text: 'Si no encuentre el mensaje en la bandeja de entrada revise en la sección de Spam!',
                     showConfirmButton: true
                 });
             </script>
@@ -169,7 +169,7 @@
             <script th:if="${enlaceEnviado} == false" type="text/javascript">
                 Swal.fire({
                     icon: 'error',
-                    title: 'Algo salio mal.',
+                    title: 'Algo salió mal.',
                     text: 'Verifica que el email ingresado sea correcto!'
                 });
             </script>
@@ -178,15 +178,15 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Token invalido.',
-                    text: 'El enlace es invalido o ya expiro!'
+                    text: 'El enlace es inválido o ya expiro!'
                 });
             </script>
 
             <script th:if="${passwordRestablecida}" type="text/javascript">
                 Swal.fire({
                     icon: 'success',
-                    title: 'La contrasña fue restablecida con exito',
-                    text: 'ya puede iniciar sesion!',
+                    title: 'La contraseña fue restablecida con éxito',
+                    text: 'ya puede iniciar sesión!',
                     showConfirmButton: true
                 });
             </script>

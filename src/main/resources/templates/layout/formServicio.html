@@ -5,113 +5,134 @@
     <head>
         <title>Form Servicio</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <section th:fragment="formServicio">
-              <div class="container-md formulario">
-            <form class="was-validated" th:action="@{/guardarServicio}" method="POST" enctype="multipart/form-data" id="form-servicios" name="multipleUploadForm">
-                <div th:object="${servicio}" th:remove="tag">
-                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
-                        <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
-                    </ul>
-                </div>
-                <div class="form-group">
-                    <label for="nombre">Nombre Del Servicio:</label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ejemplo: Plomero,animador,conductor,etc..." required>
-                </div>
-                <div class="form-group">
-                    <label for="celular">Celular:</label>
-                    <input type="tel" class="form-control"id="celular" name="celular" required number>
-                </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input text-secondary" name="whatsapp" id="whatsapp">
-                    <label class="form-check-label text-secondary" for="exampleCheck1">WhatsApp</label>  <i class="fab fa-whatsapp text-success" aria-hidden="true"></i>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email de contacto:</label>
-                    <input type="email" class="form-control" id="email" name="email" required email>
-                </div>
-                <label for="precio">Precio por el servicio:</label>
-                <div class="input-group mb-3 form-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                    </div>
-                    <input type="number" name="precio" class="form-control novalidate" id="precioNo" aria-label="Amount (to the nearest dollar)">
-                    <div class="input-group-append">
-                        <span class="input-group-text">.00</span>
-                    </div>
-                </div>
-                <div class="form-group required" >
-                    <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" value="Por Hora" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
-                        <label class="form-check-label novalidate" for="inlineRadio1">Por Hora</label>
-                    </div>
-                    <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" value="Por Dia" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
-                        <label class="form-check-label novalidate" for="inlineRadio1">Por Dia</label>
-                    </div>
-                    <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" value="Por Mes" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
-                        <label class="form-check-label novalidate" for="inlineRadio1">Por Mes</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="Por Jornada Laboral" name="precioDescripcion" id="inlineRadio2" onclick="habilitar()" >
-                        <label class="form-check-label novalidate" for="inlineRadio2">Por Jornada Laboral</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input " type="radio" value="Por trabajo terminado" name="precioDescripcion" id="inlineRadio3" onclick="habilitar()" >
-                        <label class="form-check-label novalidate " for="inlineRadio3">Por trabajo terminado</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="A acordar con el cliente" name="precioDescripcion" id=""  onclick="desabilitar2()">
-                        <label class="form-check-label novalidate" for="inlineRadio4">A acordar con el cliente</label>
-                    </div>
-                </div>
-                <label for="horario">Horario De trabajo:</label>
-                <div class="form-group borde required">
-                    <div class="form-check">
-                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios1" value="Part Time" checked required="">
-                        <label class="form-check-label novalidate" for="exampleRadios1">
-                            Part Time
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios2" value="Full Time" required>
-                        <label class="form-check-label novalidate" for="exampleRadios2">
-                            Full Time
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios3" value="A acordar con el cliente" required>
-                        <label class="form-check-label novalidate" for="exampleRadios3">
-                            A acordar con el cliente
-                        </label>
-                    </div>
-                </div>
-                <label for="exampleFormControlFile1">Agrega algunas imagenes:</label>
-                <div class="form-group borde">
-                    <p class="aviso">Puedes agregar algunas fotos que representen tu trabajo</p>
-                    <p class="aviso text-secondary">(Una imagen puede hacer que los clientes esten mas interesados al poder ver tu servicio)</p>
-                    <p class="aviso text-secondary">("Minimo de imagenes requeridas:1 &nbsp maximo de imagenes opcionales:6")</p>
-                    <input    id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple required file />
-                    <input th:each="i: ${#numbers.sequence(1, 5)}"   id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple />
-                </div>
-                <label></label>
-                <div class="form-group">
-                    <label for="horario">Agrega una breve descripcion de tu servicio:<p class="aviso text-secondary">(cantidad de caracter min:92 max:365)</p></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Descripcion</span>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    <section th:fragment="formServicio">
+                        <div class="container-md formulario">
+                            <form class="was-validated" th:action="@{/guardarServicio}" method="POST" enctype="multipart/form-data" id="form-servicios" name="multipleUploadForm">
+                                <div th:object="${servicio}" th:remove="tag">
+                                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                                        <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre">Nombre Del Servicio:</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ejemplo: Plomero,animador,conductor,etc..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="celular">Celular:</label>
+                                    <input type="tel" class="form-control"id="celular" name="celular" required number>
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input text-secondary" name="whatsapp" id="whatsapp">
+                                        <label class="form-check-label text-secondary" for="exampleCheck1">WhatsApp</label>  <i class="fab fa-whatsapp text-success" aria-hidden="true"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email de contacto:</label>
+                                    <input type="email" class="form-control" id="email" name="email" required email>
+                                </div>
+                                <div class="form-group">
+                                    <label for="categoria">Categoría:</label>
+                                    <select class="custom-select" name="categoria"  aria-label="Example select with button addon" required>
+                                        <option selected value="">Seleccione una opcion</option>
+                                        <option value="Construcción">Construcción</option>
+                                        <option value="Transporte">Transporte</option>
+                                        <option value="Hogar">Hogar y mantenimiento</option>
+                                        <option value="Asesoría">Asesoría</option>
+                                        <option value="Mascotas">Mascotas</option>
+                                        <option value="Diseño">Diseño</option>
+                                        <option value="Educación">Educación</option>
+                                        <option value="Fotografía">Fotografia</option>
+                                        <option value="musica">Música</option>
+                                        <option value="Vehiculos">Vehículos</option>
+                                        <option value="Tecnologia">Tecnología</option>
+                                        <option value="Entretenimiento">Entretenimiento</option>
+                                        <option value="Salud">Salud</option>
+                                        <option value="Cuidado personal">Cuidado personal</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                                <label for="precio">Precio por el servicio:</label>
+                                <div class="input-group mb-3 form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="number" name="precio" class="form-control novalidate" id="precioNo" aria-label="Amount (to the nearest dollar)">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
+                                        </div>
+                                </div>
+                                <div class="form-group required" >
+                                    <div class="form-check form-check-inline ">
+                                        <input class="form-check-input" type="radio" value="Por Hora" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
+                                            <label class="form-check-label novalidate" for="inlineRadio1">Por Hora</label>
+                                    </div>
+                                    <div class="form-check form-check-inline ">
+                                        <input class="form-check-input" type="radio" value="Por Dia" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
+                                            <label class="form-check-label novalidate" for="inlineRadio1">Por Dia</label>
+                                    </div>
+                                    <div class="form-check form-check-inline ">
+                                        <input class="form-check-input" type="radio" value="Por Mes" name="precioDescripcion" id="inlineRadio1" onclick="habilitar()" >
+                                            <label class="form-check-label novalidate" for="inlineRadio1">Por Mes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" value="Por Jornada Laboral" name="precioDescripcion" id="inlineRadio2" onclick="habilitar()" >
+                                            <label class="form-check-label novalidate" for="inlineRadio2">Por Jornada Laboral</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input " type="radio" value="Por trabajo terminado" name="precioDescripcion" id="inlineRadio3" onclick="habilitar()" >
+                                            <label class="form-check-label novalidate " for="inlineRadio3">Por trabajo terminado</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" value="A acordar con el cliente" name="precioDescripcion" id=""  onclick="desabilitar2()">
+                                            <label class="form-check-label novalidate" for="inlineRadio4">A acordar con el cliente</label>
+                                    </div>
+                                </div>
+                                <label for="horario">Horario De trabajo:</label>
+                                <div class="form-group borde required">
+                                    <div class="form-check">
+                                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios1" value="Part Time" checked required="">
+                                            <label class="form-check-label novalidate" for="exampleRadios1">
+                                                Part Time
+                                            </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios2" value="Full Time" required>
+                                            <label class="form-check-label novalidate" for="exampleRadios2">
+                                                Full Time
+                                            </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input"  type="radio" name="horario" id="exampleRadios3" value="A acordar con el cliente" required>
+                                            <label class="form-check-label novalidate" for="exampleRadios3">
+                                                A acordar con el cliente
+                                            </label>
+                                    </div>
+                                </div>
+                                <label for="exampleFormControlFile1">Agrega algunas imagenes:</label>
+                                <div class="form-group borde">
+                                    <p class="aviso">Puedes agregar algunas fotos que representen tu trabajo</p>
+                                    <p class="aviso text-secondary">(Una imagen puede hacer que los clientes esten mas interesados al poder ver tu servicio)</p>
+                                    <p class="aviso text-secondary">("Minimo de imagenes requeridas:1 &nbsp maximo de imagenes opcionales:6")</p>
+                                    <input    id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple required file />
+                                    <input th:each="i: ${#numbers.sequence(1, 5)}"   id="multipleFileUploadInput"  class="mb-2"  type="file" th:name="files"    multiple />
+                                </div>
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="horario">Agrega una breve descripción de tu servicio:<p class="aviso text-secondary">(cantidad de caracter min:92 max:365)</p></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Descripción</span>
+                                        </div>
+                                        <!--    <textarea  minlength="92" maxlength="365"  id="descripcion"class="form-control novalidate" name="descripcion" style="height:85px;" aria-label="With textarea" placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte."></textarea>-->
+                                        <textarea onkeyup="contarCaracteres()" id="message" name="descripcion" class="form-control" style="height:85px;"  aria-label="With textarea" minlength="92"  maxlength="365"  placeholder="Podrías contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpción puede ayudar a que tus posibles clientes te conozcan mejor y quieran contratarte." required></textarea>
+                                    </div>
+                                </div>
+                                <span>Caracteres ingresados:<span class="ml-2" id="caracteres" >0</span></span>
+                                <button type="submit" class="btn bg-dark botonform p-3 mt-5" id="inputsubmit"   name="inputsubmit" ><i data-feather="check"></i>&nbsp;Subir Servicio</button>
+                            </form>
                         </div>
-                        <!--    <textarea  minlength="92" maxlength="365"  id="descripcion"class="form-control novalidate" name="descripcion" style="height:85px;" aria-label="With textarea" placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte."></textarea>-->
-                        <textarea onkeyup="contarCaracteres()" id="message" name="descripcion" class="form-control" style="height:85px;"  aria-label="With textarea" minlength="92"  maxlength="365"  placeholder="Podrias contarnos un poco acerca de tu manera de trabajar y hace cuanto tiempo te dedicas a esto o cualquier cosa que quieras que sepamos sobre vos, una buena descrpcion puede ayudar a que tus posibles clientes te conzocan mejor y quieran contratarte." required></textarea>
-                    </div>
-                </div>
-                  <span>Caracteres ingresados:<span class="ml-2" id="caracteres" >0</span></span>
-                <button type="submit" class="btn bg-dark botonform p-3 mt-5" id="inputsubmit"   name="inputsubmit" ><i data-feather="check"></i>&nbsp;Subir Servicio</button>
-            </form>
-        </div>
-        </section>
-    </body>
-</html>
+                    </section>
+                </body>
+                </html>

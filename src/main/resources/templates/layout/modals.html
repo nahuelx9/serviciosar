@@ -14,7 +14,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-dark text-light">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Iniciar Sesion</h5>
+                                        <h5 class="modal-title" id="staticBackdropLabel">Iniciar Sesión</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -35,7 +35,7 @@
                                                         <label class="form-check-label" for="exampleCheck1">Recordar mi cuenta</label>
                                                 </div>
                                                 <div >
-                                                    <a th:href="@{/forgot_password}" class="mt-2">Olvido su contraseña? Click aqui</a>
+                                                    <a th:href="@{/forgot_password}" class="mt-2">Olvido su contraseña? Click aquí</a>
                                                 </div>
                                             </div>
 
@@ -61,14 +61,14 @@
                                         </button>
                                     </div>
                                     <div class="modal-body text-promocion text-justify">
-                                        Nos emociona que hayas elegido SERVICIOS.COM para promocionar tus servicio pero antes es necesario que te registres en nuestra plataforma es muy facil solo debes completar algunos de tus datos,
-                                        una vez registrado vuelve a presionar este boton.
+                                        Nos emociona que hayas elegido SERVICIOSAR.COM para promocionar tus servicios, pero antes es necesario que te registres en nuestra plataforma es muy fácil solo debes completar algunos de tus datos.
                                     </div>
                                     <div class="modal-footer bg-dark">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                         <a href="registro.html"><button type="submit" class="btn btn-primary btn btn-success">Registrarse</button></a>
                                     </div>
                                 </div>
+                                <a href="serviciosUsuario.html"></a>
                             </div>
                         </div>
                     </section>
@@ -143,12 +143,12 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="provincia">Seleccion su provincia:</label>
+                                                    <label for="provincia">Seleccione su provincia:</label>
                                                     <select th:name="provincia" class="custom-select" id="listaProvincias"   onclick="mostrarListado()" required>
                                                         <option selected value="">Provincia</option>
                                                         <option  th:each="provincias: ${provincias}"   th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
                                                     </select>
-                                                    <div class="invalid-feedback">Debe Selccionar una Provincia</div>
+                                                    <div class="invalid-feedback">Debe Seleccionar una Provincia</div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="ciudad">Seleccione su Departamento:</label>
@@ -219,7 +219,7 @@
                                                 <input type="password" class="form-control" th:name="password1" id="password"  minlength="8"  required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="username">Vuela a ingreser  la nueva contraseña:</label>
+                                                <label for="username">Vuelva a ingresar la nueva contraseña:</label>
                                                 <input type="password" class="form-control" th:name="password2" id="password" minlength="8"  required>
                                             </div>
                                     </div>

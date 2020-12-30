@@ -22,7 +22,7 @@
                                                 <table class="table table-stryped">
                                                     <thead class="thead-dark">
                                                         <tr>
-                                                            <th class="titulo-card">Descripcion:</th>
+                                                            <th class="titulo-card">Descripción:</th>
                                                             <th class="titulo-card">Datos:</th>
                                                             <th class="titulo-card">Fotos:</th>
                                                         </tr>
@@ -30,22 +30,22 @@
                                                     <tbody>
                                                         <tr id="card-responvie">
                                                             <td>
-                                                                <h5 class="card-title titulo-card-responsive text-break">Descripcion:</h5>
+                                                                <h5 class="card-title titulo-card-responsive text-break">Descripción:</h5>
                                                                 <article class="text-justify m-0 descripcion-servicio" lang="en">
-                                                                    <p   th:text="${servicio.descripcion}">Descripcion</p>
+                                                                    <p   th:text="${servicio.descripcion}">Descripción</p>
                                                                 </article>
                                                             </td>
                                                             <td>
                                                                 <h5 class="card-title titulo-card-responsive">Datos:</h5>
                                                                 <div class="datos-div d-flex flex-column bd-highlight" >
-                                                                    <p class="mb-2 text-break"  th:text="'Email: ' + ${servicio.email}" >email</p>
-                                                                    <p  class="mb-2 wsp-cel" th:if="${servicio.whatsapp} == true"  th:text="'Celular: ' +${servicio.celular}">Celular</p>
-                                                                    <p th:if="${servicio.whatsapp}== false"class="mb-2"  th:text="'Celular: ' +${servicio.celular}">Celular</p>
-                                                                    <p class="mb-2"  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
-                                                                    <p class="mb-2" th:if="${servicio.precio} != null" th:text="'Precio: ' + '$'+ ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
-                                                                    <p class="mb-2" th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
-                                                                    <p class="mb-2 text-capitalize" th:text="'Provincia: ' + ${usuario.provincia}">Provincia</p><p class="datos-tabla text-capitalize" th:text="'Departamento: ' + ${usuario.departamento}" >Departamento</p>
-                                                                    <p class="mb-2 text-capitalize text-break" th:text="'Usuario: ' + ${usuario.nombre} + ' ' + ${usuario.apellido}">Usuario</p>
+                                                                    <p class=" text-break"  th:text="'Email: ' + ${servicio.email}" >email</p>
+                                                                    <p  class="wsp-cel" th:if="${servicio.whatsapp} == true"  th:text="'Celular: ' +${servicio.celular}">Celular</p>
+                                                                    <p th:if="${servicio.whatsapp}== false"  th:text="'Celular: ' +${servicio.celular}">Celular</p>
+                                                                    <p  th:text="'Horario: ' + ${servicio.horario}"> Horario</p>
+                                                                    <p th:if="${servicio.precio} != null" th:text="'Precio: ' + '$'+ ${servicio.precio}  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                                    <p  th:if="${servicio.precio} == null" th:text="'Precio: '  + ' ' +${servicio.precioDescripcion}">Precio</p>
+                                                                    <p class="text-capitalize" th:text="'Provincia: ' + ${usuario.provincia}">Provincia</p><p class="datos-tabla text-capitalize" th:text="'Departamento: ' + ${usuario.departamento}" >Departamento</p>
+                                                                    <p class=" text-capitalize text-break" th:text="'Usuario: ' + ${usuario.nombre} + ' ' + ${usuario.apellido}">Usuario</p>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -87,16 +87,16 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header modal-eliminar">
-                                                            <h5 class="modal-title " id="exampleModalLabel">Eliminar Servcio</h5>
+                                                            <h5 class="modal-title " id="exampleModalLabel">Eliminar Servicio</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Esta segur@ de elimiar su servicio, no podra revertir cambios
+                                                            Esta segur@ de eliminar su servicio, no podrá revertir cambios
                                                         </div>
                                                         <div class="modal-footer modal-eliminar ">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Atras</button>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Atrás</button>
                                                             <a th:href="@{/eliminarServicio(idServicio=${servicio.idServicio})}"><button type="button" class="btn btn-danger">Si, Eliminar</button></a>
                                                         </div>
                                                     </div>
@@ -109,9 +109,9 @@
                                     <div class=" d-flex justify-content-center">
                                         <div class="alert alert-secondary" role="alert" style="height: 220px; margin-top: 150px;" >
                                             <h4 class="alert-heading">Sin servicios!</h4>
-                                            <p>Aqui encontraras todos tus servicios podras modificarlos o eliminarlos cuando desees.</p>
+                                            <p>Aquí encontrarás todos tus servicios podrás modificarlos o eliminarlos cuando desees.</p>
                                             <hr>
-                                                <p class="mb-0">Para agregar un servicio presiona el boton que aparece a continuación.</p>
+                                                <p class="mb-0">Para agregar un servicio presiona el botón que aparece a continuación.</p>
                                         </div>
                                     </div>
                         </section>

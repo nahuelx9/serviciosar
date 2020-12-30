@@ -37,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @Slf4j
-public class ControlladorServicio {
+public class ControladorServicio {
 
     @Autowired
     private ServicioService servicioService;
@@ -178,6 +178,7 @@ public class ControlladorServicio {
         List<Departamento> departamentos = departamento.listarDepartamento();
         List<Departamento> localidadesAmba = departamento.listarLocalidadesAmba();
         List<Usuario> usuarios = usuarioService.listarUsuarios();
+        boolean sinServicios = false;
 
         filtro.setNombre(nombre);
 
@@ -187,6 +188,11 @@ public class ControlladorServicio {
         PageRequest pageRequest = PageRequest.of(page, 7);
 
         pageServicio = servicioService.findByNombre(nombre, pageRequest);
+        
+         if (pageServicio.isEmpty()) {
+            pageServicio = servicioService.getAll(pageRequest);
+            sinServicios = true;
+        }
 
         Util.modificarUrlImagen(pageServicio.getContent());
 
@@ -195,12 +201,14 @@ public class ControlladorServicio {
             List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
             model.addAttribute("pages", pages);
         }
+       
 
         model.addAttribute("filtro", filtro);
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("provincias", provincias);
         model.addAttribute("departamentos", departamentos);
         model.addAttribute("localidadesAmba", localidadesAmba);
+        model.addAttribute("sinServicios", sinServicios);
 
         model.addAttribute("list", pageServicio.getContent());
         model.addAttribute("current", page + 1);

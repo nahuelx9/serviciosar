@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
-public class ControladoAdmin {
+public class ControladorAdmin {
 
     @Autowired
     private ServicioService servicioService;

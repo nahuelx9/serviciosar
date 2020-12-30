@@ -6,9 +6,24 @@
         <body>
             <header th:replace="layout/headerPrincipal :: headerPrincipal"  ></header>
             <section th:replace="layout/headerPrincipal :: card-listado-promocion"></section>
+            <section th:replace="layout/headerPrincipal :: categorias"></section>
             <section th:replace="layout/alerts :: alerts"></section>
             <section th:replace="layout/modals :: ModalIncioSesion"></section>
             <section th:replace="layout/modals :: ModalMensajePromocion"></section>
             <footer th:replace="layout/headFooter :: footer"></footer>
+            <script>
+                $(document).ready(function () {
+                    $('.slide_categorias').slick({
+                        slidesToShow: 6,
+                        dots: true,
+                        centerMode: true,
+                        nextArrow: '<span class="fas fa-arrow-circle-right slick-next"></span>',
+                        prevArrow: '<i class="fas fa-arrow-circle-left slick-prev"></i>',
+                        dots:false,
+                        variableWidth: true,
+            
+                    });
+                });
+            </script>
         </body>
 </html>

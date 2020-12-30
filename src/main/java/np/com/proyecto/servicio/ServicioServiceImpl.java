@@ -44,7 +44,7 @@ public class ServicioServiceImpl implements ServicioService {
     @Override
     @Transactional
    public void actualizarServicio(Servicio servicio) {
-        servicioDao.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getEmail(), servicio.getPrecio(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(), servicio.getIdUsuario(), servicio.getIdServicio());
+        servicioDao.actualizarServicio(servicio.getNombre(), servicio.getCelular(), servicio.isWhatsapp(), servicio.getEmail(),servicio.getCategoria(), servicio.getPrecio(), servicio.getPrecioDescripcion(), servicio.getHorario(), servicio.getDescripcion(), servicio.getIdUsuario(), servicio.getIdServicio());
     }
 
     @Override

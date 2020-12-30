@@ -26,7 +26,7 @@
                     <input type="text" class="form-control" name="apellido"  id="apellido"  th:field="*{apellido}" required>
                 </div>
                 <div class="form-group">
-                    <label for="provincia">Seleccion su provincia o Localidad:</label>
+                    <label for="provincia">Seleccione su provincia:</label>
                     <select name="provincia" class="custom-select" id="listaProvincias"   onclick="mostrarListado()" required>
                         <option selected value="">Provincia</option>
                         <option  th:each="provincias: ${provincias}"   th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
@@ -34,7 +34,7 @@
                     <div class="invalid-feedback">Debe Selccionar una Provincia</div>
                 </div>
                 <div class="form-group">
-                    <label for="ciudad">Seleccione su Departamento:</label>
+                    <label for="ciudad">Seleccione su Departamento o Localidad:</label>
                     <select class="custom-select" name="departamento"   id="listaDepartamentos" required>
                         <option value="">Departamento</option>
                     </select>
@@ -56,7 +56,7 @@
                     <div class="form-check">
                         <input  class="form-check-input" type="checkbox"  id="checkUser" required>
                         <label class="form-check-label" for="invalidCheck2">
-                            He leido y acepto los terminos y condiciones
+                            He leído y acepto los términos y condiciones
                         </label>
                     </div>
                 </div>

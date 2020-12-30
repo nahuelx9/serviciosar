@@ -13,13 +13,13 @@
                             <form th:action="@{/listaPorFiltros}" method="GET"  th:object="${filtro}">
                                 <header>
                                     <nav class="navbar navbar-light bg-dark" id="nav-lista">
-                                        <a th:href="@{/}" class="volver "><h1 class=" text-right titulo text-success titulobuscador">Servicios.com</h1></a>
+                                        <a th:href="@{/}" class="volver "><h1 class=" text-right titulo text-success titulobuscador">Serviciosar.com</h1></a>
                                         <div class="form-inline">
                                             <input id="mensaje"  th:if="*{nombre != ''}" class="form-control mr-sm-2" name="nombre" th:field="*{nombre}" type="search" aria-label="Search"  >
                                                 <input   id="mensaje"  th:if="*{nombre == ''}" class="form-control mr-sm-2" name="nombre"  type="search" placeholder="Busque un Servicio" aria-label="Search"  >
                                                     <button class="btn btn-outline-success my-2 my-sm-1 btn-nav-buscador" type="submit">Buscar</button>
                                                     </div>
-                                                    <h1 class="titulo text-success">Servicios.com</h1>
+                                                    <h1 class="titulo text-success">Serviciosar.com</h1>
                                                     </nav>
                                                     </header>
                                                     <section class="filtros">
@@ -35,12 +35,12 @@
                                                         <div class="container-fluid clearfix contenedor-filtros mt-3 collapse"  id="collapseExample">
                                                             <div class="d-flex justify-content-between mt-2 ml-4 mr-4 font-italic" id="contenedor-filtros">
                                                                 <div class=" mb-4 locaclidad">
-                                                                    <label for="validationDefault04" class="labelbuscador">Provincia o Localidad:</label>
+                                                                    <label for="validationDefault04" class="labelbuscador">Provincia:</label>
                                                                     <select class="custom-select  buscadorciudad " name="provincia" id="listaProvincias"  onclick="mostrarListado()" >
                                                                         <option selected  value="">No especificar</option>
                                                                         <option  th:each="provincias: ${provincias}"  th:value="${provincias.id}" th:text="${provincias.nombre}" ></option>
                                                                     </select>
-                                                                    <label for="validationDefault04" class="labelbuscador mt-2">Departamento:</label>
+                                                                    <label for="validationDefault04" class="labelbuscador mt-2">Departamento o Localidad:</label>
                                                                     <select class="custom-select buscadorciudad" name="departamento"   id="listaDepartamentos" >
                                                                         <option selected  value="">No especificar</option>
 
@@ -69,12 +69,12 @@
                                                                 </div>
                                                                 <div class="precioFiltro">
                                                                     <div class="rangoPrecio">
-                                                                        <label for="customRange1">Precio Maximo:</label>
-                                                                        <input type="range"  name="rangoPrecio"  class="custom-range"  id="precio" min="0" max="10000" value="0" >
+                                                                        <label for="customRange1">Precio Máximo:</label>
+                                                                        <input type="range"  name="rangoPrecio"  class="custom-range"  id="precio" min="0" max="10000" value="0"  onchange="checkDisabled()">
                                                                             $<span class="preFiltro" id="pre">0</span>
                                                                     </div>
                                                                     <div class="form-check rangoSinPrecio">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="rangoSinPrecio" >
+                                                                        <input class="form-check-input" type="checkbox" value="" id="rangoSinPrecio"  checked>
                                                                             <label class="form-check-label" for="defaultCheck1">
                                                                                 No especificar
                                                                             </label>
@@ -106,7 +106,7 @@
                                                                                 <table class="table table-stryped">
                                                                                     <thead class="thead-dark">
                                                                                         <tr>
-                                                                                            <th class="titulo-card">Descripcion:</th>
+                                                                                            <th class="titulo-card">Descripción:</th>
                                                                                             <th class="titulo-card">Datos:</th>
                                                                                             <th class="titulo-card">Fotos:</th>
                                                                                         </tr>
@@ -114,48 +114,48 @@
                                                                                     <tbody>
                                                                                         <tr id="card-responvie">
                                                                                             <td>
-                                                                                                <h5 class="card-title titulo-card-responsive">Descripcion:</h5>
+                                                                                                <h5 class="card-title titulo-card-responsive">Descripción:</h5>
                                                                                                 <article class="text-justify m-0 descripcion-servicio text-break" lang="en">
-                                                                                                    <p   th:text="${servicio.descripcion}">Descripcion</p>
-                                                                                                    <a class="position-absolute fixed-bottom m-2 text-secondary " id="reportar" href="#"  data-toggle="modal" data-target="#modalReportar" >Reportar</a>
-                                                                                                    <!-- Modal Reporte -->
-                                                                                                    <div class="modal fade" id="modalReportar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                                                        <div class="modal-dialog" role="document">
-                                                                                                            <div class="modal-content">
-                                                                                                                <div class="modal-header bg-dark text-light">
-                                                                                                                    <h5 class="modal-title" id="staticBackdropLabel">Reportar Sercicio</h5>
-                                                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                                                        <span aria-hidden="true">&times;</span>
-                                                                                                                    </button>
-                                                                                                                </div>
-                                                                                                                <form method="POST" th:action="@{/enviarReporte}">
-                                                                                                                    <div class="modal-body">
-                                                                                                                        <div class="input-group mb-3">
-                                                                                                                            <label class="input-group-text" for="inputGroupSelect01">Opciones</label>
-                                                                                                                            <select name="tipo" class="form-select" id="select-reporte" style="width: 350px;">
-                                                                                                                                <option selected>Eliga una opcion</option>
-                                                                                                                                <option value="Contenido inapropiado">Contenido inapropiado</option>
-                                                                                                                                <option value="Contenido dudoso">Contenido dudoso</option>
-                                                                                                                                <option value="Datos falsos">Datos falsos</option>
-                                                                                                                                <option value="Otro">Otro</option>
-                                                                                                                            </select>
-                                                                                                                        </div>
-                                                                                                                        <div class="input-group" id="text-area-reporte">
-                                                                                                                            <div class="form-floating">
-                                                                                                                                <textarea  name="textReporte" class="form-control"  placeholder="Cuentanos la razon por la que decis reportar este servicio. Tu comentario es totalmente anonimo" id="floatingTextarea"style="width: 450px;" ></textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                    <input type="hidden" name="idServicio" th:value="${servicio.idServicio}"/>
-                                                                                                                    <div class="modal-footer bg-dark">
-                                                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                                                                        <button type="submit" class="btn btn-primary btn btn-success">Enviar Reporte</button>
-                                                                                                                    </div>
-                                                                                                                </form>
+                                                                                                    <p   th:text="${servicio.descripcion}" style="hyphens: auto; ">Descripción</p>
+                                                                                                </article>
+                                                                                                <a class="position-absolute fixed-bottom m-2 text-secondary " id="reportar" href="#"  data-toggle="modal" data-target="#modalReportar" >Reportar</a>
+                                                                                                <!-- Modal Reporte -->
+                                                                                                <div class="modal fade" id="modalReportar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header bg-dark text-light">
+                                                                                                                <h5 class="modal-title" id="staticBackdropLabel">Reportar Servicio</h5>
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                                                </button>
                                                                                                             </div>
+                                                                                                            <form method="POST" th:action="@{/enviarReporte}">
+                                                                                                                <div class="modal-body">
+                                                                                                                    <div class="input-group mb-3">
+                                                                                                                        <label class="input-group-text" for="inputGroupSelect01">Opciones</label>
+                                                                                                                        <select name="tipo" class="form-select" id="select-reporte" style="width: 350px;" required>
+                                                                                                                            <option selected>Elija una opción</option>
+                                                                                                                            <option value="Contenido inapropiado">Contenido inapropiado</option>
+                                                                                                                            <option value="Contenido dudoso">Contenido dudoso</option>
+                                                                                                                            <option value="Datos falsos">Datos falsos</option>
+                                                                                                                            <option value="Otro">Otro</option>
+                                                                                                                        </select>
+                                                                                                                    </div>
+                                                                                                                    <div class="input-group" id="text-area-reporte">
+                                                                                                                        <div class="form-floating">
+                                                                                                                            <textarea  name="textReporte" class="form-control"  placeholder="Cuentanos la razon por la que decis reportar este servicio. Tu comentario es totalmente anonimo" id="floatingTextarea"style="width: 450px;" ></textarea>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <input type="hidden" name="idServicio" th:value="${servicio.idServicio}"/>
+                                                                                                                <div class="modal-footer bg-dark">
+                                                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                                                                    <button type="submit" class="btn btn-primary btn btn-success">Enviar Reporte</button>
+                                                                                                                </div>
+                                                                                                            </form>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                </article>
+                                                                                                </div>
                                                                                             </td>
                                                                                             <td>
                                                                                                 <h5 class="card-title titulo-card-responsive">Datos:</h5>

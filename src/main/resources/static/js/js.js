@@ -1,24 +1,18 @@
 addEventListener('load', inicio, false);
-
-
 VanillaTilt.init(document.querySelectorAll(".menu-servicios"), {
     max: 15,
     speed: 400,
     transition: true,
     scale: 1.1
 });
-
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
-
-
 $('#pop').popover().click(function () {
     setTimeout(function () {
         $('#pop').popover('hide');
     }, 5000);
 });
-
 /* Menu desplegable lateral */
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -34,8 +28,6 @@ $("#fragment-imagenes").hide();
 $("#fragment-analisis").hide();
 $("#fragment-buzon").hide();
 $("#fragment-alertas").hide();
-
-
 $("#btnUsuarios").click(function () {
     $("#fragment-servicios").hide();
     $("#fragment-imagenes").hide();
@@ -44,7 +36,6 @@ $("#btnUsuarios").click(function () {
     $("#fragment-alertas").hide();
     $("#fragment-usuarios").show();
 });
-
 $("#btnServicios").click(function () {
     $("#fragment-imagenes").hide();
     $("#fragment-usuarios").hide();
@@ -60,7 +51,6 @@ $("#btnImagenes").click(function () {
     $("#fragment-alertas").hide();
     $("#fragment-imagenes").show();
 });
-
 $("#btnAnalisis").click(function () {
     $("#fragment-usuarios").hide();
     $("#fragment-servicios").hide();
@@ -85,7 +75,6 @@ $("#btnAlertas").click(function () {
     $("#fragment-buzon").hide();
     $("#fragment-alertas").show();
 });
-
 /* Menu desplegable lateral  fin*/
 
 /* DataTable*/
@@ -120,15 +109,29 @@ $('#select-reporte').change(function () {
         $("#text-area-reporte").hide();
     }
 });
-
 /* Reporte modal Fin*/
 
 
 
-function inicio() {
+$('#rangoSinPrecio').click(function () {
+    if ($('#rangoSinPrecio').prop('checked')) {
+        $('#precio').val('0');
+        $('#pre').html("0");
+    }
+});
 
+
+function checkDisabled() {
+    if( document.getElementById("precio").value > 0){
+        document.getElementById('rangoSinPrecio').checked = false;
+    }
+}
+
+
+
+
+function inicio() {
     document.getElementById('precio').addEventListener('change', cambioPrecio, false);
-    document.getElementById('rangoSinPrecio').addEventListener('click', desabilitar, false);
 }
 
 function imagenCargada() {
@@ -184,17 +187,6 @@ window.setTimeout(function () {
         $(this).remove();
     });
 }, 5000);
-function desabilitar()
-{
-    let precio = document.getElementById('precio');
-    if (precio.disabled === false) {
-        precio.disabled = true;
-        document.getElementById('pre').innerHTML = "0";
-    } else if (precio.disabled === true) {
-        precio.disabled = false;
-    }
-}
-
 function desabilitar2()
 {
     document.getElementById('precioNo').disabled = true;

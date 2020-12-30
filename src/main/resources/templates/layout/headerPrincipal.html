@@ -11,18 +11,18 @@
                     <header th:fragment="headerPrincipal">
                         <nav class="navbar navbar-light bg-dark" id="nav">
                             <form  th:action="@{/listaPorNombre}" method="GET" class="form-inline order-2">
-                                <input onkeyup="deshabilitarBtnBusquedaIndex()" class="form-control mr-sm-2 " name="nombre" id="mensaje" type="search" placeholder="Busque un Servicio" aria-label="Search" >
+                                <input onkeyup="deshabilitarBtnBusquedaIndex()" class="form-control mr-sm-2 " name="nombre" id="mensaje" type="search" placeholder="Busque un servicio" aria-label="Search" >
                                     <button class="btn btn-outline-success my-2 my-sm-1 btn-nav-buscador" type="submit" id="btnBuscar" disabled>Buscar</button>
                             </form>
-                            <h1 class="text-light  titulo order-1">Servicios.com</h1>
+                            <h1 class="text-light  titulo order-1">Serviciosar.com</h1>
                             <div class="d-flex justify-content-end order-3">
-                                <a class=" serviciosbtn  text-light nav-link float-left" id="nav-link" data-toggle="modal" href="#" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesion</a>
-                                <a th:href="@{/admin}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" >Administracion</a>
+                                <a class=" serviciosbtn  text-light nav-link float-left" id="nav-link" data-toggle="modal" href="#" data-target="#staticBackdrop"  sec:authorize="hasRole('ROLE_ANONYMOUS')">Iniciar Sesión</a>
+                                <a th:href="@{/admin}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" >Administración</a>
                                 <form method="POST"   th:action="@{/logout}"  sec:authorize="hasRole('ROLE_ADMIN')" >
-                                    <button onclick="this.parentNode.submit();" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" >Cerrar sesion</button>
+                                    <button onclick="this.parentNode.submit();" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" >Cerrar sesión</button>
                                 </form>
                                 <a th:href="@{/crearCuenta}" class=" serviciosbtn nav-link float-left text-light"  id="nav-link" sec:authorize="hasRole('ROLE_ANONYMOUS')" >Registrarse</a>
-                                <a th:href="@{/serviciosUsuario/} + ${id}" class=" nav-link serviciosbtn  float-left  text-light"  id="nav-link" sec:authorize="hasRole('ROLE_USER')" >Mis Servcios</a>
+                                <a th:href="@{/serviciosUsuario/} + ${id}" class=" nav-link serviciosbtn  float-left  text-light"  id="nav-link" sec:authorize="hasRole('ROLE_USER')" >Mis servcios</a>
                                 <div sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown float-left">
                                     <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Cuenta
@@ -44,8 +44,8 @@
                                         <svg class="bd-placeholder"  width="100%" height="100%"  xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/> 
                                             <div class="container">
                                                 <div class="carousel-caption text-left">
-                                                    <h1 class="promocionTitle">ENCONTRA LO QUE ESTAS BUSCANDO</h1>
-                                                    <h3 class="promocionTexto ">Encuentra a los mejores animadroes,musicos,fotografos y mucho mas  </h3>
+                                                    <h1 class="promocionTitle">ENCONTRÁ LO QUE ESTÁS BUSCANDO</h1>
+                                                    <h3 class="promocionTexto ">Encuentra a los mejores animadores, musicos, fotografos y mucho más</h3>
                                                 </div>
                                             </div>
                                             </div>
@@ -55,7 +55,7 @@
                                                     <div class="container">
                                                         <div class="carousel-caption ">
                                                             <h1 class="promocionTitle">PROMOCIONA TU TRABAJO</h1>
-                                                            <h3 class="promocionTexto ">En SERVICIOS.COM queremos ayudarte a que mas personas conozcan lo que haces para que tu productividad vaya en aumento</h3>
+                                                            <h3 class="promocionTexto ">En SERVICIOSAR.COM queremos ayudarte a que más personas conozcan lo que haces para que tu productividad vaya en aumento</h3>
                                                         </div>
                                                     </div>
                                             </div>
@@ -65,7 +65,7 @@
                                                     <div class="container">
                                                         <div class="carousel-caption ">
                                                             <h1 class="promocionTitle ">CONSULTA CON LOS MEJORES</h1>
-                                                            <h3 class="promocionTexto ">Cononce a nuestros profesionales en finanzas,bienestar,educacion y mas...</h3>
+                                                            <h3 class="promocionTexto ">Conoce a nuestros profesionales en finanzas, bienestar,educación y más...</h3>
                                                         </div>
                                                     </div>
                                             </div>
@@ -74,8 +74,8 @@
                                                     <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>
                                                     <div class="container">
                                                         <div class="carousel-caption  text-right">
-                                                            <h1 class="promocionTitle">TENEMOS LA SOLUCION A TUS PROBLEMAS</h1>
-                                                            <h3 class="promocionTexto ">Plomeria, gas, elctridad entre mucho mas todos los especialistas en un  solo lugar </h3>
+                                                            <h1 class="promocionTitle">TENEMOS LA SOLUCIÓN A TUS PROBLEMAS</h1>
+                                                            <h3 class="promocionTexto ">Plomería, gas, elctricidad entre mucho más todos los especialistas en un solo lugar </h3>
                                                         </div>
                                                     </div>
                                             </div>
@@ -92,26 +92,131 @@
                                             </header>
                                             <section th:fragment="card-listado-promocion">
                                                 <div class=" container">
-                                                    <h2 class="titulomenu mb-5 animate__animated animate__pulse animate__repeat-2">conoce todos los servicios diponibles a continuacion</h2>
+                                                    <h2 class="titulomenu mb-5 animate__animated animate__pulse animate__repeat-2">Conoce todos los servicios disponibles a continuación</h2>
                                                     <hr id="title_hr">
                                                         <div class="d-flex justify-content-around " id="carteles-lista-promocion">
                                                             <div  class="menu-servicios order-1  menu-lista-servicios">
                                                                 <div class="contenido-lista">
-                                                                    <h3 class="text-center text-light mb-2">LISTA DE SERVICIOS</h3>
+                                                                    <h3 class="text-center text-light mb-2 text-carteles ">LISTA DE SERVICIOS</h3>
                                                                     <a th:href="@{/listaServicios}"> <button type="button" class="btn btn-outline-light  btn-lg btn-block">VER LISTA</button></a>
                                                                 </div>
                                                             </div>
                                                             <div  class="menu-servicios order-2  menu-promocion-servicios mb-3">
                                                                 <div class="contenido-lista">
-                                                                    <h3 class="text-center text-light ">PROMOCIONA TU SERVICIO</h3>
-                                                                    <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-light  btn-lg btn-block btn-promocion" data-toggle="modal" data-target="#exampleModal">PROMOCIONAR</button>
-                                                                    <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-light  btn-lg btn-block">PROMOCIONAR</button></a>
-                                                                    <button sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" id="pop" type="button" class="btn btn-outline-light  btn-lg btn-block" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario">PROMOCIONAR</button>
+                                                                    <h3 class="text-center text-light text-carteles ">PROMOCIONA TU SERVICIO</h3>
+                                                                    <button sec:authorize="hasRole('ROLE_ANONYMOUS')" type="button" class="btn btn-outline-light  btn-lg btn-block btn-promocion text-btn-carteles" data-toggle="modal" data-target="#exampleModal">PROMOCIONAR</button>
+                                                                    <a  sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() <= 3}"  th:href="@{/agregarServicio}"><button type="button" class="btn btn-outline-light  btn-lg btn-block text-btn-carteles">PROMOCIONAR</button></a>
+                                                                    <button sec:authorize="hasRole('ROLE_USER')"  th:if="${usuario.getServicios().size() >= 4}" id="pop" type="button" class="btn btn-outline-light  btn-lg btn-block text-btn-carteles" data-toggle="popover" data-placement="bottom" data-content="Por el momento solo se permiten 4 Servicios por usuario">PROMOCIONAR</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                 </div>
-
+                                            </section>
+                                            <section th:fragment="categorias" >
+                                                <div class="container-xl " style="margin-top: 8em; ">
+                                                    <h2 class="titulomenu"> variedad de categorías</h2>
+                                                    <hr id="title_hr">
+                                                        <div class="d-flex justify-content-center slide_categorias m-2">
+                                                            <div class="categoria ">
+                                                                <a href="/listaPorNombre?nombre=construccion" style="color: #212529">
+                                                                    <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                        <i class="fas fa-hard-hat" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Construcción</p>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                 <a href="/listaPorNombre?nombre=Transporte" style="color: #212529">
+                                                                    <i class="fas fa-truck-loading" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Transporte</p>
+                                                                   </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                  <a href="/listaPorNombre?nombre=Hogar" style="color: #212529">
+                                                                    <i class="fas fa-home" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Hogar</p>
+                                                                 </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                  <a href="/listaPorNombre?nombre=Asesoría" style="color: #212529">
+                                                                    <i class="fas fa-user-friends" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Asesoría</p>
+                                                                 </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                  <a href="/listaPorNombre?nombre=Mascotas" style="color: #212529">
+                                                                    <i class="fas fa-paw" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Mascotas</p>
+                                                                 </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                  <a href="/listaPorNombre?nombre=Diseño" style="color: #212529">
+                                                                    <i class="fas fa-paint-brush" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Diseño</p>
+                                                                  </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                   <a href="/listaPorNombre?nombre=Educación" style="color: #212529">
+                                                                    <i class="fas fa-chalkboard-teacher" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Educación</p>
+                                                                 </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                   <a href="/listaPorNombre?nombre=Fotografia" style="color: #212529">
+                                                                    <i class="fas fa-camera-retro" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Fotografía</p>
+                                                                 </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                   <a href="/listaPorNombre?nombre=musica" style="color: #212529">
+                                                                    <i class="fas fa-music" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Música</p>
+                                                                   </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                    <a href="/listaPorNombre?nombre=Vehiculos" style="color: #212529">
+                                                                    <i class="fas fa-wrench" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Vehículos</p>
+                                                                  </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                 <a href="/listaPorNombre?nombre=tecnologia" style="color: #212529">
+                                                                    <i class="fas fa-desktop" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Tecnología</p>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                 <a href="/listaPorNombre?nombre=Salud" style="color: #212529">
+                                                                    <i class="fas fa-first-aid" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Salud</p>
+                                                                 </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                    <a href="/listaPorNombre?nombre=Cuidado personal" style="color: #212529">
+                                                                    <i class="fas fa-hand-holding-medical" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Cuidado personal</p>
+                                                                 </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoria ">
+                                                            <div class="d-flex justify-content-center position-relative" style="top: 20%;">
+                                                                   <a href="/listaPorNombre?nombre=Otro" style="color: #212529">
+                                                                    <i class="fas fa-user-tie" style="font-size: 100px; color: cadetblue"></i><p class="text-center" style="font-family: 'DM Serif Text'; ">Otros Servicios</p>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                </div>
                                             </section>
                                             </body>
                                             </html>
