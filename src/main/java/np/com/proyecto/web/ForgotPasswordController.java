@@ -55,7 +55,7 @@ public class ForgotPasswordController {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("nperea641@gmail.com", "Servicios.com Support");
+        helper.setFrom("serviciosar.soporte@gmail.com", "Serviciosar.com Soporte");
         helper.setTo(recipientEmail);
 
         String subject = "Enlace para restablecer la contraseña";
