@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Provincia  {
+public class Provincia {
 
     @Id
     private int id;
@@ -24,7 +24,7 @@ public class Provincia  {
         this.nombre = nombre;
     }
 
-     public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -39,10 +39,7 @@ public class Provincia  {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    
-    
-    
+
     public List<Provincia> listarProvincia() {
         List<Provincia> provinciasListM = new ArrayList<Provincia>();
         try {
@@ -71,15 +68,15 @@ public class Provincia  {
             for (int i = 0; i < objA.length(); i++) {
                 JSONObject elemento = objA.getJSONObject(i);
                 int id = elemento.getInt("id");
-             String nombreIso = elemento.getString("nombre");
-                String nombreUtf = new String(nombreIso.getBytes("ISO-8859-1"), "UTF-8");
-                Provincia provincias = new Provincia(id, nombreUtf);
+                String nombreIso = elemento.getString("nombre");
+                //String nombreUtf = new String(nombreIso.getBytes("ISO-8859-1"), "UTF-8");
+                Provincia provincias = new Provincia(id, nombreIso);
                 provinciasListM.add(provincias);
             }
             conn.disconnect();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return  provinciasListM;
+        return provinciasListM;
     }
 }
